@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<h1>About</h1>
+
+
+{% apply markdown_to_html %}
+Kursen Objektorienterade webbteknologier
+______
+
+Kursen fokuserar på objektorienterade programmeringstekniker i programmeringsspråket PHP. Klassiska objektorienterade konstruktioner hanteras tillsammans med objektorienterad programmering i webbaserat ramverk tillsammans med databaser samt enhetstestning.
+
+Kursen omfattar följande områden:
+
+1-Programmering i webbmiljö, syntax, semantik, koppling mot databaser, datastrukturer och inbyggda funktioner.
+
+2-Objektorienterad programmering i PHP med språkkonstruktioner och begrepp. Objektorientering som sätt att strukturera och återanvända kod. Enkla designmönster.
+
+3-SQL med en databas tillsammans med PHP Data Objects.
+
+4-Utveckling av webbapplikationer i ett ramverk där tekniker såsom webbserver (Apache), PHP, HTML, CSS, och SQL integreras tillsammans med ett webbaserat ramverk.
+
+5-Användning av verktyg och tekniker som lämpar sig för utveckling av webbapplikationer, tex UNIX/Linux, installation på extern webbserver, ssh, ftp/sftp, databasklienter såsom PHPMyAdmin, MySQL Workbench och kommandoklienter.
+{% endapply %}
+<p><img src="img/bth.jpg"></p>
+
+
+<p><a href="{{ absolute_url("https://github.com/mosbth/mvc-report") }}">MVC github</a></p>
+<p><a href="{{ absolute_url("https://github.com/moawyamearza/me-report.git") }}">MVC github</a></p>
+{% endblock %}

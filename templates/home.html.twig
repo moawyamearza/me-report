@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% apply markdown_to_html %}
+Moawya Mearza
+______
+
+   
+Mitt namn är Moawya Mearza och kom från syrian. Jag har läst ekonomi i mitt hemland. Jag har
+bott i sverige i 9 år. Nu bor jag i Helsingborg. Jag är gift man och jobbar nu på Ica lager
+i Helsingborg. Jag jobbat här  i Svergie i flela stlle och  med många grijer. Jag  haft
+intresse i programering sen jag var i syrian och när jag kom hit jag kämpat mycket för att
+jag når mitt måll. Jag studerat ett år på LTH i data teknik program. Nu hoppas jag att når
+ägntligen mitt mål här på BTH. 
+
+{% endapply %}
+
+
+<p><a href="{{ absolute_url("img/88.jpg") }}">Viwe My Picture</a></p>
+
+
+{% endblock %}
