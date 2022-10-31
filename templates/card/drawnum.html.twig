@@ -1,0 +1,66 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Card{% endblock %}
+
+{% block content %}
+<div class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="{{ url("deck") }}">Deck</a></li>
+                    <li><a href="{{ url("shuffle") }}">Shuffle</a></li>
+                    <li><a href="{{ url("draw") }}">Draw</a></li>
+                    <li><a href="{{ link_to_drawnum }}">Draw Number</a></li>
+                    <li><a href="{{ link_to_deal }}">Deal</a></li>
+                    <li><a href="{{ url("deck2") }}">Deck2</a></li>
+                </ul>
+            </nav>
+</div>
+
+
+<div class = "game-board">
+
+
+<form method="post">
+    
+    
+
+    <p>
+        <input class="button" type="submit" name="start" value="Start">
+        <input class="button" type="submit" name= "draw" value="Draw">
+        
+        
+    </p>
+
+    
+
+    
+</form>
+        
+
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+    <div>
+        {% for card,color in colors %}
+            <ul class="info1" style="color:{{color}}">
+                <li class="info1" style="color:{{color}}">{{ card }}<li>
+            </ul>
+
+        {% endfor %}
+    </div>
+        {% if label == "warning" %}
+            <div class="{{ label }}">
+                <br><br><br><br><br><br>{{ message }}
+            </div>
+        {% endif %}   
+    {% endfor %}
+{% endfor %}
+
+</div>
+
+
+
+
+
+    
+
+{% endblock %}

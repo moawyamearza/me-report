@@ -32,7 +32,7 @@ class ReportController extends AbstractController
     {
         return $this->render('report.html.twig');
     }
-    
+
     /**
      * @Route("/api/lucky/number", name="lucky-number")
      */
@@ -56,7 +56,6 @@ class ReportController extends AbstractController
             'message' => 'Welcome to the lucky number API',
             'number' => random_int(0, 100),
         ];
-        return $this->render('debug.html.twig' , $data);
+        return $this->render('debug.html.twig', $data);
     }
-    
 }

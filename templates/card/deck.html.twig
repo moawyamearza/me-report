@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Card{% endblock %}
+
+{% block content %}
+<div class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="{{ url("deck") }}">Deck</a></li>
+                    <li><a href="{{ url("shuffle") }}">Shuffle</a></li>
+                    <li><a href="{{ url("draw") }}">Draw</a></li>
+                    <li><a href="{{ link_to_drawnum }}">Draw Number</a></li>
+                    <li><a href="{{ link_to_deal }}">Deal</a></li>
+                    <li><a href="{{ url("deck2") }}">Deck2</a></li>
+                </ul>
+            </nav>
+</div>
+
+
+<ul class = "game-board">
+        
+        {% for card,color in cards %}
+            
+            <li class="card" style="color:{{color}}">{{ card }}</li> 
+        {% endfor %}
+
+        
+        
+</ul>
+
+    
+
+{% endblock %}

@@ -3,19 +3,30 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="favicon.ico">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="icon" href="{{ asset('favicon.ico') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        
     </head>
+    
 
     <body>
-        <div class="navbar">
+        <header>
+            <div>
+            <image class="hero-image" src="{{ asset("img/rr.jpg") }}">
+                <div class="hero-text">
+                    <h1 style="font-size:50px">MOAWYA MEARZA</h1>
+                    
+                </div>
+            </div>
+        </header>
+        <div class="sidenav">
             <nav>
-                <ul>
-                    <li><a href="{{ url("home") }}">Home</a></li>
-                    <li><a href="{{ path("about") }}">About</a></li>
-                    <li><a href="{{ path("report") }}">Report</a></li>
-                    <li><a href="{{ path("debug") }}">Debug</a></li>
-                </ul>
+                
+                    <a href="{{ url("home") }}">Home</a>
+                    <a href="{{ path("about") }}">About</a>
+                    <a href="{{ path("report") }}">Report</a>
+                    <a href="{{ path("card") }}">Card</a>
+                
             </nav>
         </div>
 

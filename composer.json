@@ -87,7 +87,11 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+            "csfix": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src",
+            "phpcs": "tools/php-codesniffer/vendor/bin/phpcs --standard=PSR12 src",
+            "phpcbf": "tools/php-codesniffer/vendor/bin/phpcbf --standard=PSR12 src"
+        
     },
     "conflict": {
         "symfony/symfony": "*"
