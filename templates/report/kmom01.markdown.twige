@@ -1,16 +1,4 @@
 Kmom01
 ======
-1-Berätta kort om dina förkunskaper och tidigare erfarenheter kring objektorientering.
-    Jag hade lite kunskap angående objektorientering under js kursen men den är roligare än vad jag tänkte.
 
-2-Berätta kort om PHPs modell för klasser och objekt. Vilka är de grunder man behöver veta/förstå för att kunna komma igång och skapa sina första klasser?
-    Modeller är PHP-klasser som är designade för att fungera med information i din databas. Låt oss till exempel säga att du använder CodeIgniter för att hantera en blogg. Du kanske har en modellklass som innehåller funktioner för att infoga, uppdatera och hämta din bloggdata.
-
-3-Reflektera kort över den kodbas, koden, strukturen som användes till uppgiften me/report, hur uppfattar du den?
-    Jag fick nya kunskap under den kod och strktur. många nya kunskaper fick jag lära mig om ramverk.
-
-4-Med tanke på artikeln “PHP The Right Way”, vilka delar in den finner du extra intressanta och värdefulla? Är det några särskilda områden som du känner att du vill veta mer om? Lyft fram några delar av artikeln som du känner mer värdefulla.
-    Jag vill veta mer om ramverk och andra saker som kopplat till objektorientering.
-
-5-Vilken är din TIL för detta kmom?
-    Många saker mest om ramverk.
+Att jobba i objektorienterad har gett mig känsla på hur objektorientering fungerar. Jag kan säga att jag lite tidigare erfarenhet från kursen ”objektorientering med Python”. Vi har jobbat med PHP tidigare i kursen Webbteknologier. Jag känner att vi har fördjupat oss ännu mer i PHP, alltså har tagit oss till nytt viktigt steg. När det kommer till modeller och klasser så det funkar så att PHP-klasser är som modeller som är designade att fungera med information i databas. Låt oss till exempel säga att du använder CodeIgniter för att hantera en blogg. Du kanske har en modellklass som innehåller funktioner för att infoga, uppdatera och hämta din bloggdata. Kodbasen eller strukturen är ungefär samma som vi använde oss av i en tidigare kurs om jag kommer ihåg rätt. Twig filer kändes något nytt för mig men jag jobbar med dem på samma sätt som jag jobbar med vanliga HTML filer. Jag skulle vilja kunna och veta mer om ramverk och andra saker som är kopplade till objektorientering. Min TIL är som sagt att kunna fördjupa mig ännu mer i kursen i och med att denna är första kmom vi gör med jag ser fram emot att kunna mer om ramverk speciellt.
