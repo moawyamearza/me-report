@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Card Play{% endblock %}
+
+{% block content %}
+
+<div class="game-board">
+    
+    <div>
+        <h1>21 Card Game</h1>
+        <h2>Bank</h2>
+        {% for card, color in newBanken %} 
+            <p class="info1" style="color:{{ color }}">{{ card }}</p> 
+        {% endfor %}
+        <h2>Player</h2>
+        {% for card, color in new %} 
+            <p class="info1" style="color:{{ color }}">{{ card }}</p> 
+        {% endfor %}
+    </div>
+    
+    <form method="post">
+        {% set draw_clicked = app.request.method == 'POST' and app.request.request.get('draw') is defined %}
+        {% set stop_clicked = app.request.method == 'POST' and app.request.request.get('stop') is defined %}
+
+        {% if not draw_clicked or not stop_clicked or valuesum >= 21 or valuesumBanken >= 21 %}
+            <input class="button" type="submit" name="newround" value="New Round">
+        {% endif %}
+        {% if valuesum < 21 and valuesumBanken < 21 %}
+            <input class="button" type="submit" name="draw" value="Draw">
+            <input class="button" type="submit" name="stop" value="Stop">
+        {% endif %}
+    </form>
+    
+    <div>
+        {% if valuesum == 21 %}
+            <div>Player: You went bust!</div>
+            <div>Bank: {{ valuesumBanken }}</div>
+        {% elseif valuesumBanken == 21 %}
+            <div>Player: {{ valuesum }}</div>
+            <div>Bank: You went bust!</div>
+        {% elseif valuesum < valuesumBanken %}
+            <div>Player: You went bust!</div>
+            <div>Bank: {{ valuesumBanken }}</div>
+        {% elseif (valuesum == 0 and valuesumBanken == 0) or (valuesum < 21 and valuesumBanken <21) %}
+            <div>Player: {{ valuesum }}</div>
+            <div>Bank: {{ valuesumBanken }}</div>
+        {% else %}
+            <div>Player: {{ valuesum }}</div>
+            <div>Bank: {{ valuesumBanken }}</div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

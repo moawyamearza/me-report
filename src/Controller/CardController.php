@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use \App\Card\CardGraphic as CardG;
-use \App\Card\DeckWith2Jokers as CardJ;
+use App\Card\CardGraphic as CardG;
+use App\Card\DeckWith2Jokers as CardJ;
 
 class CardController extends AbstractController
 {
@@ -22,7 +22,7 @@ class CardController extends AbstractController
             'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
             'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
         ];
-        return $this->render('card/card.html.twig',$data);
+        return $this->render('card/card.html.twig', $data);
     }
 
     /**
@@ -78,7 +78,7 @@ class CardController extends AbstractController
     {
         $shu = new CardG();
         $cards = $shu->shuffleCards();
-        
+
         $data = [
             'title' => 'Graphic dice rolled many times',
             'cards' => $cards,
@@ -118,12 +118,11 @@ class CardController extends AbstractController
                 $session->set("cards", $cards);
                 $session->set("cardn", $cardn);
                 $this->addFlash("info", "$cardn");
-                $this->addFlash("warning", "You have $sum cards left.");
+
 
                 $session->set("color", $color);
-            } else {
-                $this->addFlash("warning", " You have $sum cards left pless click 'Start' to start agin.");
             }
+            $this->addFlash("warning", " You have $sum cards left please click 'Start' if you want to start again.");
         } elseif ($start) {
             $this->addFlash("warning", "You will start the game.");
             $sum = 0;
@@ -149,11 +148,11 @@ class CardController extends AbstractController
      *       methods={"GET","HEAD"}
      * )
      */
-    public function drawnum(int $numDraw): Response
+    public function drawnum(): Response
     {
         $shu = new CardG();
         $cards = $shu->shuffleCards();
-        
+
         $data = [
             'title' => 'Graphic dice rolled many times',
             'cards' => $cards,
@@ -184,8 +183,8 @@ class CardController extends AbstractController
         $sum = $session->get("sum") ?? 0;
         $colorarr =[];
         if ($draw) {
-                if (!empty($cards)) {
-                    for ($i = 1; $i <= $numDraw; $i++) {
+            if (!empty($cards)) {
+                for ($i = 1; $i <= $numDraw; $i++) {
                     $cardn = array_key_first($cards);
                     $color = reset($cards);
                     unset($cards[$cardn]);
@@ -194,14 +193,12 @@ class CardController extends AbstractController
                     $sum = count($newcards);
                     $session->set("sum", $sum);
                     $session->set("cards", $cards);
-                    $session->set("cardn", $cardn);   
-                    }
-                    $this->addFlash("warning", "You have $sum cards left.");
-                    $session->set("color", $color);
-                } else {
-                    $this->addFlash("warning", " You have $sum cards left pless click 'Start' to start agin. ");
+                    $session->set("cardn", $cardn);
                 }
-        
+
+                $session->set("color", $color);
+            }
+            $this->addFlash("warning", " You have $sum cards left please click 'Start' if you want to start again.");
         } elseif ($start) {
             $this->addFlash("warning", "You will start the game.");
             $sum = 0;
@@ -228,19 +225,17 @@ class CardController extends AbstractController
      * )
      */
     public function drawPl(
-        int $cards1,
-        int $players,
-        ): Response
-    {
+
+        ): Response {
         $shu = new CardG();
         $cards = $shu->shuffleCards();
-        
+
         $data = [
             'title' => 'Graphic dice rolled many times',
             'cards' => $cards,
             'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
             'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
-            
+
         ];
         return $this->render('card/deal.html.twig', $data);
     }
@@ -258,7 +253,7 @@ class CardController extends AbstractController
         SessionInterface $session
     ): Response {
         $shu = new CardG();
-        
+
         $cards = $session->get("cards");
         $draw  = $request->request->get('draw');
         $start = $request->request->get('start');
@@ -277,15 +272,12 @@ class CardController extends AbstractController
                     $sum = count($newcards);
                     $session->set("sum", $sum);
                     $session->set("cards", $cards);
-                    $session->set("cardn", $cardn); 
-                    
+                    $session->set("cardn", $cardn);
                 }
-                $this->addFlash("warning", "You have $sum cards left.");
+
                 $session->set("color", $color);
-            } else {
-                $this->addFlash("warning", " You have $sum cards left pless click 'Start' to start agin. ");
             }
-    
+            $this->addFlash("warning", " You have $sum cards left please click 'Start' if you want to start again.");
         } elseif ($start) {
             $this->addFlash("warning", "You will start the game.");
             $sum = 0;
@@ -298,7 +290,7 @@ class CardController extends AbstractController
             'colors' => $colorarr,
             'cards' => $cards,
             'cards1' => $cards1,
-            
+
             'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
             'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
 
@@ -314,7 +306,7 @@ class CardController extends AbstractController
         $die = new Cardj();
 
         $cards2 = $die->initEnglishDeck2Jokers();
-        print_r($cards2);
+
 
         $data = [
             'title' => 'Graphic dice rolled many times',

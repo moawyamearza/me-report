@@ -59,18 +59,12 @@ class DeckWith2Jokers
         '🃎' => '#d3000e',
         '🃟' => '#000000',
         '🂿' => '#d3000e',
-        
+
 
     );
 
-    public function dealCard()
-    {
-        return array_pop($this->arrCards);
-    }
-
     public function initEnglishDeck2Jokers()
     {
-        
         return $this->cards2;
     }
     public function shuffleCards()
@@ -91,6 +85,4 @@ class DeckWith2Jokers
 
         return $shuffledarray;
     }
-    
-
 }

@@ -12,10 +12,9 @@
     <body>
         <header>
             <div>
-            <image class="hero-image" src="{{ asset("img/rr.jpg") }}">
+            
                 <div class="hero-text">
-                    <h1 style="font-size:50px">MOAWYA MEARZA</h1>
-                    
+                    <p style="font-size:50px; font-family: Arial, Helvetica, sans-serif">MOAWYA MEARZA</p>
                 </div>
             </div>
         </header>
@@ -26,14 +25,15 @@
                     <a href="{{ path("about") }}">About</a>
                     <a href="{{ path("report") }}">Report</a>
                     <a href="{{ path("card") }}">Card</a>
+                    <a href="{{ path("game") }}">Game</a>
                 
             </nav>
         </div>
-
+        <div class = "main">
         {% block content %}
         Default content
         {% endblock %}
-
+        </div>
         <div class="footer-basic">
             <footer>
                 

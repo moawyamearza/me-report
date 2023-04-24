@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Dokumentation{% endblock %}
+
+{% block content %}
+<h1>Dbout</h1>
+
+
+{% apply markdown_to_html %}
+Här är en pseudokod som visar hur jag skulle kunna tänka mig att lösa delar av spelet 21:
+______
+
+1. Börja med att skapa en kortlek bestående av 52 kort.
+2. Skapa en funktion som slumpmässigt väljer ett kort från kortleken och returnerar det.
+3. Skapa en funktion som räknar värdet på en hand, där ess räknas som 1 .
+4. Skapa en funktion för att spela en spelrunda mellan spelaren och banken.
+5. Visa spelplanen där spelaren och banken har 0 kort.
+6. Låt spelaren ta ett kort och lägg till det på deras hand.
+7. Räkna ut värdet på spelarens hand och visa det på spelplanen.
+8. Ge spelaren möjlighet att ta ytterligare kort eller stanna.
+9. Om spelaren väljer att ta ytterligare kort, gå tillbaka till steg 6.
+10. Om spelaren väljer att stanna, fortsätt till bankens drag.
+11. Låt banken ta kort tills deras hand är värd minst 17.
+12. Räkna ut värdet på bankens hand och visa det på spelplanen.
+13. Jämför spelarens hand med bankens hand och avgör vem som vinner.
+14. Visa vinnaren på spelplanen och uppdatera deras poäng.
+15. Ge spelaren möjlighet att starta en ny spelomgång eller avsluta spelet.
+
+
+{% endapply %}
+<p><img src="../img/Schema.jpg" width="1300"></p>
+{% apply markdown_to_html %}
+Mian klass
+______
+Första klassen heter "CardGraphic" och har till syfte att hantera grafiska representationer av kort i ett kortspel. Den innehåller funktioner för att initiera en engelsk kortlek och att blanda korten.
+Andra Klassen GameService används för att hantera spellogiken för ett kortspel. Metoden draw används för att dra kort från en kortlek och uppdatera spelarens hand.
+{% endapply %}
+
+
+
+{% endblock %}
