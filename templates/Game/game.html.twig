@@ -33,13 +33,13 @@
     
     <div>
         {% if valuesum == 21 %}
-            <div>Player: You went bust!</div>
+            <div>Player: You win!</div>
             <div>Bank: {{ valuesumBanken }}</div>
         {% elseif valuesumBanken == 21 %}
             <div>Player: {{ valuesum }}</div>
-            <div>Bank: You went bust!</div>
+            <div>Bank: You win!</div>
         {% elseif valuesum < valuesumBanken %}
-            <div>Player: You went bust!</div>
+            <div>Player: You win!</div>
             <div>Bank: {{ valuesumBanken }}</div>
         {% elseif (valuesum == 0 and valuesumBanken == 0) or (valuesum < 21 and valuesumBanken <21) %}
             <div>Player: {{ valuesum }}</div>

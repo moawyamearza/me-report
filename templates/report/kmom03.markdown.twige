@@ -1,0 +1,14 @@
+Kmom03
+======
+Det kändes verkligen som att flödesdiagram och pseudokod hjälpte mig mycket med att strukturera min kod för kortspelsapplikationen. Det gav mig en tydlig plan att följa och gjorde det lättare att se helheten i programmet. Dessutom hjälpte det mig att hitta eventuella problem och felaktigheter innan jag började koda. Sammanfattningsvis var flödesdiagram och pseudokod ovärderliga verktyg i min problemlösning och jag tror att de kommer att fortsätta vara användbara i framtida projekt.
+Det var verkligen roligt att implementera kortspelet baserat på mina tidigare modelleringar med flödesdiagram och pseudokod. Jag är väldigt nöjd med min implementation och känner att jag har lärt mig mycket om objektorienterad programmering och hur man kan tillämpa det på riktiga projekt.
+
+Jag försökte att göra min kod så läsbar och enkel som möjligt genom att använda en tydlig struktur och namngivning av variabler och metoder. Men det finns alltid utrymme för förbättringar och jag skulle kunna tänka mig att göra koden ännu mer modulär och återanvändbar genom att använda designmönster.
+
+Jag tycker att mina klasser fungerar bra tillsammans och att applikationen som helhet är välstrukturerad. Men jag kan se att det finns utrymme för att lägga till mer funktionalitet och att göra det möjligt för spelaren att interagera mer med spelet, till exempel genom att välja hur många kort som ska dras eller att spela mot andra spelare.
+
+Överlag är jag mycket nöjd med min implementation och ser fram emot att fortsätta utforska objektorienterad programmering och att lära mig mer om designmönster och andra verktyg som kan hjälpa mig att skriva ännu bättre kod.
+
+Jag är positivt inställd till att koda i Symfony efter att ha arbetat med det ett tag i kursen. Ramverket ger mig verktyg för att organisera och strukturera min kod på ett sätt som är både effektivt och lätt att förstå. Dessutom erbjuder Symfony en mängd funktioner och komponenter som gör det möjligt för mig att utveckla robusta och skalbara applikationer. Jag ser fram emot att fortsätta lära mig mer om Symfony och dess möjligheter.
+
+Under detta kursmoment har Jag lärt mig mycket om att skapa en kodstruktur och att hålla koden organiserad genom att använda objektorienterad programmering (OOP) och designmönster.Jag har också fått en bra förståelse för hur man skapar och använder twig-templating i Symfony.
