@@ -1,0 +1,16 @@
+Kmom04
+======
+
+I detta kursmoment har jag utforskat hur man använder PHPUnit för att skriva tester för min kod. Det har varit en intressant erfarenhet som har hjälpt mig att förstå hur man kan kontrollera och säkra koden i sina projekt.
+
+I början var det svårt att komma igång med att skriva testfall och använda PHPUnit, speciellt eftersom jag inte hade mycket erfarenhet av det innan. Det tog tid och övning att förstå hur man skapar tester som verkligen fungerar. Men när jag väl fick mina tester att fungera, kände jag mig nöjd med resultatet.
+
+När det gäller kodtäckning, har jag strävat efter att täcka så mycket av min kod som möjligt med tester. Jag försökte nå målet att täcka över 90% av koden, vilket var svårt, men det är viktigt för att vara säker på att koden fungerar som den ska.
+
+När jag arbetade med att skapa tester, insåg jag att det är viktigt att skriva kod på ett sätt som gör det enkelt att testa. Det kallas "testbar kod". Jag lärde mig att undvika komplicerade saker och istället använda enklare tekniker som dependency injection, vilket hjälper till att göra koden mer testbar.
+
+Jag upptäckte också att när koden är enkel att testa, blir den oftast också lättare att förstå och underhålla. Det gör det mindre troligt att det gömmer sig fel i koden som kan vara svåra att upptäcka.
+
+För att sammanfatta har detta kursmoment gett mig en bättre förståelse för enhetstestning och hur man kan använda PHPUnit för att skriva tester. Jag har arbetat hårt för att förbättra min kod och har försökt att täcka så mycket av den som möjligt med tester. Jag har också lärt mig hur viktigt det är att skriva testbar kod. Jag ser fram emot att använda dessa färdigheter i framtida projekt.
+
+Min viktigaste lärdom, "TIL", från detta kursmoment är att det är viktigt att skriva testbar kod för att upprätthålla god kodkvalitet och göra koden mer pålitlig. Det är något jag kommer att ta med mig i mitt fortsatta arbete som utvecklare.

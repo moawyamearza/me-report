@@ -30,7 +30,7 @@ class CardController extends AbstractController
      */
     public function deck(): Response
     {
-        $die = new CardG();
+        $die = new CardJ();
 
         $cards = $die->initEnglishDeck();
 
@@ -51,10 +51,11 @@ class CardController extends AbstractController
      */
     public function shuffle(SessionInterface $session): Response
     {
-        $shu = new CardG();
+        $shu = new CardJ();
 
         $cards = $shu->shuffleCards();
         $session->set("cards", $cards);
+
 
         $data = [
             'title' => 'Graphic dice rolled many times',
@@ -76,7 +77,7 @@ class CardController extends AbstractController
      */
     public function draw(): Response
     {
-        $shu = new CardG();
+        $shu = new CardJ();
         $cards = $shu->shuffleCards();
 
         $data = [
@@ -100,7 +101,7 @@ class CardController extends AbstractController
         Request $request,
         SessionInterface $session
     ): Response {
-        $shu = new CardG();
+        $shu = new CardJ();
         $cards = $session->get("cards");
         $draw  = $request->request->get('draw');
         $start = $request->request->get('start');
@@ -150,7 +151,7 @@ class CardController extends AbstractController
      */
     public function drawnum(): Response
     {
-        $shu = new CardG();
+        $shu = new CardJ();
         $cards = $shu->shuffleCards();
 
         $data = [
@@ -174,7 +175,7 @@ class CardController extends AbstractController
         Request $request,
         SessionInterface $session
     ): Response {
-        $shu = new CardG();
+        $shu = new CardJ();
         $cards = $session->get("cards");
         $draw  = $request->request->get('draw');
         $start = $request->request->get('start');
@@ -227,7 +228,7 @@ class CardController extends AbstractController
     public function drawPl(
 
         ): Response {
-        $shu = new CardG();
+        $shu = new CardJ();
         $cards = $shu->shuffleCards();
 
         $data = [
@@ -252,7 +253,7 @@ class CardController extends AbstractController
         Request $request,
         SessionInterface $session
     ): Response {
-        $shu = new CardG();
+        $shu = new CardJ();
 
         $cards = $session->get("cards");
         $draw  = $request->request->get('draw');

@@ -1,5 +1,7 @@
 {
+    "name": "moawya/report",
     "type": "project",
+    "description": "A brief description of your package",
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -94,11 +96,19 @@
             "phpmd": "tools/phpmd/vendor/bin/phpmd src text phpmd.xml || true",
             "phpstan": "tools/phpstan/vendor/bin/phpstan analyse -l 9 src || true",
             "phpcpd": "tools/phpcpd/vendor/bin/phpcpd src || true",
+            "phpdoc": "tools/phpdoc/phpdoc",
             "lint": [
                 "@phpcpd",
                 "@phpmd",
                 "@phpstan"
-            ]
+            ],
+            "clean": "rm -rf build .phpunit.result.cache",
+            "clean-all": [
+                "@clean",
+                "rm -rf vendor composer.lock"
+            ],
+            "phpunit": "XDEBUG_MODE=coverage vendor/bin/phpunit"
+
     },
     "conflict": {
         "symfony/symfony": "*"
