@@ -78,19 +78,17 @@ class GameController extends AbstractController
             $session->set("valueSum", $valueSum);
         } elseif ($stop) {
             for ($i = 1; $i <= 100; $i++) {
-                
-                    $result = $gameService->draw($cardsBanken, $newBanken, $arrcardvalueBanken, $valueSumBanken);
-                    // access the returned variables
-                    $cardsBanken = $result['cards'];
-                    $newBanken = $result['new'];
-                    $valueSumBanken = $result['valueSum'];
-                    $arrcardvalueBanken = $result['arrcardvalue'];
-                    // Update session variables
-                    $session->set("cardsBanken", $cardsBanken);
-                    $session->set("newBanken", $newBanken);
-                    $session->set("arrcardvalueBanken", $arrcardvalueBanken);
-                    $session->set("valueSumBanken", $valueSumBanken);
-                
+                $result = $gameService->draw($cardsBanken, $newBanken, $arrcardvalueBanken, $valueSumBanken);
+                // access the returned variables
+                $cardsBanken = $result['cards'];
+                $newBanken = $result['new'];
+                $valueSumBanken = $result['valueSum'];
+                $arrcardvalueBanken = $result['arrcardvalue'];
+                // Update session variables
+                $session->set("cardsBanken", $cardsBanken);
+                $session->set("newBanken", $newBanken);
+                $session->set("arrcardvalueBanken", $arrcardvalueBanken);
+                $session->set("valueSumBanken", $valueSumBanken);
             }
         }
         $data = [

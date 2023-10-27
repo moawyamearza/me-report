@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Card;
+
 /**
  * Class CardGraphic
  *
@@ -9,9 +10,9 @@ namespace App\Card;
 
 class CardGraphic
 {
-/**
- * @var array An array representing the deck of cards with graphics, colors and value.
- */
+    /**
+     * @var array An array representing the deck of cards with graphics, colors and value.
+     */
     private $cards = array(
         '🂡' => array('#000000',"1"),
         '🂢' => array('#000000',"2"),
@@ -68,9 +69,9 @@ class CardGraphic
 
     );
 
-/**
- * @return array An array of cards with their corresponding colors.
- */
+    /**
+     * @return array An array of cards with their corresponding colors.
+     */
     public function initEnglishDeck()
     {
         $arrCards = array();
