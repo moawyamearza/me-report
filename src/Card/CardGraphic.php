@@ -11,7 +11,7 @@ namespace App\Card;
 class CardGraphic
 {
     /**
-     * @var array An array representing the deck of cards with graphics, colors and value.
+     * @var array<string, array{string, string}> An array representing the deck of cards with graphics, colors, and value.
      */
     private $cards = array(
         '🂡' => array('#000000',"1"),
@@ -70,7 +70,7 @@ class CardGraphic
     );
 
     /**
-     * @return array An array of cards with their corresponding colors.
+     * @return array<string, string> An array of cards with their corresponding colors.
      */
     public function initEnglishDeck()
     {
@@ -81,10 +81,9 @@ class CardGraphic
         return $arrCards;
     }
 
-/**
- *
- * @return array A shuffled deck of cards with graphics and colors.
- */
+    /**
+     * @return array<string, array{string, string}> A shuffled deck of cards with graphics and colors.
+     */
     public function shuffleCards()
     {
         $arrCards = array();
