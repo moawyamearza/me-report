@@ -6,6 +6,7 @@ use App\Card\CardGraphic as CardG;
 
 class GameService
 {
+    
     public function draw($cards, $new, $arrcardvalue, $valueSum)
     {
         if (!empty($cards) && $valueSum <= 21) {
