@@ -13,18 +13,21 @@ use App\Card\CardGraphic as CardG;
 
 class GameController extends AbstractController
 {
-    private $cardGraphic;
-    private $bankCardGraphic;
+    private bool $initialized = false;
 
-    public function __construct(CardG $cardGraphic, CardG $bankCardGraphic)
+    public function __construct()
     {
-        $this->cardGraphic = $cardGraphic;
-        $this->bankCardGraphic = $bankCardGraphic;
-        $this->new = [];
-        $this->newBanken = [];
-        $this->valueSum = 0;
-        $this->valueSumBanken = 0;
+        // Initialize cardGraphic and bankCardGraphic only once
+        $this->initializeCardGraphics();
+    }
 
+    private function initializeCardGraphics()
+    {
+        if (!$this->initialized) {
+            $this->cardGraphic = new CardG();
+            $this->bankCardGraphic = new CardG();
+            $this->initialized = true;
+        }
     }
     /**
     * @Route(
@@ -62,32 +65,49 @@ class GameController extends AbstractController
         $newround = $request->request->get('newround');
         $draw  = $request->request->get('draw');
         $stop = $request->request->get('stop');
+        $data = [
+            'new' => [],
+            'valuesum' => 0,
+            'newBanken' => [],
+            'valuesumBanken' => 0,
+            'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
+            'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
+        ];
         if ($newround) {
             $session->clear();
         }
         
         if ($draw) {
             $result = $this->cardGraphic->drawCards();
-            $this->new = $result['hand'];
-            $this->valueSum = $result['valueSum'];
-            foreach ($this->new as $card) {
-                echo ', Color: ' . $card->getColor() . '<br>';
+            $new = $result['hand'];
+            $valueSum = $result['valueSum'];
+            foreach ($new as $card) {
+                echo ', Color: ' . $card[2] . '<br>';
             }
+            $data = [
+                'new' => [],
+                'valuesum' => $valueSum,
+                'newBanken' => [],
+                'valuesumBanken' => 0,
+                'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
+                'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
+            ];
         } elseif ($stop) {
             for ($i = 1; $i <= 100; $i++) {
                 $bankResult = $this->bankCardGraphic->drawCards();
                 $this->newBanken = $bankResult['hand'];
                 $this->valueSumBanken = $bankResult['valueSum'];
             }
+            $data = [
+                'new' => [],
+                'valuesum' => 0,
+                'newBanken' => [],
+                'valuesumBanken' => 0,
+                'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
+                'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
+            ];
         }
-        $data = [
-            'new' => [],
-            'valuesum' => $this->valueSum,
-            'newBanken' => [],
-            'valuesumBanken' => $this->valueSumBanken,
-            'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
-            'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
-        ];
+        
         return $this->render('Game/game.html.twig', $data);
     }
      /**

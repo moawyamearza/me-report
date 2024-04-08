@@ -17,6 +17,7 @@ class CardGraphic
         // Initialize the deck of cards
         $this->initializeDeck();
         $this->drawnCards = [];
+        $this->sumvalue = 0;
     }
 
     /**
@@ -98,13 +99,11 @@ class CardGraphic
         }
 
         // Calculate the sum of card values
-        $valueSum = 0;
-        foreach ($this->drawnCards as $card) {
-            $valueSum += $card->getValue();
-        }
-
-        return ['hand' => $this->drawnCards, 'valueSum' => $valueSum];
+        
+        $this->sumvalue = array_sum(array_column($this->drawnCards, 1));
+        return ['hand' => $this->drawnCards, 'valueSum' =>$this->sumvalue];
     }
+
     /**
      * Shuffles the deck of cards.
      */
@@ -129,6 +128,7 @@ class Card
 {
     private $color;
     private $value;
+    private $form;
 
     public function __construct($color, $value ,$form)
     {
