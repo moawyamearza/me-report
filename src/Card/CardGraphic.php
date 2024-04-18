@@ -9,22 +9,19 @@ namespace App\Card;
  */
 class CardGraphic
 {
-    private $cards; // Array representing the deck of cards
-    private $drawnCards; // Array to store all drawn cards
-
+    private $cards;
+    
     public function __construct()
     {
         // Initialize the deck of cards
         $this->initializeDeck();
-        $this->drawnCards = [];
-        $this->sumvalue = 0;
     }
-
     /**
      * Initializes the deck of cards.
      */
     private function initializeDeck()
     {
+        
         // Define the cards with their graphics, colors, and values
         $this->cards = [
             '🂡' => ['#000000', "1", '🂡'],
@@ -84,24 +81,30 @@ class CardGraphic
 
     /**
      * Draws cards from the deck.
+     * 
+     * @param array $cards The deck of cards to draw from.
+     * @param array $drawnCards The array to store drawn cards.
+     * 
      * @return array<string, mixed> The updated state after drawing cards.
      */
-    public function drawCards()
+    public function drawCards($cards1 , $drawnCards)
     {
-        $this->shuffleDeck();
-        if (!empty($this->cards)) {
-            $cardKey = array_key_first($this->cards);
-            $card = $this->cards[$cardKey];
-            unset($this->cards[$cardKey]);
-
-            // Store the drawn card in the history
-            array_push($this->drawnCards, $card);
+        
+        if ($cards1 === null) {
+            $this->shuffleDeck();
+            $cards1 = $this->cards;
+        }
+        $sumValue = array_sum(array_column($drawnCards, 1));
+        if (!empty($cards1) && $sumValue < 21) {
+            $cardKey = array_key_first($cards1);
+            $card = $cards1[$cardKey];
+            unset($cards1[$cardKey]);
+            array_push($drawnCards, $card);
         }
 
-        // Calculate the sum of card values
-        
-        $this->sumvalue = array_sum(array_column($this->drawnCards, 1));
-        return ['hand' => $this->drawnCards, 'valueSum' =>$this->sumvalue];
+        $sumValue = array_sum(array_column($drawnCards, 1));
+
+        return ['hand' => $drawnCards, 'cards' => $cards1, 'sumValue' => $sumValue];
     }
 
     /**

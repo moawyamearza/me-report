@@ -8,27 +8,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use App\Card\GameService;
 use App\Card\CardGraphic as CardG;
 
 class GameController extends AbstractController
 {
-    private bool $initialized = false;
-
-    public function __construct()
-    {
-        // Initialize cardGraphic and bankCardGraphic only once
-        $this->initializeCardGraphics();
-    }
-
-    private function initializeCardGraphics()
-    {
-        if (!$this->initialized) {
-            $this->cardGraphic = new CardG();
-            $this->bankCardGraphic = new CardG();
-            $this->initialized = true;
-        }
-    }
     /**
     * @Route(
     *       "/Game",
@@ -60,54 +43,50 @@ class GameController extends AbstractController
     public function gamepross(
         Request $request,
         SessionInterface $session,
-        GameService $gameService
     ): Response {
         $newround = $request->request->get('newround');
         $draw  = $request->request->get('draw');
         $stop = $request->request->get('stop');
-        $data = [
-            'new' => [],
-            'valuesum' => 0,
-            'newBanken' => [],
-            'valuesumBanken' => 0,
-            'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
-            'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
-        ];
+        $cardGraphic = new CardG();
+        $drawnCards = $session->get('drawn_cards', []);
+        $cards = $session->get('cards', null);
+        $sumValue = $session->get('sum_value', 0);
+        $drawnCardsbsnk = $session->get('drawn_cardsbank', []);
+        $cardsbsnk = $session->get('cardsbank', null);
+        $sumValuebank = $session->get('sum_valuebank', 0);
+        $gamefinshed = False;
         if ($newround) {
             $session->clear();
         }
-        
         if ($draw) {
-            $result = $this->cardGraphic->drawCards();
-            $new = $result['hand'];
-            $valueSum = $result['valueSum'];
-            foreach ($new as $card) {
-                echo ', Color: ' . $card[2] . '<br>';
-            }
-            $data = [
-                'new' => [],
-                'valuesum' => $valueSum,
-                'newBanken' => [],
-                'valuesumBanken' => 0,
-                'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
-                'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
-            ];
+            $result = $cardGraphic->drawCards($cards,$drawnCards);
+            $drawnCards = $result['hand'];
+            $sumValue = $result['sumValue'];
+            $cards = $result['cards'];
+            $session->set('drawn_cards', $drawnCards);
+            $session->set('sum_value', $sumValue);
+            $session->set('cards', $cards);
         } elseif ($stop) {
             for ($i = 1; $i <= 100; $i++) {
-                $bankResult = $this->bankCardGraphic->drawCards();
-                $this->newBanken = $bankResult['hand'];
-                $this->valueSumBanken = $bankResult['valueSum'];
+                $resultbank = $cardGraphic->drawCards($cardsbank,$drawnCardsbsnk);
+                $drawnCardsbsnk = $result['hand'];
+                $sumValuebank = $result['sumValue'];
+                $cardsbank = $result['cards'];
+                $session->set('drawn_cardsbank', $drawnCardsbsnk);
+                $session->set('sum_valuebank', $sumValuebank);
+                $session->set('cardsbank', $cardsbank);
             }
-            $data = [
-                'new' => [],
-                'valuesum' => 0,
-                'newBanken' => [],
-                'valuesumBanken' => 0,
-                'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
-                'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
-            ];
+            $gamefinshed = True;
         }
-        
+        $data = [
+            'new' => $drawnCards,
+            'valuesum' => $sumValue,
+            'newbank' => $drawnCardsbsnk,
+            'valuesumBanken' => $sumValuebank,
+            'gamefinshed' => $gamefinshed,
+            'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
+            'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
+        ];
         return $this->render('Game/game.html.twig', $data);
     }
      /**

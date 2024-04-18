@@ -66,10 +66,11 @@ class CardController extends AbstractController
     /**
      * @Route("/card", name="card")
      */
-    public function card(): Response
+    public function card(SessionInterface $session): Response
     {
-        return $this->render('card/card.html.twig', $this->getCardData($this->get('session')));
+        return $this->render('card/card.html.twig', $this->getCardData($session));
     }
+
 
     /**
      * @Route("/card/deck", name="deck")
