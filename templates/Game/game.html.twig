@@ -10,7 +10,7 @@
         <h1>21 Card Game!</h1>
         <h2>Bank</h2>
         {% for card, data in newbank %}
-            <p class="info1" style="color: {{ data[0] }}">{{ data }}</p> 
+            <p class="info1" style="color: {{ data[0] }}">{{ data[2] }}</p> 
         {% endfor %}
         <h2>Player</h2>
         {% for card, data in new %} 
@@ -33,24 +33,28 @@
     
     <div>
         {% if valuesum == 21 %}
-            <div>Player: You win! Congratulations!</div>
+            <div>Player win! Congratulations!</div>
             <div>Bank: {{ valuesumBanken }}</div>
         {% elseif valuesumBanken == 21 %}
             <div>Player: {{ valuesum }}</div>
-            <div>Bank: Bank wins! Better luck next time.</div>
+            <div>Bank wins! Better luck next time.</div>
         {% elseif gamefinshed and valuesum < 21 and valuesumBanken < 21 %}
             {% if valuesum > valuesumBanken %}
-                <div>Player: You win! Congratulations!</div>
+                <div> You win! Congratulations!</div>
                 <div>Bank: {{ valuesumBanken }}</div>
             {% elseif valuesum < valuesumBanken %}
-                <div>Player: Bank wins! Better luck next time.</div>
+                <div>Bank wins! Better luck next time.</div>
                 <div>Bank: {{ valuesumBanken }}</div>
             {% endif %}
         {% elseif valuesum < 21 and valuesumBanken < 21 %}
             <div>Player: {{ valuesum }}</div>
             <div>Bank: {{ valuesumBanken }}</div>
-        {% else %}
-            <div>One of the players has exceeded 21. Game over.</div>
+        {% elseif valuesumBanken > 21 %}
+            <div>Banken has exceeded 21. Player wins.</div>
+            <div>Player: {{ valuesum }}</div>
+            <div>Bank: {{ valuesumBanken }}</div>
+        {% elseif valuesum > 21 %}
+            <div>Player has exceeded 21. Banken wins.</div>
             <div>Player: {{ valuesum }}</div>
             <div>Bank: {{ valuesumBanken }}</div>
         {% endif %}

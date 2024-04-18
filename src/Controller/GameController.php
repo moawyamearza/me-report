@@ -52,7 +52,7 @@ class GameController extends AbstractController
         $cards = $session->get('cards', null);
         $sumValue = $session->get('sum_value', 0);
         $drawnCardsbsnk = $session->get('drawn_cardsbank', []);
-        $cardsbsnk = $session->get('cardsbank', null);
+        $cardsbank = $session->get('cardsbank', null);
         $sumValuebank = $session->get('sum_valuebank', 0);
         $gamefinshed = False;
         if ($newround) {
@@ -69,9 +69,9 @@ class GameController extends AbstractController
         } elseif ($stop) {
             for ($i = 1; $i <= 100; $i++) {
                 $resultbank = $cardGraphic->drawCards($cardsbank,$drawnCardsbsnk);
-                $drawnCardsbsnk = $result['hand'];
-                $sumValuebank = $result['sumValue'];
-                $cardsbank = $result['cards'];
+                $drawnCardsbsnk = $resultbank['hand'];
+                $sumValuebank = $resultbank['sumValue'];
+                $cardsbank = $resultbank['cards'];
                 $session->set('drawn_cardsbank', $drawnCardsbsnk);
                 $session->set('sum_valuebank', $sumValuebank);
                 $session->set('cardsbank', $cardsbank);
