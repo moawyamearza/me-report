@@ -9,6 +9,7 @@ namespace App\Card;
  */
 class CardGraphic
 {
+    /** @var array<string, array<string>> */
     private $cards;
     
     public function __construct()
@@ -19,7 +20,7 @@ class CardGraphic
     /**
      * Initializes the deck of cards.
      */
-    private function initializeDeck()
+    private function initializeDeck(): void
     {
         
         // Define the cards with their graphics, colors, and values
@@ -79,11 +80,11 @@ class CardGraphic
         ];
     }
 
-    /**
+     /**
      * Draws cards from the deck.
      * 
-     * @param array $cards The deck of cards to draw from.
-     * @param array $drawnCards The array to store drawn cards.
+     * @param array<string, array<string>>|null $cards1 The deck of cards to draw from.
+     * @param array<array<string>> $drawnCards The array to store drawn cards.
      * 
      * @return array<string, mixed> The updated state after drawing cards.
      */
@@ -108,9 +109,36 @@ class CardGraphic
     }
 
     /**
+     * Draws cards from the deck.
+     * 
+     * @param array<string, array<string>>|null $cards1 The deck of cards to draw from.
+     * @param array<array<string>> $drawnCards The array to store drawn cards.
+     * 
+     * @return array<string, mixed> The updated state after drawing cards.
+     */
+    public function drawCardsbank($cards1 , $drawnCards)
+    {
+        
+        if ($cards1 === null) {
+            $this->shuffleDeck();
+            $cards1 = $this->cards;
+        }
+        $sumValue = array_sum(array_column($drawnCards, 1));
+        if (!empty($cards1) && $sumValue < 19) {
+            $cardKey = array_key_first($cards1);
+            $card = $cards1[$cardKey];
+            unset($cards1[$cardKey]);
+            array_push($drawnCards, $card);
+        }
+
+        $sumValue = array_sum(array_column($drawnCards, 1));
+
+        return ['hand' => $drawnCards, 'cards' => $cards1, 'sumValue' => $sumValue];
+    }
+    /**
      * Shuffles the deck of cards.
      */
-    private function shuffleDeck()
+    private function shuffleDeck(): void
     {
         $keys = array_keys($this->cards);
         shuffle($keys);
@@ -129,11 +157,17 @@ class CardGraphic
  */
 class Card
 {
-    private $color;
-    private $value;
-    private $form;
-
-    public function __construct($color, $value ,$form)
+    private string $color;
+    private string $value;
+    private string $form;
+    /**
+     * Constructs a new Card instance.
+     *
+     * @param string $color The color of the card.
+     * @param string $value The value of the card.
+     * @param string $form The form of the card.
+     */
+    public function __construct ($color, $value, $form)
     {
         $this->color = $color;
         $this->value = $value;

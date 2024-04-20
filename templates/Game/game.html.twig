@@ -22,10 +22,10 @@
         {% set draw_clicked = app.request.method == 'POST' and app.request.request.get('draw') is defined %}
         {% set stop_clicked = app.request.method == 'POST' and app.request.request.get('stop') is defined %}
 
-        {% if not draw_clicked or not stop_clicked or valuesum >= 21 or valuesumBanken >= 21 %}
+        {% if stop_clicked or not draw_clicked or not stop_clicked or valuesum >= 21 or valuesumBanken >= 21 %}
             <input class="button" type="submit" name="newround" value="New Round">
         {% endif %}
-        {% if valuesum < 21 and valuesumBanken < 21 %}
+        {% if not gamefinshed and valuesum < 21 and valuesumBanken < 21 %}
             <input class="button" type="submit" name="draw" value="Draw">
             <input class="button" type="submit" name="stop" value="Stop">
         {% endif %}
