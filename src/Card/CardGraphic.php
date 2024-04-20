@@ -11,7 +11,7 @@ class CardGraphic
 {
     /** @var array<string, array<string>> */
     private $cards;
-    
+
     public function __construct()
     {
         // Initialize the deck of cards
@@ -22,7 +22,6 @@ class CardGraphic
      */
     private function initializeDeck(): void
     {
-        
         // Define the cards with their graphics, colors, and values
         $this->cards = [
             '🂡' => ['#000000', "1", '🂡'],
@@ -82,15 +81,14 @@ class CardGraphic
 
      /**
      * Draws cards from the deck.
-     * 
+     *
      * @param array<string, array<string>>|null $cards1 The deck of cards to draw from.
      * @param array<array<string>> $drawnCards The array to store drawn cards.
-     * 
+     *
      * @return array<string, mixed> The updated state after drawing cards.
      */
-    public function drawCards($cards1 , $drawnCards)
+    public function drawCards($cards1, $drawnCards)
     {
-        
         if ($cards1 === null) {
             $this->shuffleDeck();
             $cards1 = $this->cards;
@@ -110,15 +108,14 @@ class CardGraphic
 
     /**
      * Draws cards from the deck.
-     * 
+     *
      * @param array<string, array<string>>|null $cards1 The deck of cards to draw from.
      * @param array<array<string>> $drawnCards The array to store drawn cards.
-     * 
+     *
      * @return array<string, mixed> The updated state after drawing cards.
      */
-    public function drawCardsbank($cards1 , $drawnCards)
+    public function drawCardsbank($cards1, $drawnCards)
     {
-        
         if ($cards1 === null) {
             $this->shuffleDeck();
             $cards1 = $this->cards;
@@ -167,7 +164,7 @@ class Card
      * @param string $value The value of the card.
      * @param string $form The form of the card.
      */
-    public function __construct ($color, $value, $form)
+    public function __construct($color, $value, $form)
     {
         $this->color = $color;
         $this->value = $value;

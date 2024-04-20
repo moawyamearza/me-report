@@ -57,9 +57,9 @@ class GameController extends AbstractController
         $drawnCardsbsnk = $session->get('drawn_cardsbank', []);
         $cardsbank = $session->get('cardsbank', null);
         $sumValuebank = $session->get('sum_valuebank', 0);
-        $gamefinshed = False;
+        $gamefinshed = false;
         if ($draw) {
-            $result = $cardGraphic->drawCards($cards,$drawnCards);
+            $result = $cardGraphic->drawCards($cards, $drawnCards);
             $drawnCards = $result['hand'];
             $sumValue = $result['sumValue'];
             $cards = $result['cards'];
@@ -68,7 +68,7 @@ class GameController extends AbstractController
             $session->set('cards', $cards);
         } elseif ($stop) {
             for ($i = 1; $i <= 100; $i++) {
-                $resultbank = $cardGraphic->drawCardsbank($cardsbank,$drawnCardsbsnk);
+                $resultbank = $cardGraphic->drawCardsbank($cardsbank, $drawnCardsbsnk);
                 $drawnCardsbsnk = $resultbank['hand'];
                 $sumValuebank = $resultbank['sumValue'];
                 $cardsbank = $resultbank['cards'];
@@ -76,7 +76,7 @@ class GameController extends AbstractController
                 $session->set('sum_valuebank', $sumValuebank);
                 $session->set('cardsbank', $cardsbank);
             }
-            $gamefinshed = True;
+            $gamefinshed = true;
         }
         $data = [
             'new' => $drawnCards,
