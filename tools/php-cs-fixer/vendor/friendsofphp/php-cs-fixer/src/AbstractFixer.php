@@ -76,17 +76,11 @@ abstract class AbstractFixer implements FixerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isRisky(): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         $nameParts = explode('\\', static::class);
@@ -95,22 +89,19 @@ abstract class AbstractFixer implements FixerInterface
         return Utils::camelCaseToUnderscore($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(\SplFileInfo $file): bool
     {
         return true;
     }
 
+    /**
+     * @param array<string, mixed> $configuration
+     */
     public function configure(array $configuration): void
     {
         if (!$this instanceof ConfigurableFixerInterface) {

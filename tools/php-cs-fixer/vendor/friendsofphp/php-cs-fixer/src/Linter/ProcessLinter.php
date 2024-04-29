@@ -84,7 +84,7 @@ final class ProcessLinter implements LinterInterface
      */
     public function __sleep(): array
     {
-        throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
+        throw new \BadMethodCallException('Cannot serialize '.self::class);
     }
 
     /**
@@ -95,28 +95,19 @@ final class ProcessLinter implements LinterInterface
      */
     public function __wakeup(): void
     {
-        throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
+        throw new \BadMethodCallException('Cannot unserialize '.self::class);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isAsync(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function lintFile(string $path): LintingResultInterface
     {
         return new ProcessLintingResult($this->createProcessForFile($path), $path);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function lintSource(string $source): LintingResultInterface
     {
         return new ProcessLintingResult($this->createProcessForSource($source), $this->temporaryFile);

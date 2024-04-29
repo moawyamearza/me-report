@@ -23,7 +23,7 @@ use PhpCsFixer\Cache\NullCacheManager;
 use PhpCsFixer\Cache\Signature;
 use PhpCsFixer\ConfigInterface;
 use PhpCsFixer\ConfigurationException\InvalidConfigurationException;
-use PhpCsFixer\Console\Command\HelpCommand;
+use PhpCsFixer\Console\Output\Progress\ProgressOutputType;
 use PhpCsFixer\Console\Report\FixReport\ReporterFactory;
 use PhpCsFixer\Console\Report\FixReport\ReporterInterface;
 use PhpCsFixer\Differ\DifferInterface;
@@ -42,7 +42,6 @@ use PhpCsFixer\ToolInfoInterface;
 use PhpCsFixer\Utils;
 use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixer\WordMatcher;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 
@@ -106,6 +105,9 @@ final class ConfigurationResolver
 
     private ToolInfoInterface $toolInfo;
 
+    /**
+     * @var array<string, mixed>
+     */
     private array $options = [
         'allow-risky' => null,
         'cache-file' => null,
@@ -179,6 +181,9 @@ final class ConfigurationResolver
      */
     private $fixerFactory;
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function __construct(
         ConfigInterface $config,
         array $options,
@@ -281,11 +286,7 @@ final class ConfigurationResolver
     public function getDiffer(): DifferInterface
     {
         if (null === $this->differ) {
-            if ($this->options['diff']) {
-                $this->differ = new UnifiedDiffer();
-            } else {
-                $this->differ = new NullDiffer();
-            }
+            $this->differ = (true === $this->options['diff']) ? new UnifiedDiffer() : new NullDiffer();
         }
 
         return $this->differ;
@@ -303,9 +304,10 @@ final class ConfigurationResolver
                 $absolutePath = $filesystem->isAbsolutePath($path)
                     ? $path
                     : $this->cwd.\DIRECTORY_SEPARATOR.$path;
+                $absolutePath = \dirname($absolutePath);
             }
 
-            $this->directory = new Directory(\dirname($absolutePath));
+            $this->directory = new Directory($absolutePath);
         }
 
         return $this->directory;
@@ -325,19 +327,15 @@ final class ConfigurationResolver
 
             if (false === $this->getRiskyAllowed()) {
                 $riskyFixers = array_map(
-                    static function (FixerInterface $fixer): string {
-                        return $fixer->getName();
-                    },
+                    static fn (FixerInterface $fixer): string => $fixer->getName(),
                     array_filter(
                         $this->fixers,
-                        static function (FixerInterface $fixer): bool {
-                            return $fixer->isRisky();
-                        }
+                        static fn (FixerInterface $fixer): bool => $fixer->isRisky()
                     )
                 );
 
                 if (\count($riskyFixers) > 0) {
-                    throw new InvalidConfigurationException(sprintf('The rules contain risky fixers ("%s"), but they are not allowed to run. Perhaps you forget to use --allow-risky=yes option?', implode('", "', $riskyFixers)));
+                    throw new InvalidConfigurationException(sprintf('The rules contain risky fixers (%s), but they are not allowed to run. Perhaps you forget to use --allow-risky=yes option?', Utils::naturalLanguageJoin($riskyFixers)));
                 }
             }
         }
@@ -400,26 +398,27 @@ final class ConfigurationResolver
     /**
      * @throws InvalidConfigurationException
      */
-    public function getProgress(): string
+    public function getProgressType(): string
     {
         if (null === $this->progress) {
-            if (OutputInterface::VERBOSITY_VERBOSE <= $this->options['verbosity'] && 'txt' === $this->getFormat()) {
+            if ('txt' === $this->getFormat()) {
                 $progressType = $this->options['show-progress'];
-                $progressTypes = ['none', 'dots'];
 
                 if (null === $progressType) {
-                    $progressType = $this->getConfig()->getHideProgress() ? 'none' : 'dots';
-                } elseif (!\in_array($progressType, $progressTypes, true)) {
+                    $progressType = $this->getConfig()->getHideProgress()
+                        ? ProgressOutputType::NONE
+                        : ProgressOutputType::BAR;
+                } elseif (!\in_array($progressType, ProgressOutputType::all(), true)) {
                     throw new InvalidConfigurationException(sprintf(
-                        'The progress type "%s" is not defined, supported are "%s".',
+                        'The progress type "%s" is not defined, supported are %s.',
                         $progressType,
-                        implode('", "', $progressTypes)
+                        Utils::naturalLanguageJoin(ProgressOutputType::all())
                     ));
                 }
 
                 $this->progress = $progressType;
             } else {
-                $this->progress = 'none';
+                $this->progress = ProgressOutputType::NONE;
             }
         }
 
@@ -440,7 +439,7 @@ final class ConfigurationResolver
                 $formats = $reporterFactory->getFormats();
                 sort($formats);
 
-                throw new InvalidConfigurationException(sprintf('The format "%s" is not defined, supported are "%s".', $format, implode('", "', $formats)));
+                throw new InvalidConfigurationException(sprintf('The format "%s" is not defined, supported are %s.', $format, Utils::naturalLanguageJoin($formats)));
             }
         }
 
@@ -462,6 +461,8 @@ final class ConfigurationResolver
 
     /**
      * Returns rules.
+     *
+     * @return array<string, array<string, mixed>|bool>
      */
     public function getRules(): array
     {
@@ -478,7 +479,7 @@ final class ConfigurationResolver
             }
         }
 
-        $this->usingCache = $this->usingCache && ($this->toolInfo->isInstalledAsPhar() || $this->toolInfo->isInstalledByComposer());
+        $this->usingCache = $this->usingCache && $this->isCachingAllowedForRuntime();
 
         return $this->usingCache;
     }
@@ -529,7 +530,7 @@ final class ConfigurationResolver
     /**
      * Compute file candidates for config file.
      *
-     * @return string[]
+     * @return list<string>
      */
     private function computeConfigFiles(): array
     {
@@ -629,7 +630,7 @@ final class ConfigurationResolver
     }
 
     /**
-     * Compute rules.
+     * @return array<string, mixed>
      */
     private function parseRules(): array
     {
@@ -672,6 +673,8 @@ final class ConfigurationResolver
     }
 
     /**
+     * @param array<string, mixed> $rules
+     *
      * @throws InvalidConfigurationException
      */
     private function validateRules(array $rules): void
@@ -693,20 +696,13 @@ final class ConfigurationResolver
 
         $ruleSet = new RuleSet($ruleSet);
 
-        /** @var string[] $configuredFixers */
         $configuredFixers = array_keys($ruleSet->getRules());
 
         $fixers = $this->createFixerFactory()->getFixers();
 
-        /** @var string[] $availableFixers */
-        $availableFixers = array_map(static function (FixerInterface $fixer): string {
-            return $fixer->getName();
-        }, $fixers);
+        $availableFixers = array_map(static fn (FixerInterface $fixer): string => $fixer->getName(), $fixers);
 
-        $unknownFixers = array_diff(
-            $configuredFixers,
-            $availableFixers
-        );
+        $unknownFixers = array_diff($configuredFixers, $availableFixers);
 
         if (\count($unknownFixers) > 0) {
             $renamedRules = [
@@ -772,7 +768,7 @@ final class ConfigurationResolver
                         '"%s" is renamed (did you mean "%s"?%s), ',
                         $unknownFixer,
                         $renamedRules[$unknownFixer]['new_name'],
-                        isset($renamedRules[$unknownFixer]['config']) ? ' (note: use configuration "'.HelpCommand::toString($renamedRules[$unknownFixer]['config']).'")' : ''
+                        isset($renamedRules[$unknownFixer]['config']) ? ' (note: use configuration "'.Utils::toString($renamedRules[$unknownFixer]['config']).'")' : ''
                     );
                 } else { // Go to normal matcher if it is not a renamed rule
                     $matcher = new WordMatcher($availableFixers);
@@ -788,7 +784,7 @@ final class ConfigurationResolver
             $message = substr($message, 0, -2).'.';
 
             if ($hasOldRule) {
-                $message .= "\nFor more info about updating see: https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/v3.0.0/UPGRADE-v3.md#renamed-ruless.";
+                $message .= "\nFor more info about updating see: https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/v3.0.0/UPGRADE-v3.md#renamed-ruless.";
             }
 
             throw new InvalidConfigurationException($message);
@@ -828,20 +824,18 @@ final class ConfigurationResolver
             true
         )) {
             throw new InvalidConfigurationException(sprintf(
-                'The path-mode "%s" is not defined, supported are "%s".',
+                'The path-mode "%s" is not defined, supported are %s.',
                 $this->options['path-mode'],
-                implode('", "', $modes)
+                Utils::naturalLanguageJoin($modes)
             ));
         }
 
         $isIntersectionPathMode = self::PATH_MODE_INTERSECTION === $this->options['path-mode'];
 
-        $paths = array_filter(array_map(
-            static function (string $path) {
-                return realpath($path);
-            },
+        $paths = array_map(
+            static fn (string $path) => realpath($path),
             $this->getPath()
-        ));
+        );
 
         if (0 === \count($paths)) {
             if ($isIntersectionPathMode) {
@@ -954,5 +948,12 @@ final class ConfigurationResolver
         }
 
         return $config;
+    }
+
+    private function isCachingAllowedForRuntime(): bool
+    {
+        return $this->toolInfo->isInstalledAsPhar()
+            || $this->toolInfo->isInstalledByComposer()
+            || $this->toolInfo->isRunInsideDocker();
     }
 }

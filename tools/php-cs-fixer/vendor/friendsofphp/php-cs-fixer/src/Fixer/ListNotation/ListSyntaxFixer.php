@@ -35,9 +35,7 @@ final class ListSyntaxFixer extends AbstractFixer implements ConfigurableFixerIn
     private $candidateTokenKind;
 
     /**
-     * Use 'syntax' => 'long'|'short'.
-     *
-     * @param array<string, string> $configuration
+     * @param array{syntax: 'long'|'short'} $configuration
      *
      * @throws InvalidFixerConfigurationException
      */
@@ -48,9 +46,6 @@ final class ListSyntaxFixer extends AbstractFixer implements ConfigurableFixerIn
         $this->candidateTokenKind = 'long' === $this->configuration['syntax'] ? CT::T_DESTRUCTURING_SQUARE_BRACE_OPEN : T_LIST;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -74,20 +69,14 @@ final class ListSyntaxFixer extends AbstractFixer implements ConfigurableFixerIn
      */
     public function getPriority(): int
     {
-        return 1;
+        return 2;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound($this->candidateTokenKind);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; 0 <= $index; --$index) {
@@ -101,13 +90,10 @@ final class ListSyntaxFixer extends AbstractFixer implements ConfigurableFixerIn
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('syntax', 'Whether to use the `long` or `short` `list` syntax.'))
+            (new FixerOptionBuilder('syntax', 'Whether to use the `long` or `short` syntax for array destructuring.'))
                 ->setAllowedValues(['long', 'short'])
                 ->setDefault('short')
                 ->getOption(),

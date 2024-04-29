@@ -75,11 +75,11 @@ class CardController extends AbstractController
     /**
      * @Route("/card/deck", name="deck")
      */
-    public function deck(): Response
+    public function deck(Request $request): Response
     {
-        $data = $this->getCardData($this->get('session'));
+        $data = $this->getCardData($request->getSession());
         $data['title'] = 'Graphic dice rolled many times';
-        $data['cards'] = (new CardJ())->initEnglishDeck();
+        $data['cards'] = (new CardJ())->initEnglishDeck2Jokers();
 
         return $this->render('card/deck.html.twig', $data);
     }
@@ -98,9 +98,9 @@ class CardController extends AbstractController
     /**
      * @Route("/card/deck/draw", name="draw")
      */
-    public function draw(): Response
+    public function draw(Request $request): Response
     {
-        $data = $this->getCardData($this->get('session'));
+        $data = $this->getCardData($request->getSession());
 
         return $this->render('card/draw.html.twig', $data);
     }

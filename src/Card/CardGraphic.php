@@ -79,14 +79,14 @@ class CardGraphic
         ];
     }
 
-     /**
-     * Draws cards from the deck.
-     *
-     * @param array<string, array<string>>|null $cards1 The deck of cards to draw from.
-     * @param array<array<string>> $drawnCards The array to store drawn cards.
-     *
-     * @return array<string, mixed> The updated state after drawing cards.
-     */
+    /**
+    * Draws cards from the deck.
+    *
+    * @param array<string, array<string>>|null $cards1 The deck of cards to draw from.
+    * @param array<array<string>> $drawnCards The array to store drawn cards.
+    *
+    * @return array<string, mixed> The updated state after drawing cards.
+    */
     public function drawCards($cards1, $drawnCards)
     {
         if ($cards1 === null) {

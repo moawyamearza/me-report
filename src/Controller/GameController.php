@@ -33,7 +33,7 @@ class GameController extends AbstractController
         }
         return $this->render('Game/landdningssida.html.twig');
     }
-      /**
+    /**
      * @Route(
      *       "/Game/start",
      *       name="Startgame",
@@ -42,7 +42,7 @@ class GameController extends AbstractController
      */
     public function gamepross(
         Request $request,
-        SessionInterface $session,
+        SessionInterface $session
     ): Response {
         $newround = $request->request->get('newround');
         $draw  = $request->request->get('draw');
@@ -89,13 +89,13 @@ class GameController extends AbstractController
         ];
         return $this->render('Game/game.html.twig', $data);
     }
-     /**
-     * @Route(
-     *       "/Game/doc",
-     *       name="doc",
-     *       methods={"GET","HEAD","post"}
-     * )
-     */
+    /**
+    * @Route(
+    *       "/Game/doc",
+    *       name="doc",
+    *       methods={"GET","HEAD","post"}
+    * )
+    */
     public function doc(
         Request $request,
         SessionInterface $session
@@ -104,22 +104,19 @@ class GameController extends AbstractController
     }
     /**
      * @Route(
-     *       "Game/api/game",
-     *       name="api",
+     *       "/api/game",
+     *       name="api_game",
      *       methods={"GET","HEAD","post"}
      * )
      */
-    public function getGameState(
-        SessionInterface $session
-    ): Response {
+    public function getGameStateJson(Request $request, SessionInterface $session): JsonResponse
+    {
         $gameState = [
-            'new' => $session->get("new") ?? array(),
-            'newBanken' => $session->get("newBanken") ?? array(),
-            'valueSum' => $session->get("valueSum")?? 0,
-            'valueSumBanken' => $session->get("valueSumBanken")?? 0,
-            'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
-            'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
+            'new' => $session->get("drawn_cards") ?? array(),
+            'newBanken' => $session->get("drawn_cardsbank") ?? array(),
+            'valueSum' => $session->get("sum_value") ?? 0,
+            'valueSumBanken' => $session->get("sum_valuebank") ?? 0,
         ];
-        return $this->json($gameState);
+        return new JsonResponse($gameState);
     }
 }

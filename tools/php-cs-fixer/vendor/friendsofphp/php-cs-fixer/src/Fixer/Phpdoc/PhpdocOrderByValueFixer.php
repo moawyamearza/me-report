@@ -35,13 +35,10 @@ use Symfony\Component\OptionsResolver\Options;
  */
 final class PhpdocOrderByValueFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Order phpdoc tags by value.',
+            'Order PHPDoc tags by value.',
             [
                 new CodeSample(
                     '<?php
@@ -83,17 +80,11 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         return -10;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAllTokenKindsFound([T_CLASS, T_DOC_COMMENT]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         if ([] === $this->configuration['annotations']) {
@@ -110,7 +101,7 @@ final class MyTest extends \PHPUnit_Framework_TestCase
 
                 if (
                     !$tokens[$index]->isGivenKind(T_DOC_COMMENT)
-                    || 0 === Preg::match($findPattern, $tokens[$index]->getContent())
+                    || !Preg::match($findPattern, $tokens[$index]->getContent())
                 ) {
                     continue;
                 }
@@ -122,7 +113,7 @@ final class MyTest extends \PHPUnit_Framework_TestCase
 
                 if (\in_array($type, ['property', 'property-read', 'property-write'], true)) {
                     $replacePattern = sprintf(
-                        '/(?s)\*\s*@%s\s+(?P<optionalTypes>.+\s+)?\$(?P<comparableContent>[^\s]+).*/',
+                        '/(?s)\*\s*@%s\s+(?P<optionalTypes>.+\s+)?\$(?P<comparableContent>\S+).*/',
                         $type
                     );
 
@@ -203,7 +194,7 @@ final class MyTest extends \PHPUnit_Framework_TestCase
                 ->setAllowedValues([
                     new AllowedValueSubset($allowedValues),
                 ])
-                ->setNormalizer(static function (Options $options, $value): array {
+                ->setNormalizer(static function (Options $options, array $value): array {
                     $normalized = [];
 
                     foreach ($value as $annotation) {

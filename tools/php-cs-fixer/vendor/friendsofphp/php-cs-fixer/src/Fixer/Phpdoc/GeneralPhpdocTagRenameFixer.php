@@ -30,9 +30,6 @@ use Symfony\Component\OptionsResolver\Options;
 
 final class GeneralPhpdocTagRenameFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -77,17 +74,11 @@ final class GeneralPhpdocTagRenameFixer extends AbstractFixer implements Configu
         return 11;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
@@ -101,7 +92,7 @@ final class GeneralPhpdocTagRenameFixer extends AbstractFixer implements Configu
                 ->getOption(),
             (new FixerOptionBuilder('replacements', 'A map of tags to replace.'))
                 ->setAllowedTypes(['array'])
-                ->setNormalizer(static function (Options $options, $value): array {
+                ->setNormalizer(static function (Options $options, array $value): array {
                     $normalizedValue = [];
 
                     foreach ($value as $from => $to) {
@@ -116,7 +107,7 @@ final class GeneralPhpdocTagRenameFixer extends AbstractFixer implements Configu
                             ));
                         }
 
-                        if (1 !== Preg::match('#^\S+$#', $to) || str_contains($to, '*/')) {
+                        if (!Preg::match('#^\S+$#', $to) || str_contains($to, '*/')) {
                             throw new InvalidOptionsException(sprintf(
                                 'Tag "%s" cannot be replaced by invalid tag "%s".',
                                 $from,
@@ -127,7 +118,7 @@ final class GeneralPhpdocTagRenameFixer extends AbstractFixer implements Configu
                         $from = trim($from);
                         $to = trim($to);
 
-                        if (!$options['case_sensitive']) {
+                        if (false === $options['case_sensitive']) {
                             $lowercaseFrom = strtolower($from);
 
                             if (isset($normalizedValue[$lowercaseFrom]) && $normalizedValue[$lowercaseFrom] !== $to) {
@@ -165,9 +156,6 @@ final class GeneralPhpdocTagRenameFixer extends AbstractFixer implements Configu
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         if (0 === \count($this->configuration['replacements'])) {
@@ -175,11 +163,9 @@ final class GeneralPhpdocTagRenameFixer extends AbstractFixer implements Configu
         }
 
         if (true === $this->configuration['fix_annotation']) {
-            if ($this->configuration['fix_inline']) {
-                $regex = '/"[^"]*"(*SKIP)(*FAIL)|\b(?<=@)(%s)\b/';
-            } else {
-                $regex = '/"[^"]*"(*SKIP)(*FAIL)|(?<!\{@)(?<=@)(%s)(?!\})/';
-            }
+            $regex = true === $this->configuration['fix_inline']
+                ? '/"[^"]*"(*SKIP)(*FAIL)|\b(?<=@)(%s)\b/'
+                : '/"[^"]*"(*SKIP)(*FAIL)|(?<!\{@)(?<=@)(%s)(?!\})/';
         } else {
             $regex = '/(?<={@)(%s)(?=[ \t}])/';
         }

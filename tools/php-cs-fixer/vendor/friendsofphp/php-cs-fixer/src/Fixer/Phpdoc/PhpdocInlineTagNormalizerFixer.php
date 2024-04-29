@@ -28,17 +28,11 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpdocInlineTagNormalizerFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -66,9 +60,6 @@ final class PhpdocInlineTagNormalizerFixer extends AbstractFixer implements Conf
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         if (0 === \count($this->configuration['tags'])) {
@@ -85,10 +76,8 @@ final class PhpdocInlineTagNormalizerFixer extends AbstractFixer implements Conf
             // of text and closing bracket and between the tag and inline comment.
             $content = Preg::replaceCallback(
                 sprintf(
-                    '#(?:@{+|{+\h*@)\h*(%s)s?([^}]*)(?:}+)#i',
-                    implode('|', array_map(static function (string $tag): string {
-                        return preg_quote($tag, '/');
-                    }, $this->configuration['tags']))
+                    '#(?:@{+|{+\h*@)\h*(%s)\b([^}]*)(?:}+)#i',
+                    implode('|', array_map(static fn (string $tag): string => preg_quote($tag, '/'), $this->configuration['tags']))
                 ),
                 static function (array $matches): string {
                     $doc = trim($matches[2]);
@@ -106,13 +95,10 @@ final class PhpdocInlineTagNormalizerFixer extends AbstractFixer implements Conf
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('tags', 'The list of tags to normalize'))
+            (new FixerOptionBuilder('tags', 'The list of tags to normalize.'))
                 ->setAllowedTypes(['array'])
                 ->setDefault(['example', 'id', 'internal', 'inheritdoc', 'inheritdocs', 'link', 'source', 'toc', 'tutorial'])
                 ->getOption(),

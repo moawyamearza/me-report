@@ -34,7 +34,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 final class PhpUnitStrictFixer extends AbstractPhpUnitFixer implements ConfigurableFixerInterface
 {
     /**
-     * @var array<string,string>
+     * @var array<string, string>
      */
     private static array $assertionMap = [
         'assertAttributeEquals' => 'assertAttributeSame',
@@ -43,9 +43,6 @@ final class PhpUnitStrictFixer extends AbstractPhpUnitFixer implements Configura
         'assertNotEquals' => 'assertNotSame',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -86,17 +83,11 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isRisky(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
@@ -132,9 +123,6 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([

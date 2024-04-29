@@ -31,9 +31,6 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class ReturnTypeDeclarationFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -58,24 +55,18 @@ final class ReturnTypeDeclarationFixer extends AbstractFixer implements Configur
     /**
      * {@inheritdoc}
      *
-     * Must run after PhpdocToReturnTypeFixer, VoidReturnFixer.
+     * Must run after PhpUnitDataProviderReturnTypeFixer, PhpdocToReturnTypeFixer, VoidReturnFixer.
      */
     public function getPriority(): int
     {
         return -17;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(CT::T_TYPE_COLON);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $oneSpaceBefore = 'one' === $this->configuration['space_before'];
@@ -116,9 +107,6 @@ final class ReturnTypeDeclarationFixer extends AbstractFixer implements Configur
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([

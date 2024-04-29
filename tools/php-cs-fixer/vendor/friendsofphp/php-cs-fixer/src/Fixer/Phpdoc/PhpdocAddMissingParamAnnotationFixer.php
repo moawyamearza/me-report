@@ -27,6 +27,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -35,9 +36,6 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class PhpdocAddMissingParamAnnotationFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -90,17 +88,11 @@ function f9(string $foo, $bar, $baz) {}
         return 10;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
@@ -137,7 +129,6 @@ function f9(string $foo, $bar, $baz) {}
                 T_PROTECTED,
                 T_PUBLIC,
                 T_STATIC,
-                T_VAR,
             ])) {
                 $index = $tokens->getNextMeaningfulToken($index);
             }
@@ -169,7 +160,7 @@ function f9(string $foo, $bar, $baz) {}
             foreach ($doc->getAnnotationsOfType('param') as $annotation) {
                 $pregMatched = Preg::match('/^[^$]+(\$\w+).*$/s', $annotation->getContent(), $matches);
 
-                if (1 === $pregMatched) {
+                if ($pregMatched) {
                     unset($arguments[$matches[1]]);
                 }
 
@@ -189,7 +180,7 @@ function f9(string $foo, $bar, $baz) {}
             $newLines = [];
 
             foreach ($arguments as $argument) {
-                $type = $argument['type'] ?: 'mixed';
+                $type = '' !== $argument['type'] ? $argument['type'] : 'mixed';
 
                 if (!str_starts_with($type, '?') && 'null' === strtolower($argument['default'])) {
                     $type = 'null|'.$type;
@@ -206,7 +197,7 @@ function f9(string $foo, $bar, $baz) {}
 
             array_splice(
                 $lines,
-                $lastParamLine ? $lastParamLine + 1 : $linesCount - 1,
+                $lastParamLine > 0 ? $lastParamLine + 1 : $linesCount - 1,
                 0,
                 $newLines
             );
@@ -215,9 +206,6 @@ function f9(string $foo, $bar, $baz) {}
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
@@ -228,6 +216,9 @@ function f9(string $foo, $bar, $baz) {}
         ]);
     }
 
+    /**
+     * @return array{default: string, name: string, type: string}
+     */
     private function prepareArgumentInformation(Tokens $tokens, int $start, int $end): array
     {
         $info = [
@@ -241,7 +232,16 @@ function f9(string $foo, $bar, $baz) {}
         for ($index = $start; $index <= $end; ++$index) {
             $token = $tokens[$index];
 
-            if ($token->isComment() || $token->isWhitespace()) {
+            if (
+                $token->isComment()
+                || $token->isWhitespace()
+                || $token->isGivenKind([
+                    CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE,
+                    CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED,
+                    CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC,
+                ])
+                || (\defined('T_READONLY') && $token->isGivenKind(T_READONLY))
+            ) {
                 continue;
             }
 

@@ -35,9 +35,6 @@ final class ProcessLintingResult implements LintingResultInterface
         $this->path = $path;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function check(): void
     {
         if (!$this->isSuccessful()) {
@@ -48,7 +45,8 @@ final class ProcessLintingResult implements LintingResultInterface
 
     private function getProcessErrorMessage(): string
     {
-        $output = strtok(ltrim($this->process->getErrorOutput() ?: $this->process->getOutput()), "\n");
+        $errorOutput = $this->process->getErrorOutput();
+        $output = strtok(ltrim('' !== $errorOutput ? $errorOutput : $this->process->getOutput()), "\n");
 
         if (false === $output) {
             return 'Fatal error: Unable to lint file.';

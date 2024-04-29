@@ -6,24 +6,79 @@ Search.appendIndex(
             "summary": "Class\u0020CardGraphic",
             "url": "classes/App-Card-CardGraphic.html"
         },                {
-            "fqsen": "\\App\\Card\\CardGraphic\u003A\u003AinitEnglishDeck\u0028\u0029",
-            "name": "initEnglishDeck",
+            "fqsen": "\\App\\Card\\CardGraphic\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
             "summary": "",
-            "url": "classes/App-Card-CardGraphic.html#method_initEnglishDeck"
+            "url": "classes/App-Card-CardGraphic.html#method___construct"
         },                {
-            "fqsen": "\\App\\Card\\CardGraphic\u003A\u003AshuffleCards\u0028\u0029",
-            "name": "shuffleCards",
-            "summary": "",
-            "url": "classes/App-Card-CardGraphic.html#method_shuffleCards"
+            "fqsen": "\\App\\Card\\CardGraphic\u003A\u003AinitializeDeck\u0028\u0029",
+            "name": "initializeDeck",
+            "summary": "Initializes\u0020the\u0020deck\u0020of\u0020cards.",
+            "url": "classes/App-Card-CardGraphic.html#method_initializeDeck"
+        },                {
+            "fqsen": "\\App\\Card\\CardGraphic\u003A\u003AdrawCards\u0028\u0029",
+            "name": "drawCards",
+            "summary": "Draws\u0020cards\u0020from\u0020the\u0020deck.",
+            "url": "classes/App-Card-CardGraphic.html#method_drawCards"
+        },                {
+            "fqsen": "\\App\\Card\\CardGraphic\u003A\u003AdrawCardsbank\u0028\u0029",
+            "name": "drawCardsbank",
+            "summary": "Draws\u0020cards\u0020from\u0020the\u0020deck.",
+            "url": "classes/App-Card-CardGraphic.html#method_drawCardsbank"
+        },                {
+            "fqsen": "\\App\\Card\\CardGraphic\u003A\u003AshuffleDeck\u0028\u0029",
+            "name": "shuffleDeck",
+            "summary": "Shuffles\u0020the\u0020deck\u0020of\u0020cards.",
+            "url": "classes/App-Card-CardGraphic.html#method_shuffleDeck"
         },                {
             "fqsen": "\\App\\Card\\CardGraphic\u003A\u003A\u0024cards",
             "name": "cards",
             "summary": "",
             "url": "classes/App-Card-CardGraphic.html#property_cards"
         },                {
+            "fqsen": "\\App\\Card\\Card",
+            "name": "Card",
+            "summary": "Class\u0020Card",
+            "url": "classes/App-Card-Card.html"
+        },                {
+            "fqsen": "\\App\\Card\\Card\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructs\u0020a\u0020new\u0020Card\u0020instance.",
+            "url": "classes/App-Card-Card.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Card\\Card\u003A\u003AgetColor\u0028\u0029",
+            "name": "getColor",
+            "summary": "Get\u0020the\u0020color\u0020of\u0020the\u0020card.",
+            "url": "classes/App-Card-Card.html#method_getColor"
+        },                {
+            "fqsen": "\\App\\Card\\Card\u003A\u003AgetValue\u0028\u0029",
+            "name": "getValue",
+            "summary": "Get\u0020the\u0020value\u0020of\u0020the\u0020card.",
+            "url": "classes/App-Card-Card.html#method_getValue"
+        },                {
+            "fqsen": "\\App\\Card\\Card\u003A\u003Agetform\u0028\u0029",
+            "name": "getform",
+            "summary": "Get\u0020the\u0020form\u0020of\u0020the\u0020card.",
+            "url": "classes/App-Card-Card.html#method_getform"
+        },                {
+            "fqsen": "\\App\\Card\\Card\u003A\u003A\u0024color",
+            "name": "color",
+            "summary": "",
+            "url": "classes/App-Card-Card.html#property_color"
+        },                {
+            "fqsen": "\\App\\Card\\Card\u003A\u003A\u0024value",
+            "name": "value",
+            "summary": "",
+            "url": "classes/App-Card-Card.html#property_value"
+        },                {
+            "fqsen": "\\App\\Card\\Card\u003A\u003A\u0024form",
+            "name": "form",
+            "summary": "",
+            "url": "classes/App-Card-Card.html#property_form"
+        },                {
             "fqsen": "\\App\\Card\\DeckWith2Jokers",
             "name": "DeckWith2Jokers",
-            "summary": "",
+            "summary": "Class\u0020DeckWith2Jokers",
             "url": "classes/App-Card-DeckWith2Jokers.html"
         },                {
             "fqsen": "\\App\\Card\\DeckWith2Jokers\u003A\u003AinitEnglishDeck2Jokers\u0028\u0029",
@@ -41,20 +96,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Card-DeckWith2Jokers.html#property_cards2"
         },                {
-            "fqsen": "\\App\\Card\\GameService",
-            "name": "GameService",
-            "summary": "",
-            "url": "classes/App-Card-GameService.html"
-        },                {
-            "fqsen": "\\App\\Card\\GameService\u003A\u003Adraw\u0028\u0029",
-            "name": "draw",
-            "summary": "",
-            "url": "classes/App-Card-GameService.html#method_draw"
-        },                {
             "fqsen": "\\App\\Controller\\CardController",
             "name": "CardController",
             "summary": "",
             "url": "classes/App-Controller-CardController.html"
+        },                {
+            "fqsen": "\\App\\Controller\\CardController\u003A\u003AgetCardData\u0028\u0029",
+            "name": "getCardData",
+            "summary": "",
+            "url": "classes/App-Controller-CardController.html#method_getCardData"
+        },                {
+            "fqsen": "\\App\\Controller\\CardController\u003A\u003AdrawCards\u0028\u0029",
+            "name": "drawCards",
+            "summary": "",
+            "url": "classes/App-Controller-CardController.html#method_drawCards"
         },                {
             "fqsen": "\\App\\Controller\\CardController\u003A\u003Acard\u0028\u0029",
             "name": "card",
@@ -126,10 +181,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-GameController.html#method_doc"
         },                {
-            "fqsen": "\\App\\Controller\\GameController\u003A\u003AgetGameState\u0028\u0029",
-            "name": "getGameState",
+            "fqsen": "\\App\\Controller\\GameController\u003A\u003AgetGameStateJson\u0028\u0029",
+            "name": "getGameStateJson",
             "summary": "",
-            "url": "classes/App-Controller-GameController.html#method_getGameState"
+            "url": "classes/App-Controller-GameController.html#method_getGameStateJson"
         },                {
             "fqsen": "\\App\\Controller\\ReportController",
             "name": "ReportController",

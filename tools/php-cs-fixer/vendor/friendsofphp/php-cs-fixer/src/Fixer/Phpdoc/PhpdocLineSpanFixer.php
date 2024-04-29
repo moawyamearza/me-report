@@ -35,9 +35,6 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  */
 final class PhpdocLineSpanFixer extends AbstractFixer implements WhitespacesAwareFixerInterface, ConfigurableFixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -63,29 +60,23 @@ final class PhpdocLineSpanFixer extends AbstractFixer implements WhitespacesAwar
         return 7;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('const', 'Whether const blocks should be single or multi line'))
+            (new FixerOptionBuilder('const', 'Whether const blocks should be single or multi line.'))
                 ->setAllowedValues(['single', 'multi', null])
                 ->setDefault('multi')
                 ->getOption(),
-            (new FixerOptionBuilder('property', 'Whether property doc blocks should be single or multi line'))
+            (new FixerOptionBuilder('property', 'Whether property doc blocks should be single or multi line.'))
                 ->setAllowedValues(['single', 'multi', null])
                 ->setDefault('multi')
                 ->getOption(),
-            (new FixerOptionBuilder('method', 'Whether method doc blocks should be single or multi line'))
+            (new FixerOptionBuilder('method', 'Whether method doc blocks should be single or multi line.'))
                 ->setAllowedValues(['single', 'multi', null])
                 ->setDefault('multi')
                 ->getOption(),

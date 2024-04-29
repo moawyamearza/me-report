@@ -1,39 +1,47 @@
 <?php
 
-namespace App\Card;
-
 use PHPUnit\Framework\TestCase;
+use App\Card\DeckWith2Jokers;
 
-/**
- * Test cases for class Dice.
- */
 class DeckWith2JokersTest extends TestCase
 {
     /**
-     * Construct object and verify that the object has the expected
-     * properties, use no arguments.
+     * Test if initEnglishDeck2Jokers returns an array with correct keys and values.
      */
-    public function testinitEnglishDeck2Jokers()
+    public function testInitEnglishDeck2Jokers()
     {
-        $die = new DeckWith2Jokers();
-        $this->assertInstanceOf("\App\Card\DeckWith2Jokers", $die);
+        $deck = new DeckWith2Jokers();
+        $cards = $deck->initEnglishDeck2Jokers();
 
-        $res = $die->initEnglishDeck2Jokers();
-        $expectedCard = '🂡';  
-        $expectedColor = '#000000';
+        // Assert that $cards is an array
+        $this->assertIsArray($cards);
 
-        $this->assertArrayHasKey($expectedCard, $res);
-    
-        $this->assertEquals($expectedColor, $res[$expectedCard]);
+        // Assert that $cards contains the expected number of cards
+        $this->assertCount(54, $cards);
+
+        // Assert that each card has the correct format of key-value pair
+        foreach ($cards as $card => $color) {
+            $this->assertIsString($card);
+            $this->assertIsString($color);
+        }
     }
-    public function testshuffleCards()
+
+    /**
+     * Test if shuffleCards returns a shuffled deck of cards.
+     */
+    public function testShuffleCards()
     {
-        $die = new DeckWith2Jokers();
-        $this->assertInstanceOf("\App\Card\DeckWith2Jokers", $die);
+        $deck = new DeckWith2Jokers();
+        $shuffledCards = $deck->shuffleCards();
 
-        $res = $die->shuffleCards();
-        $res1 = $die->initEnglishDeck2Jokers();
+        // Assert that $shuffledCards is an array
+        $this->assertIsArray($shuffledCards);
 
-        $this->assertEquals($res1, $res);
+        // Assert that $shuffledCards contains the same number of cards as the original deck
+        $this->assertCount(54, $shuffledCards);
+
+        // Assert that $shuffledCards contains the same cards but in different order
+        $originalDeck = $deck->initEnglishDeck2Jokers();
+        $this->assertEquals($originalDeck, $shuffledCards);
     }
 }

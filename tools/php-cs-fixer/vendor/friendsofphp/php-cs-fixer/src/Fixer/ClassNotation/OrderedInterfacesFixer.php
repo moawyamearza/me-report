@@ -51,7 +51,7 @@ final class OrderedInterfacesFixer extends AbstractFixer implements Configurable
     /**
      * Array of supported directions in configuration.
      *
-     * @var string[]
+     * @var list<string>
      */
     private const SUPPORTED_DIRECTION_OPTIONS = [
         self::DIRECTION_ASCEND,
@@ -61,16 +61,13 @@ final class OrderedInterfacesFixer extends AbstractFixer implements Configurable
     /**
      * Array of supported orders in configuration.
      *
-     * @var string[]
+     * @var list<string>
      */
     private const SUPPORTED_ORDER_OPTIONS = [
         self::ORDER_ALPHA,
         self::ORDER_LENGTH,
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -94,32 +91,39 @@ final class OrderedInterfacesFixer extends AbstractFixer implements Configurable
                         self::OPTION_DIRECTION => self::DIRECTION_DESCEND,
                     ]
                 ),
+                new CodeSample(
+                    "<?php\n\nfinal class ExampleA implements IgnorecaseB, IgNoReCaSeA, IgnoreCaseC {}\n\ninterface ExampleB extends IgnorecaseB, IgNoReCaSeA, IgnoreCaseC {}\n",
+                    [
+                        self::OPTION_ORDER => self::ORDER_ALPHA,
+                    ]
+                ),
+                new CodeSample(
+                    "<?php\n\nfinal class ExampleA implements Casesensitivea, CaseSensitiveA, CasesensitiveA {}\n\ninterface ExampleB extends Casesensitivea, CaseSensitiveA, CasesensitiveA {}\n",
+                    [
+                        self::OPTION_ORDER => self::ORDER_ALPHA,
+                        'case_sensitive' => true,
+                    ]
+                ),
             ],
-            null,
-            "Risky for `implements` when specifying both an interface and its parent interface, because PHP doesn't break on `parent, child` but does on `child, parent`."
         );
     }
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after FullyQualifiedStrictTypesFixer.
      */
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_IMPLEMENTS)
             || $tokens->isAllTokenKindsFound([T_INTERFACE, T_EXTENDS]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isRisky(): bool
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
@@ -138,7 +142,7 @@ final class OrderedInterfacesFixer extends AbstractFixer implements Configurable
             }
 
             $implementsStart = $index + 1;
-            $implementsEnd = $tokens->getPrevNonWhitespace($tokens->getNextTokenOfKind($implementsStart, ['{']));
+            $implementsEnd = $tokens->getPrevMeaningfulToken($tokens->getNextTokenOfKind($implementsStart, ['{']));
 
             $interfaces = $this->getInterfaces($tokens, $implementsStart, $implementsEnd);
 
@@ -172,7 +176,11 @@ final class OrderedInterfacesFixer extends AbstractFixer implements Configurable
             usort($interfaces, function (array $first, array $second): int {
                 $score = self::ORDER_LENGTH === $this->configuration[self::OPTION_ORDER]
                     ? \strlen($first['normalized']) - \strlen($second['normalized'])
-                    : strcasecmp($first['normalized'], $second['normalized']);
+                    : (
+                        true === $this->configuration['case_sensitive']
+                        ? $first['normalized'] <=> $second['normalized']
+                        : strcasecmp($first['normalized'], $second['normalized'])
+                    );
 
                 if (self::DIRECTION_DESCEND === $this->configuration[self::OPTION_DIRECTION]) {
                     $score *= -1;
@@ -205,23 +213,27 @@ final class OrderedInterfacesFixer extends AbstractFixer implements Configurable
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder(self::OPTION_ORDER, 'How the interfaces should be ordered'))
+            (new FixerOptionBuilder(self::OPTION_ORDER, 'How the interfaces should be ordered.'))
                 ->setAllowedValues(self::SUPPORTED_ORDER_OPTIONS)
                 ->setDefault(self::ORDER_ALPHA)
                 ->getOption(),
-            (new FixerOptionBuilder(self::OPTION_DIRECTION, 'Which direction the interfaces should be ordered'))
+            (new FixerOptionBuilder(self::OPTION_DIRECTION, 'Which direction the interfaces should be ordered.'))
                 ->setAllowedValues(self::SUPPORTED_DIRECTION_OPTIONS)
                 ->setDefault(self::DIRECTION_ASCEND)
+                ->getOption(),
+            (new FixerOptionBuilder('case_sensitive', 'Whether the sorting should be case sensitive.'))
+                ->setAllowedTypes(['bool'])
+                ->setDefault(false)
                 ->getOption(),
         ]);
     }
 
+    /**
+     * @return array<int, list<Token>>
+     */
     private function getInterfaces(Tokens $tokens, int $implementsStart, int $implementsEnd): array
     {
         $interfaces = [];

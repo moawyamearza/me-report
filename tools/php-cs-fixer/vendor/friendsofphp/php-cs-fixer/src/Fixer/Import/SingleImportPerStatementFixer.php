@@ -36,9 +36,6 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  */
 final class SingleImportPerStatementFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -73,28 +70,21 @@ use Space\Models\ {
         return 1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_USE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
-        $fixGroups = $this->configuration['group_to_single_imports'];
 
         foreach (array_reverse($tokensAnalyzer->getImportUseIndexes()) as $index) {
             $endIndex = $tokens->getNextTokenOfKind($index, [';', [T_CLOSE_TAG]]);
             $groupClose = $tokens->getPrevMeaningfulToken($endIndex);
 
             if ($tokens[$groupClose]->isGivenKind(CT::T_GROUP_IMPORT_BRACE_CLOSE)) {
-                if ($fixGroups) {
+                if (true === $this->configuration['group_to_single_imports']) {
                     $this->fixGroupUse($tokens, $index, $endIndex);
                 }
             } else {
@@ -103,9 +93,6 @@ use Space\Models\ {
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
@@ -116,6 +103,9 @@ use Space\Models\ {
         ]);
     }
 
+    /**
+     * @return array{string, ?int, int, string}
+     */
     private function getGroupDeclaration(Tokens $tokens, int $index): array
     {
         $groupPrefix = '';
@@ -156,7 +146,7 @@ use Space\Models\ {
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      */
     private function getGroupStatements(Tokens $tokens, string $groupPrefix, int $groupOpenIndex, int $groupCloseIndex, string $comment): array
     {

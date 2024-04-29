@@ -29,9 +29,6 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class GroupImportFixer extends AbstractFixer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -44,17 +41,11 @@ final class GroupImportFixer extends AbstractFixer
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_USE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $useWithSameNamespaces = $this->getSameNamespaces($tokens);
@@ -81,15 +72,11 @@ final class GroupImportFixer extends AbstractFixer
         }
 
         $allNamespaceAndType = array_map(
-            function (NamespaceUseAnalysis $useDeclaration): string {
-                return $this->getNamespaceNameWithSlash($useDeclaration).$useDeclaration->getType();
-            },
+            fn (NamespaceUseAnalysis $useDeclaration): string => $this->getNamespaceNameWithSlash($useDeclaration).$useDeclaration->getType(),
             $useDeclarations
         );
 
-        $sameNamespaces = array_filter(array_count_values($allNamespaceAndType), static function (int $count): bool {
-            return $count > 1;
-        });
+        $sameNamespaces = array_filter(array_count_values($allNamespaceAndType), static fn (int $count): bool => $count > 1);
         $sameNamespaces = array_keys($sameNamespaces);
 
         $sameNamespaceAnalysis = array_filter($useDeclarations, function (NamespaceUseAnalysis $useDeclaration) use ($sameNamespaces): bool {
@@ -102,7 +89,9 @@ final class GroupImportFixer extends AbstractFixer
             $namespaceA = $this->getNamespaceNameWithSlash($a);
             $namespaceB = $this->getNamespaceNameWithSlash($b);
 
-            return \strlen($namespaceA) - \strlen($namespaceB) ?: strcmp($a->getFullName(), $b->getFullName());
+            $namespaceDifference = \strlen($namespaceA) <=> \strlen($namespaceB);
+
+            return 0 !== $namespaceDifference ? $namespaceDifference : $a->getFullName() <=> $b->getFullName();
         });
 
         return $sameNamespaceAnalysis;
@@ -154,7 +143,7 @@ final class GroupImportFixer extends AbstractFixer
                     $tokens,
                     $insertIndex,
                     $useDeclaration,
-                    $this->getNamespaceNameWithSlash($currentUseDeclaration)
+                    rtrim($this->getNamespaceNameWithSlash($currentUseDeclaration), '\\')
                 );
             } else {
                 $newTokens = [
@@ -208,7 +197,7 @@ final class GroupImportFixer extends AbstractFixer
 
         $tokens->insertAt($insertIndex, $newTokens);
 
-        return \count($newTokens) + 1;
+        return \count($newTokens);
     }
 
     /**
@@ -236,7 +225,7 @@ final class GroupImportFixer extends AbstractFixer
             $newTokens[] = new Token([T_WHITESPACE, ' ']);
         }
 
-        $namespaceParts = array_filter(explode('\\', $currentNamespace));
+        $namespaceParts = explode('\\', $currentNamespace);
 
         foreach ($namespaceParts as $part) {
             $newTokens[] = new Token([T_STRING, $part]);
@@ -252,15 +241,14 @@ final class GroupImportFixer extends AbstractFixer
         $insertIndex += $newTokensCount;
 
         if ($useDeclaration->isAliased()) {
-            $inserted = $this->insertToGroupUseWithAlias($tokens, $insertIndex + 1, $useDeclaration);
+            $inserted = $this->insertToGroupUseWithAlias($tokens, $insertIndex + 1, $useDeclaration) + 1;
             $insertedTokens += $inserted;
             $insertIndex += $inserted;
         }
 
         $tokens->insertAt($insertIndex, new Token([T_STRING, $useDeclaration->getShortName()]));
-        ++$insertedTokens;
 
-        return $insertedTokens;
+        return ++$insertedTokens;
     }
 
     /**

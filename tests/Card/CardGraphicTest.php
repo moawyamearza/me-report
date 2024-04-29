@@ -1,38 +1,69 @@
 <?php
 
-namespace App\Card;
+namespace Tests\Unit\Card;
 
 use PHPUnit\Framework\TestCase;
+use App\Card\CardGraphic;
+use App\Card\Card;
 
-/**
- * Test cases for class Dice.
- */
 class CardGraphicTest extends TestCase
 {
-    /**
-     * Construct object and verify that the object has the expected
-     * properties, use no arguments.
-     */
-    public function testInitEnglishDeck()
+    /** @var CardGraphic */
+    private $cardGraphic;
+    private $card;
+
+    protected function setUp(): void
     {
-        $die = new CardGraphic();
-        $this->assertInstanceOf("\App\Card\CardGraphic", $die);
+        parent::setUp();
+        $this->cardGraphic = new CardGraphic();
+        $this->card = new Card('red', '10', 'heart');
 
-        $res = $die->initEnglishDeck();
-        $expectedCard = '🂡';  
-        $expectedColor = '#000000';
-
-        $this->assertArrayHasKey($expectedCard, $res);
-    
-        $this->assertEquals($expectedColor, $res[$expectedCard]);
     }
-    public function testshuffleCards()
+
+        public function testDrawPlayerCards()
     {
-        $die = new CardGraphic();
-        $this->assertInstanceOf("\App\Card\CardGraphic", $die);
+        $drawnCards = [];
+        $initialState = $this->cardGraphic->drawCards($drawnCards, []);
 
-        $res = $die->shuffleCards();
-        $this->assertNotEquals($die->initEnglishDeck(), $res);
+        $this->assertIsArray($initialState);
+        $this->assertArrayHasKey('hand', $initialState);
+        $this->assertArrayHasKey('cards', $initialState);
+        $this->assertArrayHasKey('sumValue', $initialState);
+    }
 
+    public function testDrawCards(): void
+    {
+        $initialDeck = $this->cardGraphic->drawCards(null, []);
+        $this->assertCount(51, $initialDeck['cards']); // One card is drawn
+
+        $drawnCards = [];
+        $updatedState = $this->cardGraphic->drawCards($initialDeck['cards'], $drawnCards);
+        $this->assertLessThan(21, $updatedState['sumValue']);
+
+    }
+
+    public function testDrawCardsbank(): void
+    {
+        $initialDeck = $this->cardGraphic->drawCardsbank(null, []);
+        $this->assertCount(51, $initialDeck['cards']); // One card is drawn
+
+        $drawnCards = [];
+        $updatedState = $this->cardGraphic->drawCardsbank($initialDeck['cards'], $drawnCards);
+        $this->assertLessThan(19, $updatedState['sumValue']);
+    }
+
+    public function testGetColor(): void
+    {
+        $this->assertSame('red', $this->card->getColor());
+    }
+
+    public function testGetValue(): void
+    {
+        $this->assertSame('10', $this->card->getValue());
+    }
+
+    public function testGetForm(): void
+    {
+        $this->assertSame('heart', $this->card->getForm());
     }
 }

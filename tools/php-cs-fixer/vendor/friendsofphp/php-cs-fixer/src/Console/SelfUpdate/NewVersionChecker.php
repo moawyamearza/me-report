@@ -38,9 +38,6 @@ final class NewVersionChecker implements NewVersionCheckerInterface
         $this->versionParser = new VersionParser();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLatestVersion(): string
     {
         $this->retrieveAvailableVersions();
@@ -48,9 +45,6 @@ final class NewVersionChecker implements NewVersionCheckerInterface
         return $this->availableVersions[0];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLatestVersionOfMajor(int $majorVersion): ?string
     {
         $this->retrieveAvailableVersions();
@@ -66,9 +60,6 @@ final class NewVersionChecker implements NewVersionCheckerInterface
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function compareVersions(string $versionA, string $versionB): int
     {
         $versionA = $this->versionParser->normalize($versionA);
@@ -91,9 +82,7 @@ final class NewVersionChecker implements NewVersionCheckerInterface
             return;
         }
 
-        foreach ($this->githubClient->getTags() as $tag) {
-            $version = $tag['name'];
-
+        foreach ($this->githubClient->getTags() as $version) {
             try {
                 $this->versionParser->normalize($version);
 

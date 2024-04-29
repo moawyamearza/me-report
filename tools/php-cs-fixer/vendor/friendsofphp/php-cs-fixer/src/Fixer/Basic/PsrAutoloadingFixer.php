@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Basic;
 
 use PhpCsFixer\AbstractFixer;
+use PhpCsFixer\DocBlock\TypeExpression;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
@@ -37,9 +38,6 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  */
 final class PsrAutoloadingFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -66,9 +64,6 @@ class InvalidName {}
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(array $configuration): void
     {
         parent::configure($configuration);
@@ -84,17 +79,11 @@ class InvalidName {}
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound(Token::getClassyTokenKinds());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isRisky(): bool
     {
         return true;
@@ -102,15 +91,14 @@ class InvalidName {}
 
     /**
      * {@inheritdoc}
+     *
+     * Must run before SelfAccessorFixer.
      */
     public function getPriority(): int
     {
         return -10;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(\SplFileInfo $file): bool
     {
         if ($file instanceof StdinFileInfo) {
@@ -121,7 +109,7 @@ class InvalidName {}
             // ignore file with extension other than php
             ('php' !== $file->getExtension())
             // ignore file with name that cannot be a class name
-            || 0 === Preg::match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $file->getBasename('.php'))
+            || !Preg::match('/^'.TypeExpression::REGEX_IDENTIFIER.'$/', $file->getBasename('.php'))
         ) {
             return false;
         }
@@ -142,9 +130,6 @@ class InvalidName {}
         return !Preg::match('{[/\\\\](stub|fixture)s?[/\\\\]}i', $file->getRealPath());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
@@ -155,9 +140,6 @@ class InvalidName {}
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $tokenAnalyzer = new TokensAnalyzer($tokens);

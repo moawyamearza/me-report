@@ -22,8 +22,6 @@ use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\FixerDefinition\VersionSpecification;
-use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
@@ -49,17 +47,11 @@ final class FunctionDeclarationFixer extends AbstractFixer implements Configurab
 
     private string $singleLineWhitespaceOptions = " \t";
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_FUNCTION, T_FN]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -88,12 +80,11 @@ $f = function () {};
 ',
                     ['closure_function_spacing' => self::SPACING_NONE]
                 ),
-                new VersionSpecificCodeSample(
+                new CodeSample(
                     '<?php
 $f = fn () => null;
 ',
-                    new VersionSpecification(70400),
-                    ['closure_function_spacing' => self::SPACING_NONE]
+                    ['closure_fn_spacing' => self::SPACING_NONE]
                 ),
             ]
         );
@@ -103,16 +94,13 @@ $f = fn () => null;
      * {@inheritdoc}
      *
      * Must run before MethodArgumentSpaceFixer.
-     * Must run after SingleSpaceAfterConstructFixer.
+     * Must run after SingleSpaceAfterConstructFixer, SingleSpaceAroundConstructFixer, UseArrowFunctionsFixer.
      */
     public function getPriority(): int
     {
         return 31;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
@@ -195,7 +183,9 @@ $f = fn () => null;
                 $tokens->clearAt($startParenthesisIndex - 1);
             }
 
-            if ($isLambda && self::SPACING_NONE === $this->configuration['closure_function_spacing']) {
+            $option = $token->isGivenKind(T_FN) ? 'closure_fn_spacing' : 'closure_function_spacing';
+
+            if ($isLambda && self::SPACING_NONE === $this->configuration[$option]) {
                 // optionally remove whitespace after T_FUNCTION of a closure
                 // eg: `function () {}` => `function() {}`
                 if ($tokens[$index + 1]->isWhitespace()) {
@@ -219,14 +209,15 @@ $f = fn () => null;
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('closure_function_spacing', 'Spacing to use before open parenthesis for closures.'))
                 ->setDefault(self::SPACING_ONE)
+                ->setAllowedValues(self::SUPPORTED_SPACINGS)
+                ->getOption(),
+            (new FixerOptionBuilder('closure_fn_spacing', 'Spacing to use before open parenthesis for short arrow functions.'))
+                ->setDefault(self::SPACING_ONE) // @TODO change to SPACING_NONE on next major 4.0
                 ->setAllowedValues(self::SUPPORTED_SPACINGS)
                 ->getOption(),
             (new FixerOptionBuilder('trailing_comma_single_line', 'Whether trailing commas are allowed in single line signatures.'))

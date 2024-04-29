@@ -96,7 +96,7 @@
             "phpmd": "tools/phpmd/vendor/bin/phpmd src text phpmd.xml || true",
             "phpstan": "tools/phpstan/vendor/bin/phpstan analyse -l 9 src || true",
             "phpcpd": "tools/phpcpd/vendor/bin/phpcpd src || true",
-            "phpdoc": "tools/phpdoc/phpdoc",
+            "phpdoc": " tools/phpdoc/phpdoc --config=tools/phpdoc/phpdoc.xml",
             "lint": [
                 "@phpcpd",
                 "@phpmd",

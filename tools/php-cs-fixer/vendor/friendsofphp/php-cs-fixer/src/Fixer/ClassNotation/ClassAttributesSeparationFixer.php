@@ -30,12 +30,21 @@ use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
+use PhpCsFixer\Utils;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 /**
  * Make sure there is one blank line above and below class elements.
  *
  * The exception is when an element is the first or last item in a 'classy'.
+ *
+ * @phpstan-type _Class array{
+ *      index: int,
+ *      open: int,
+ *      close: int,
+ *      elements: non-empty-list<_Element>
+ *  }
+ * @phpstan-type _Element array{token: Token, type: string, index: int, start?: int, end?: int}
  */
 final class ClassAttributesSeparationFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
 {
@@ -56,9 +65,6 @@ final class ClassAttributesSeparationFixer extends AbstractFixer implements Conf
      */
     private array $classElementTypes = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(array $configuration): void
     {
         parent::configure($configuration);
@@ -70,9 +76,6 @@ final class ClassAttributesSeparationFixer extends AbstractFixer implements Conf
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -146,7 +149,7 @@ class Sample
     public $e;
 }
 ',
-                    new VersionSpecification(80000),
+                    new VersionSpecification(8_00_00),
                     ['elements' => ['property' => self::SPACING_ONLY_IF_META]]
                 ),
             ]
@@ -164,17 +167,11 @@ class Sample
         return 55;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound(Token::getClassyTokenKinds());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($this->getElementsByClass($tokens) as $class) {
@@ -198,9 +195,6 @@ class Sample
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
@@ -213,8 +207,8 @@ class Sample
                         if (!\in_array($type, $supportedTypes, true)) {
                             throw new InvalidOptionsException(
                                 sprintf(
-                                    'Unexpected element type, expected any of "%s", got "%s".',
-                                    implode('", "', $supportedTypes),
+                                    'Unexpected element type, expected any of %s, got "%s".',
+                                    Utils::naturalLanguageJoin($supportedTypes),
                                     \gettype($type).'#'.$type
                                 )
                             );
@@ -225,9 +219,9 @@ class Sample
                         if (!\in_array($spacing, $supportedSpacings, true)) {
                             throw new InvalidOptionsException(
                                 sprintf(
-                                    'Unexpected spacing for element type "%s", expected any of "%s", got "%s".',
+                                    'Unexpected spacing for element type "%s", expected any of %s, got "%s".',
                                     $spacing,
-                                    implode('", "', $supportedSpacings),
+                                    Utils::naturalLanguageJoin($supportedSpacings),
                                     \is_object($spacing) ? \get_class($spacing) : (null === $spacing ? 'null' : \gettype($spacing).'#'.$spacing)
                                 )
                             );
@@ -252,6 +246,8 @@ class Sample
      *
      * Deals with comments, PHPDocs and spaces above the element with respect to the position of the
      * element within the class, interface or trait.
+     *
+     * @param _Class $class
      */
     private function fixSpaceAboveClassElement(Tokens $tokens, array $class, int $elementIndex): void
     {
@@ -322,6 +318,9 @@ class Sample
         $this->correctLineBreaks($tokens, $nonWhiteAbove, $element['start'], $this->determineRequiredLineCount($tokens, $class, $elementIndex));
     }
 
+    /**
+     * @param _Class $class
+     */
     private function determineRequiredLineCount(Tokens $tokens, array $class, int $elementIndex): int
     {
         $type = $class['elements'][$elementIndex]['type'];
@@ -356,6 +355,9 @@ class Sample
         throw new \RuntimeException(sprintf('Unknown spacing "%s".', $spacing));
     }
 
+    /**
+     * @param _Class $class
+     */
     private function fixSpaceBelowClassElement(Tokens $tokens, array $class): void
     {
         $element = $class['elements'][0];
@@ -454,6 +456,11 @@ class Sample
         return $start;
     }
 
+    /**
+     * @TODO Introduce proper DTO instead of an array
+     *
+     * @return \Generator<_Class>
+     */
     private function getElementsByClass(Tokens $tokens): \Generator
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
@@ -498,9 +505,15 @@ class Sample
         }
     }
 
+    /**
+     * including trailing single line comments if belonging to the class element.
+     *
+     * @param _Class   $class
+     * @param _Element $element
+     */
     private function getFirstTokenIndexOfClassElement(Tokens $tokens, array $class, array $element): int
     {
-        $modifierTypes = [T_PRIVATE, T_PROTECTED, T_PUBLIC, T_ABSTRACT, T_FINAL, T_STATIC, T_STRING, T_NS_SEPARATOR, T_VAR, CT::T_NULLABLE_TYPE, CT::T_ARRAY_TYPEHINT, CT::T_TYPE_ALTERNATION, CT::T_TYPE_INTERSECTION];
+        $modifierTypes = [T_PRIVATE, T_PROTECTED, T_PUBLIC, T_ABSTRACT, T_FINAL, T_STATIC, T_STRING, T_NS_SEPARATOR, T_VAR, CT::T_NULLABLE_TYPE, CT::T_ARRAY_TYPEHINT, CT::T_TYPE_ALTERNATION, CT::T_TYPE_INTERSECTION, CT::T_DISJUNCTIVE_NORMAL_FORM_TYPE_PARENTHESIS_OPEN, CT::T_DISJUNCTIVE_NORMAL_FORM_TYPE_PARENTHESIS_CLOSE];
 
         if (\defined('T_READONLY')) { // @TODO: drop condition when PHP 8.1+ is required
             $modifierTypes[] = T_READONLY;
@@ -521,7 +534,12 @@ class Sample
         return $firstElementAttributeIndex;
     }
 
-    // including trailing single line comments if belonging to the class element
+    /**
+     * including trailing single line comments if belonging to the class element.
+     *
+     * @param _Class   $class
+     * @param _Element $element
+     */
     private function getLastTokenIndexOfClassElement(Tokens $tokens, array $class, array $element, TokensAnalyzer $tokensAnalyzer): int
     {
         // find last token of the element

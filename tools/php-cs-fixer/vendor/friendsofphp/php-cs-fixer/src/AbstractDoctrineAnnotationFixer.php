@@ -29,19 +29,16 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  */
 abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
+    /**
+     * @var array<int, array{classIndex: int, token: Token, type: string}>
+     */
     private array $classyElements;
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         // fetch indices one time, this is safe as we never add or remove a token during fixing
@@ -69,9 +66,6 @@ abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements 
      */
     abstract protected function fixAnnotations(DoctrineAnnotationTokens $doctrineAnnotationTokens): void;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
@@ -204,13 +198,19 @@ abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements 
 
     private function nextElementAcceptsDoctrineAnnotations(Tokens $tokens, int $index): bool
     {
+        $classModifiers = [T_ABSTRACT, T_FINAL];
+
+        if (\defined('T_READONLY')) { // @TODO: drop condition when PHP 8.2+ is required
+            $classModifiers[] = T_READONLY;
+        }
+
         do {
             $index = $tokens->getNextMeaningfulToken($index);
 
             if (null === $index) {
                 return false;
             }
-        } while ($tokens[$index]->isGivenKind([T_ABSTRACT, T_FINAL]));
+        } while ($tokens[$index]->isGivenKind($classModifiers));
 
         if ($tokens[$index]->isGivenKind(T_CLASS)) {
             return true;

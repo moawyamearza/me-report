@@ -19,3 +19,7 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 .phpdoc/
+
+/tools/**/vendor/
+/tools/**/composer.lock
+.php-cs-fixer.cache

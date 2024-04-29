@@ -32,9 +32,6 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoTrailingWhitespaceFixer extends AbstractFixer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -53,17 +50,11 @@ final class NoTrailingWhitespaceFixer extends AbstractFixer
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = \count($tokens) - 1; $index >= 0; --$index) {
@@ -72,8 +63,8 @@ final class NoTrailingWhitespaceFixer extends AbstractFixer
                 $token->isGivenKind(T_OPEN_TAG)
                 && $tokens->offsetExists($index + 1)
                 && $tokens[$index + 1]->isWhitespace()
-                && 1 === Preg::match('/(.*)\h$/', $token->getContent(), $openTagMatches)
-                && 1 === Preg::match('/^(\R)(.*)$/s', $tokens[$index + 1]->getContent(), $whitespaceMatches)
+                && Preg::match('/(.*)\h$/', $token->getContent(), $openTagMatches)
+                && Preg::match('/^(\R)(.*)$/s', $tokens[$index + 1]->getContent(), $whitespaceMatches)
             ) {
                 $tokens[$index] = new Token([T_OPEN_TAG, $openTagMatches[1].$whitespaceMatches[1]]);
                 $tokens->ensureWhitespaceAtIndex($index + 1, 0, $whitespaceMatches[2]);
@@ -90,7 +81,7 @@ final class NoTrailingWhitespaceFixer extends AbstractFixer
 
             // fix only multiline whitespaces or singleline whitespaces at the end of file
             if ($linesSize > 1 || !isset($tokens[$index + 1])) {
-                if (!$tokens[$index - 1]->isGivenKind(T_OPEN_TAG) || 1 !== Preg::match('/(.*)\R$/', $tokens[$index - 1]->getContent())) {
+                if (!$tokens[$index - 1]->isGivenKind(T_OPEN_TAG) || !Preg::match('/(.*)\R$/', $tokens[$index - 1]->getContent())) {
                     $lines[0] = rtrim($lines[0], " \t");
                 }
 

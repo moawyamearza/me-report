@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\Console;
 
+use PhpCsFixer\Console\Command\CheckCommand;
 use PhpCsFixer\Console\Command\DescribeCommand;
 use PhpCsFixer\Console\Command\FixCommand;
 use PhpCsFixer\Console\Command\HelpCommand;
@@ -39,19 +40,21 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class Application extends BaseApplication
 {
-    public const VERSION = '3.11.0';
-    public const VERSION_CODENAME = 'Oliva';
+    public const NAME = 'PHP CS Fixer';
+    public const VERSION = '3.54.0';
+    public const VERSION_CODENAME = '15 Keys Accelerate';
 
     private ToolInfo $toolInfo;
 
     public function __construct()
     {
-        parent::__construct('PHP CS Fixer', self::VERSION);
+        parent::__construct(self::NAME, self::VERSION);
 
         $this->toolInfo = new ToolInfo();
 
         // in alphabetical order
         $this->add(new DescribeCommand());
+        $this->add(new CheckCommand($this->toolInfo));
         $this->add(new FixCommand($this->toolInfo));
         $this->add(new ListFilesCommand($this->toolInfo));
         $this->add(new ListSetsCommand());
@@ -67,15 +70,11 @@ final class Application extends BaseApplication
         return (int) explode('.', self::VERSION)[0];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function doRun(InputInterface $input, OutputInterface $output): int
     {
         $stdErr = $output instanceof ConsoleOutputInterface
             ? $output->getErrorOutput()
-            : ($input->hasParameterOption('--format', true) && 'txt' !== $input->getParameterOption('--format', null, true) ? null : $output)
-        ;
+            : ($input->hasParameterOption('--format', true) && 'txt' !== $input->getParameterOption('--format', null, true) ? null : $output);
 
         if (null !== $stdErr) {
             $warningsDetector = new WarningsDetector($this->toolInfo);
@@ -112,10 +111,12 @@ final class Application extends BaseApplication
     }
 
     /**
-     * {@inheritdoc}
+     * @internal
      */
-    public function getLongVersion(): string
+    public static function getAbout(bool $decorated = false): string
     {
+        $longVersion = sprintf('%s <info>%s</info>', self::NAME, self::VERSION);
+
         $commit = '@git-commit@';
         $versionCommit = '';
 
@@ -123,18 +124,38 @@ final class Application extends BaseApplication
             $versionCommit = substr($commit, 0, 7);
         }
 
-        return implode('', [
-            parent::getLongVersion(),
+        $about = implode('', [
+            $longVersion,
             $versionCommit ? sprintf(' <info>(%s)</info>', $versionCommit) : '', // @phpstan-ignore-line to avoid `Ternary operator condition is always true|false.`
             self::VERSION_CODENAME ? sprintf(' <info>%s</info>', self::VERSION_CODENAME) : '', // @phpstan-ignore-line to avoid `Ternary operator condition is always true|false.`
-            ' by <comment>Fabien Potencier</comment> and <comment>Dariusz Ruminski</comment>.',
-            "\nPHP runtime: <info>".PHP_VERSION.'</info>',
+            ' by <comment>Fabien Potencier</comment>, <comment>Dariusz Ruminski</comment> and <comment>contributors</comment>.',
         ]);
+
+        if (false === $decorated) {
+            return strip_tags($about);
+        }
+
+        return $about;
     }
 
     /**
-     * {@inheritdoc}
+     * @internal
      */
+    public static function getAboutWithRuntime(bool $decorated = false): string
+    {
+        $about = self::getAbout(true)."\nPHP runtime: <info>".PHP_VERSION.'</info>';
+        if (false === $decorated) {
+            return strip_tags($about);
+        }
+
+        return $about;
+    }
+
+    public function getLongVersion(): string
+    {
+        return self::getAboutWithRuntime(true);
+    }
+
     protected function getDefaultCommands(): array
     {
         return [new HelpCommand(), new ListCommand()];

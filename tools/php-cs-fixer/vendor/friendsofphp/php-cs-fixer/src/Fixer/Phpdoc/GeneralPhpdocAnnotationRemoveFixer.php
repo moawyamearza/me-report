@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace PhpCsFixer\Fixer\Phpdoc;
 
 use PhpCsFixer\AbstractFixer;
+use PhpCsFixer\DocBlock\Annotation;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
@@ -32,9 +33,6 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class GeneralPhpdocAnnotationRemoveFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -45,10 +43,22 @@ final class GeneralPhpdocAnnotationRemoveFixer extends AbstractFixer implements 
 /**
  * @internal
  * @author John Doe
+ * @AuThOr Jane Doe
  */
 function foo() {}
 ',
                     ['annotations' => ['author']]
+                ),
+                new CodeSample(
+                    '<?php
+/**
+ * @internal
+ * @author John Doe
+ * @AuThOr Jane Doe
+ */
+function foo() {}
+',
+                    ['annotations' => ['author'], 'case_sensitive' => false]
                 ),
                 new CodeSample(
                     '<?php
@@ -77,17 +87,11 @@ function foo() {}
         return 10;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         if (0 === \count($this->configuration['annotations'])) {
@@ -100,7 +104,7 @@ function foo() {}
             }
 
             $doc = new DocBlock($token->getContent());
-            $annotations = $doc->getAnnotationsOfType($this->configuration['annotations']);
+            $annotations = $this->getAnnotationsToRemove($doc);
 
             // nothing to do if there are no annotations
             if (0 === \count($annotations)) {
@@ -119,9 +123,6 @@ function foo() {}
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
@@ -129,6 +130,33 @@ function foo() {}
                 ->setAllowedTypes(['array'])
                 ->setDefault([])
                 ->getOption(),
+            (new FixerOptionBuilder('case_sensitive', 'Should annotations be case sensitive.'))
+                ->setAllowedTypes(['bool'])
+                ->setDefault(true)
+                ->getOption(),
         ]);
+    }
+
+    /**
+     * @return list<Annotation>
+     */
+    private function getAnnotationsToRemove(DocBlock $doc): array
+    {
+        if (true === $this->configuration['case_sensitive']) {
+            return $doc->getAnnotationsOfType($this->configuration['annotations']);
+        }
+
+        $typesToSearchFor = array_map(static fn (string $type): string => strtolower($type), $this->configuration['annotations']);
+
+        $annotations = [];
+
+        foreach ($doc->getAnnotations() as $annotation) {
+            $tagName = strtolower($annotation->getTag()->getName());
+            if (\in_array($tagName, $typesToSearchFor, true)) {
+                $annotations[] = $annotation;
+            }
+        }
+
+        return $annotations;
     }
 }

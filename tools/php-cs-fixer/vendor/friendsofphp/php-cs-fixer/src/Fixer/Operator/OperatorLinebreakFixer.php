@@ -24,10 +24,9 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\AlternativeSyntaxAnalyzer;
-use PhpCsFixer\Tokenizer\Analyzer\Analysis\SwitchAnalysis;
-use PhpCsFixer\Tokenizer\Analyzer\ControlCaseStructuresAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\GotoLabelAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\ReferenceAnalyzer;
+use PhpCsFixer\Tokenizer\Analyzer\SwitchAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -41,13 +40,10 @@ final class OperatorLinebreakFixer extends AbstractFixer implements Configurable
     private string $position = 'beginning';
 
     /**
-     * @var array<array<int|string>|string>
+     * @var list<list<int|string>|string>
      */
     private array $operators = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -72,9 +68,6 @@ function foo() {
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(array $configuration): void
     {
         parent::configure($configuration);
@@ -87,41 +80,30 @@ function foo() {
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('only_booleans', 'whether to limit operators to only boolean ones'))
+            (new FixerOptionBuilder('only_booleans', 'Whether to limit operators to only boolean ones.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-            (new FixerOptionBuilder('position', 'whether to place operators at the beginning or at the end of the line'))
+            (new FixerOptionBuilder('position', 'Whether to place operators at the beginning or at the end of the line.'))
                 ->setAllowedValues(['beginning', 'end'])
                 ->setDefault($this->position)
                 ->getOption(),
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $referenceAnalyzer = new ReferenceAnalyzer();
         $gotoLabelAnalyzer = new GotoLabelAnalyzer();
         $alternativeSyntaxAnalyzer = new AlternativeSyntaxAnalyzer();
-
-        $excludedIndices = $this->getExcludedIndices($tokens);
 
         $index = $tokens->count();
         while ($index > 1) {
@@ -143,7 +125,7 @@ function foo() {
                 continue;
             }
 
-            if (\in_array($index, $excludedIndices, true)) {
+            if (SwitchAnalyzer::belongsToSwitch($tokens, $index)) {
                 continue;
             }
 
@@ -159,31 +141,6 @@ function foo() {
 
             $this->fixOperatorLinebreak($tokens, $operatorIndices);
         }
-    }
-
-    /**
-     * Currently only colons from "switch".
-     *
-     * @return int[]
-     */
-    private function getExcludedIndices(Tokens $tokens): array
-    {
-        $colonIndices = [];
-
-        /** @var SwitchAnalysis $analysis */
-        foreach (ControlCaseStructuresAnalyzer::findControlStructures($tokens, [T_SWITCH]) as $analysis) {
-            foreach ($analysis->getCases() as $case) {
-                $colonIndices[] = $case->getColonIndex();
-            }
-
-            $defaultAnalysis = $analysis->getDefaultAnalysis();
-
-            if (null !== $defaultAnalysis) {
-                $colonIndices[] = $defaultAnalysis->getColonIndex();
-            }
-        }
-
-        return $colonIndices;
     }
 
     /**
@@ -230,7 +187,7 @@ function foo() {
         $nextIndex = $tokens->getNextMeaningfulToken(max($operatorIndices));
 
         for ($i = $nextIndex - 1; $i > max($operatorIndices); --$i) {
-            if ($tokens[$i]->isWhitespace() && 1 === Preg::match('/\R/u', $tokens[$i]->getContent())) {
+            if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent())) {
                 $isWhitespaceBefore = $tokens[$prevIndex]->isWhitespace();
                 $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, -1);
                 if ($isWhitespaceBefore) {
@@ -255,7 +212,7 @@ function foo() {
         $nextIndex = $tokens->getNonEmptySibling(max($operatorIndices), 1);
 
         for ($i = $prevIndex + 1; $i < max($operatorIndices); ++$i) {
-            if ($tokens[$i]->isWhitespace() && 1 === Preg::match('/\R/u', $tokens[$i]->getContent())) {
+            if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent())) {
                 $isWhitespaceAfter = $tokens[$nextIndex]->isWhitespace();
                 $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, 1);
                 if ($isWhitespaceAfter) {
@@ -302,6 +259,9 @@ function foo() {
         return false;
     }
 
+    /**
+     * @return list<array{int}|string>
+     */
     private static function getNonBooleanOperators(): array
     {
         return array_merge(

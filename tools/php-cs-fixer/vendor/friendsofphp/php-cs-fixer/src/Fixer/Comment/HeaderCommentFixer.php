@@ -44,9 +44,6 @@ final class HeaderCommentFixer extends AbstractFixer implements ConfigurableFixe
      */
     public const HEADER_COMMENT = 'comment';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -113,18 +110,15 @@ echo 1;
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isMonolithicPhp();
+        return $tokens->isMonolithicPhp() && !$tokens->isTokenKindFound(T_OPEN_TAG_WITH_ECHO);
     }
 
     /**
      * {@inheritdoc}
      *
-     * Must run before SingleLineCommentStyleFixer.
+     * Must run before BlankLinesBeforeNamespaceFixer, SingleBlankLineBeforeNamespaceFixer, SingleLineCommentStyleFixer.
      * Must run after DeclareStrictTypesFixer, NoBlankLinesAfterPhpdocFixer.
      */
     public function getPriority(): int
@@ -135,9 +129,6 @@ echo 1;
         return -30;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $location = $this->configuration['location'];
@@ -172,7 +163,7 @@ echo 1;
             $expectedLocation = $possibleLocation === $location;
 
             if (!$sameComment || !$expectedLocation) {
-                if ($expectedLocation ^ $sameComment) {
+                if ($expectedLocation xor $sameComment) {
                     $this->removeHeader($tokens, $headerCurrentIndex);
                 }
 
@@ -191,9 +182,6 @@ echo 1;
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         $fixerName = $this->getName();
@@ -278,11 +266,7 @@ echo 1;
      */
     private function findHeaderCommentInsertionIndex(Tokens $tokens, string $location): int
     {
-        $openTagIndex = $tokens[0]->isGivenKind(T_OPEN_TAG) ? 0 : $tokens->getNextTokenOfKind(0, [[T_OPEN_TAG]]);
-
-        if (null === $openTagIndex) {
-            return 1;
-        }
+        $openTagIndex = $tokens[0]->isGivenKind(T_INLINE_HTML) ? 1 : 0;
 
         if ('after_open' === $location) {
             return $openTagIndex + 1;

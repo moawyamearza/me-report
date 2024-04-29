@@ -22,8 +22,6 @@ use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\FixerDefinition\VersionSpecification;
-use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -32,16 +30,13 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoWhitespaceBeforeCommaInArrayFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'In array declaration, there MUST NOT be a whitespace before each comma.',
             [
                 new CodeSample("<?php \$x = array(1 , \"2\");\n"),
-                new VersionSpecificCodeSample(
+                new CodeSample(
                     <<<'PHP'
                         <?php
                             $x = [<<<EOD
@@ -51,24 +46,17 @@ final class NoWhitespaceBeforeCommaInArrayFixer extends AbstractFixer implements
                             ];
 
                         PHP,
-                    new VersionSpecification(70300),
                     ['after_heredoc' => true]
                 ),
             ]
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; --$index) {
@@ -78,9 +66,6 @@ final class NoWhitespaceBeforeCommaInArrayFixer extends AbstractFixer implements
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([

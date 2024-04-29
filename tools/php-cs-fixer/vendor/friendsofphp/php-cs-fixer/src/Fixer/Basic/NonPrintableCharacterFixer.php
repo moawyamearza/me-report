@@ -64,9 +64,6 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -85,25 +82,16 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isRisky(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound(self::$tokens);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
@@ -114,9 +102,6 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $replacements = [];
@@ -131,7 +116,7 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
             $content = $token->getContent();
 
             if (
-                $this->configuration['use_escape_sequences_in_strings']
+                true === $this->configuration['use_escape_sequences_in_strings']
                 && $token->isGivenKind([T_CONSTANT_ENCAPSED_STRING, T_ENCAPSED_AND_WHITESPACE])
             ) {
                 if (!Preg::match('/'.implode('|', array_keys($escapeSequences)).'/', $content)) {

@@ -26,99 +26,63 @@ class NullOutput implements OutputInterface
 {
     private NullOutputFormatter $formatter;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setFormatter(OutputFormatterInterface $formatter)
+    public function setFormatter(OutputFormatterInterface $formatter): void
     {
         // do nothing
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFormatter(): OutputFormatterInterface
     {
         // to comply with the interface we must return a OutputFormatterInterface
         return $this->formatter ??= new NullOutputFormatter();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setDecorated(bool $decorated)
+    public function setDecorated(bool $decorated): void
     {
         // do nothing
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isDecorated(): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setVerbosity(int $level)
+    public function setVerbosity(int $level): void
     {
         // do nothing
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getVerbosity(): int
     {
         return self::VERBOSITY_QUIET;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isQuiet(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isVerbose(): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isVeryVerbose(): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isDebug(): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function writeln(string|iterable $messages, int $options = self::OUTPUT_NORMAL)
+    public function writeln(string|iterable $messages, int $options = self::OUTPUT_NORMAL): void
     {
         // do nothing
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function write(string|iterable $messages, bool $newline = false, int $options = self::OUTPUT_NORMAL)
+    public function write(string|iterable $messages, bool $newline = false, int $options = self::OUTPUT_NORMAL): void
     {
         // do nothing
     }

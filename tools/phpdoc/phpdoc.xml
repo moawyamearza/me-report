@@ -6,11 +6,11 @@
         xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd"
 >
     <paths>
-        <output>docs/api</output>
+        <output>../../docs/api</output>
     </paths>
     <version number="3.0.0">
         <api>
-            <source dsn=".">
+            <source dsn="../..">
                 <path>src</path>
             </source>
         </api>
