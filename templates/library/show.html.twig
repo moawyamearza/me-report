@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Books{% endblock %}
+
+{% block content %}
+<div class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="{{ url("book_new") }}">Creat Book</a></li>
+                    <li><a href="{{ url("library_show_all_books") }}">Show All Books</a></li>
+                </ul>
+            </nav>
+    </div>
+    <h1>All Books</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.BokNamn }}</td>
+                    <td>
+                        <div class="book-actions">
+                            <a href="{{ path('library_show_one_book', {'id': book.id}) }}">View</a>
+                            <a href="{{ path('library_edit', {'id': book.id}) }}">Edit</a>
+                            <form method="post" action="{{ path('library_delete', {'id': book.id}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ book.id) }}">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,32 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ books.BokNamn }}{% endblock %}
+
+{% block content %}
+<div class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="{{ url("book_new") }}">Creat Book</a></li>
+                    <li><a href="{{ url("library_show_all_books") }}">Show All Books</a></li>
+                </ul>
+            </nav>
+</div>
+<div class="book-details">
+    <h1>{{ books.BokNamn }}</h1>
+    <p><strong>ISBN:</strong> {{ books.ISBN }}</p>
+    <p><strong>Author:</strong> {{ books.forfattare }}</p>
+    {% if books.bild %}
+        <img src="{{ asset('uploads/images/' ~ books.bild) }}" alt="{{ books.BokNamn }}">
+    {% else %}
+        <p>No cover image available</p>
+    {% endif %}
+    <div class="book-actions">
+        <a href="{{ path('library_edit', {'id': books.id}) }}">Edit</a>
+        <form method="post" action="{{ path('library_delete', {'id': books.id}) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ books.id) }}">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
