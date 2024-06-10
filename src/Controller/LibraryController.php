@@ -217,10 +217,10 @@ class LibraryController extends AbstractController
 
     #[Route('/api/library/book/{isbn}', name: 'api_library_book', methods: ['GET'])]
     public function getBookByISBN(BooksRepository $booksRepository, string $isbn): Response {
-        $books = $booksRepository
+        $book = $booksRepository
             ->findOneBy(['ISBN' => $isbn]);
 
-        return $this->json($books);
+        return $this->json($book);
     
     }
 }
