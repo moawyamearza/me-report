@@ -208,10 +208,10 @@ class LibraryController extends AbstractController
     public function getAllBooks(
             BooksRepository $booksRepository
         ): Response {
-            $books = $booksRepository
+            $book = $booksRepository
                 ->findAll();
     
-            return $this->json($books);
+            return $this->json($book);
         }
     
 
