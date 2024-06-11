@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BooksRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BooksRepository::class)]
@@ -19,11 +20,11 @@ class Books
     #[ORM\Column(nullable: true)]
     private ?int $ISBN = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $forfattare = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $bild = null;
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $bild = null;
 
     public function getId(): ?int
     {
@@ -59,19 +60,19 @@ class Books
         return $this->forfattare;
     }
 
-    public function setForfattare(?string $forfattare): static
+    public function setForfattare(string $forfattare): static
     {
         $this->forfattare = $forfattare;
 
         return $this;
     }
 
-    public function getBild(): ?string
+    public function getBild()
     {
         return $this->bild;
     }
 
-    public function setBild(?string $bild): static
+    public function setBild($bild): static
     {
         $this->bild = $bild;
 

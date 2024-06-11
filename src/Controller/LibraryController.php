@@ -73,22 +73,14 @@ class LibraryController extends AbstractController
             $bildFile = $form->get('bild')->getData();
 
             if ($bildFile) {
-                $originalFilename = pathinfo($bildFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $slugger = new AsciiSlugger();
-                $safeFilename = $slugger->slug($originalFilename)->lower();                
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $bildFile->guessExtension();
                 try {
-                    $bildFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                    );
-                    $this->logger->info('File uploaded to: ' . $this->getParameter('images_directory') . '/' . $newFilename);
+                    $fileData = file_get_contents($bildFile->getPathname());
+                    $Books->setBild($fileData);
                 } catch (FileException $e) {
-                    $this->logger->error('File upload error: ' . $e->getMessage());
                     throw new \Exception('File upload error: ' . $e->getMessage());
                 }
 
-                $Books->setBild($newFilename);
+                
 
             }
 
