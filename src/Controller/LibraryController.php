@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\File;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 
 class LibraryController extends AbstractController
@@ -73,7 +74,8 @@ class LibraryController extends AbstractController
 
             if ($bildFile) {
                 $originalFilename = pathinfo($bildFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $slugger = new AsciiSlugger();
+                $safeFilename = $slugger->slug($originalFilename)->lower();                
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $bildFile->guessExtension();
                 try {
                     $bildFile->move(
