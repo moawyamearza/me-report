@@ -6,6 +6,7 @@
 <div class="navbar">
             <nav>
                 <ul>
+                    <li><a href="{{ url("app_library") }}">Home</a></li>
                     <li><a href="{{ url("book_new") }}">Creat Book</a></li>
                     <li><a href="{{ url("library_show_all_books") }}">Show All Books</a></li>
                 </ul>
@@ -25,7 +26,7 @@
             {% for book in books %}
                 <tr>
                     <td>{{ book.id }}</td>
-                    <td>{{ book.BokNamn }}</td>
+                    <td>{{ book.bookname }}</td>
                     <td>
                         <div class="book-actions">
                             <a href="{{ path('library_show_one_book', {'id': book.id}) }}">View</a>

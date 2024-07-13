@@ -5,13 +5,14 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Books;
+use App\Entity\Booklib;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use App\Repository\BooksRepository;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use App\Repository\BooklibRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Validator\Constraints\File;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,66 +44,34 @@ class LibraryController extends AbstractController
     ): Response {
         $entityManager = $doctrine->getManager();
 
-        $Books = new Books();
+        $Books = new Booklib();
 
         $form = $this->createFormBuilder($Books)
-        ->add('BokNamn', TextType::class, ['label' => 'Book Name'])
-        ->add('ISBN', IntegerType::class, ['label' => 'ISBN'])
-        ->add('forfattare', TextType::class, ['label' => 'Author'])
-        ->add('bild', FileType::class, [
-            'label' => 'Book Cover (Image file)',
-            'mapped' => false,
-            'required' => false,
-            'constraints' => [
-                new File([
-                    'maxSize' => '2M',
-                    'mimeTypes' => [
-                        'image/jpeg',
-                        'image/png',
-                        'image/gif',
-                    ],
-                    'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, GIF)',
-                ])
-            ],
-        ])
+        ->add('bookname', TextType::class, ['label' => 'Book Name'])
+        ->add('isbn',TextType::class, ['label' => 'ISBN'])       
+        ->add('writer', TextType::class, ['label' => 'Author'])
+        ->add('image', UrlType::class, ['label' => 'Book Cover'])
             ->getForm();
  
         $form->handleRequest($request);
-        $bildFile = "daj";
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $bildFile = $form->get('bild')->getData();
-
-            if ($bildFile) {
-                try {
-                    $fileData = file_get_contents($bildFile->getPathname());
-                    $Books->setBild($fileData);
-                } catch (FileException $e) {
-                    throw new \Exception('File upload error: ' . $e->getMessage());
-                }
-
-                
-
-            }
-
             $entityManager->persist($Books);
             $entityManager->flush();
             return $this->redirectToRoute('library_show_all_books');
-
-
         }
 
         return $this->render('library/new.html.twig', [
             'form' => $form->createView(),
-            'bild' => $bildFile
         ]);
     
     }
 
     #[Route('/library/showall', name: 'library_show_all_books')]
     public function showAllLibrarybooks(
-        BooksRepository $booksRepository
+        BooklibRepository $booklibRepository
     ): Response {
-        $books = $booksRepository
+        $books = $booklibRepository
             ->findAll();
             return $this->render('library/show.html.twig', [
                 'books' => $books,
@@ -111,10 +80,10 @@ class LibraryController extends AbstractController
 
     #[Route('/library/showone/{id}', name: 'library_show_one_book')]
     public function showOneLibrarybooks(
-        BooksRepository $booksRepository,
+        BooklibRepository $booklibRepository,
         int $id ,
     ): Response {
-        $books = $booksRepository
+        $books = $booklibRepository
             ->find($id);
 
             return $this->render('library/showone.html.twig', [
@@ -123,69 +92,40 @@ class LibraryController extends AbstractController
     }
 
     #[Route('/library/edit/{id}', name: 'library_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, int $id ,BooksRepository $booksRepository): Response
+    public function edit(Request $request, int $id ,BooklibRepository $booklibRepository, ManagerRegistry $doctrine): Response
     {
-        $book = $booksRepository->find($id);
+        $entityManager = $doctrine->getManager();
+
+        $book = $booklibRepository->find($id);
         if (!$book) {
             throw $this->createNotFoundException('The book does not exist');
         }
 
         $form = $this->createFormBuilder($book)
-        ->add('BokNamn', TextType::class, ['label' => 'Book Name'])
-        ->add('ISBN', IntegerType::class, ['label' => 'ISBN'])
-        ->add('forfattare', TextType::class, ['label' => 'Author'])
-        ->add('bild', FileType::class, [
-            'label' => 'Book Cover (Image file)',
-            'mapped' => false,
-            'required' => false,
-            'constraints' => [
-                new File([
-                    'maxSize' => '2M',
-                    'mimeTypes' => [
-                        'image/jpeg',
-                        'image/png',
-                        'image/gif',
-                    ],
-                    'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, GIF)',
-                ])
-            ],
-        ])
-        ->getForm();
+        ->add('bookname', TextType::class, ['label' => 'Book Name'])
+        ->add('isbn',TextType::class, ['label' => 'ISBN'])        
+        ->add('writer', TextType::class, ['label' => 'Author'])
+        ->add('image', UrlType::class, ['label' => 'Book Cover'])
+            ->getForm();
 
-        $form->handleRequest($request);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $bildFile = $form->get('bild')->getData();
-            if ($bildFile) {
-                $originalFilename = pathinfo($bildFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $bildFile->guessExtension();
-                try {
-                    $bildFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    throw new \Exception('File upload error: ' . $e->getMessage());
-                }
-                $book->setBild($newFilename);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($book);
+                $entityManager->flush();
+                return $this->redirectToRoute('library_show_all_books');
             }
-
-            $this->entityManager->flush();
-
-            return $this->redirectToRoute('library_show_all_books');
+    
+            return $this->render('library/new.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        
         }
 
-        return $this->render('library/edit.html.twig', [
-            'form' => $form->createView(),
-            'book' => $book,
-        ]);
-    }
-
     #[Route('/library/delete/{id}', name: 'library_delete', methods: ['POST'])]
-    public function delete(Request $request, int $id ,BooksRepository $booksRepository): Response
+    public function delete(Request $request, int $id ,BooklibRepository $booklibRepository): Response
     {
-        $book = $booksRepository->find($id);
+        $book = $booklibRepository->find($id);
         if (!$book) {
             throw $this->createNotFoundException('The book does not exist');
         }
@@ -200,9 +140,9 @@ class LibraryController extends AbstractController
     
     #[Route('/api/library/books', name: 'api_library_books', methods: ['GET'])]
     public function getAllBooks(
-            BooksRepository $booksRepository
+            BooklibRepository $booklibRepository
         ): Response {
-            $book = $booksRepository
+            $book = $booklibRepository
                 ->findAll();
     
             return $this->json($book);
@@ -210,9 +150,9 @@ class LibraryController extends AbstractController
     
 
     #[Route('/api/library/book/{isbn}', name: 'api_library_book', methods: ['GET'])]
-    public function getBookByISBN(BooksRepository $booksRepository, string $isbn): Response {
-        $book = $booksRepository
-            ->findOneBy(['ISBN' => $isbn]);
+    public function getBookByISBN(BooklibRepository $booklibRepository, string $isbn): Response {
+        $book = $booklibRepository
+            ->findOneBy(['isbn' => $isbn]);
 
         return $this->json($book);
     

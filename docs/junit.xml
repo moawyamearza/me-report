@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="8" assertions="124" errors="0" warnings="0" failures="0" skipped="0" time="0.013691">
+    <testsuite name="Project Test Suite" tests="8" assertions="124" errors="0" warnings="0" failures="0" skipped="0" time="0.013691">
+      <testsuite name="Tests\Unit\Card\CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" tests="6" assertions="11" errors="0" warnings="0" failures="0" skipped="0" time="0.009561">
+        <testcase name="testDrawPlayerCards" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="23" assertions="4" time="0.005745"/>
+        <testcase name="testDrawCards" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="34" assertions="2" time="0.001642"/>
+        <testcase name="testDrawCardsbank" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="45" assertions="2" time="0.000437"/>
+        <testcase name="testGetColor" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="55" assertions="1" time="0.000989"/>
+        <testcase name="testGetValue" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="60" assertions="1" time="0.000401"/>
+        <testcase name="testGetForm" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="65" assertions="1" time="0.000347"/>
+      </testsuite>
+      <testsuite name="DeckWith2JokersTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/DeckWith2JokersTest.php" tests="2" assertions="113" errors="0" warnings="0" failures="0" skipped="0" time="0.004130">
+        <testcase name="testInitEnglishDeck2Jokers" class="DeckWith2JokersTest" classname="DeckWith2JokersTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/DeckWith2JokersTest.php" line="11" assertions="110" time="0.002108"/>
+        <testcase name="testShuffleCards" class="DeckWith2JokersTest" classname="DeckWith2JokersTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/DeckWith2JokersTest.php" line="32" assertions="3" time="0.002023"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

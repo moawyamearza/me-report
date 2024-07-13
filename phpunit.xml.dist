@@ -32,7 +32,9 @@
             <html outputDirectory="docs/coverage" lowUpperBound="35" highLowerBound="70"/>
         </report>
     </coverage>
-
+    <logging>
+        <junit outputFile="docs/junit.xml" />
+    </logging>
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>

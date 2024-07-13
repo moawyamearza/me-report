@@ -10,6 +10,7 @@
 <div class="navbar">
             <nav>
                 <ul>
+                    <li><a href="{{ url("app_library") }}">Home</a></li>
                     <li><a href="{{ url("book_new") }}">Creat Book</a></li>
                     <li><a href="{{ url("library_show_all_books") }}">Show All Books</a></li>
                 </ul>
@@ -20,7 +21,7 @@
     <h2>API Endpoints</h2>
         <ul  class="navbar">
             <li><a href="{{ path('api_library_books') }}" target="_blank">Get All Books (JSON)</a></li>
-            <li><a href="{{ path('api_library_book', {'isbn': '9789113131986'}) }}" target="_blank">Get Book by ISBN (JSON)</a></li>
+            <li><a href="{{ path('api_library_book', {'isbn': '9789180024266'}) }}" target="_blank">Get Book by ISBN (JSON)</a></li>
         </ul>
 
     
