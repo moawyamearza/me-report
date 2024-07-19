@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello{% endblock %}
+
+{% block content %}
+
+
+<div>
+    <h1>Metrics analys</h1>  
+    <h1>Introduktion</h1>
+    <p>När man utvecklar mjukvara är kodens kvalitet viktigt för projektets framgång. Kodkvalitet kan förbättras genom att fokusera på sex nyckelområden: Codestyle, Coverage, Complexity, Cohesion, Coupling, och CRAP. Här följer en förklaring av de och hur de kan påverka kodens kvalitet.</p>
+    
+    <h4>Codestyle</h4>
+    <p>Codestyle handlar om hur koden är uppbyggd och for strukturerad. Enhetlig kodstil gör koden lättare att läsa, förstå och underhålla. Verktyg som linters kan användas för att mäta och säkerställa konsekvent kodstil.</p>
+    
+    <h4>Coverage</h4>
+    <p>Coverage, eller kodtäckning, mäter hur stor del av koden som täcks av tester. En hög täckning, ofta mätt i procent. Att fler delar av koden testas betyder att koden har hög kvalitet.</p>
+    
+    <h4>Complexity</h4>
+    <p>Complexity avser hur komplicerad koden är. Hög Complexity leda till att kod bli svårt att förstås och underhållas.</p>
+    
+    <h4>Cohesion</h4>
+    <p>Cohesion beskriver hur väl de olika delarna av en modul hänger ihop. Hög sammanhållning innebär att komponenter inom en modul är starkt relaterade och arbetar tillsammans mot ett gemensamt mål.</p>
+    
+    <h4>Coupling</h4>
+    <p>Coupling beskriver hur beroende kod delar av varandra. En kod med låg koppling är mer flexibelt och lättare att underhålla.</p>
+    
+    <h4>CRAP (Change Risk Analysis and Predictions)</h4>
+    <p>CRAP-måttet kombinerar komplexitet och kodtäckning för att bedöma risken för förändring. Högre CRAP-värden motivera att koden är dåligt testad.</p>
+
+    <h2>Phpmetrics</h2>
+    <p>Phpmetrics är ett verktyg som analyserar PHP-kodbaser och visa en rapport med olika mätvärden. Dessa värden kan hjälpa utvecklare att hitta flaskhalsar och svaga punkter i koden.</p>
+    
+    <h3>Flaskhalsar och Svaga Punkter för min kod</h3>
+    <ol>
+        <li>
+            <strong>Hög Genomsnittlig Cyklomatisk Komplexitet per Klass (3.82):</strong>
+            <p>Den genomsnittliga cyklomatiska komplexiteten per klass är 3.82. Detta kan indikera att vissa klasser är mer komplexa än vad som är optimalt, vilket kan göra koden svår att förstå och underhålla. Att refaktorisera dessa klasser kan minska komplexiteten.</p>
+        </li>
+        <li>
+            <strong>Antal Kodelinjer (633):</strong>
+            <p>Med totalt 633 rader kod kan vissa moduler vara för stora, vilket gör dem svåra att underhålla och förstå. Det kan vara fördelaktigt att bryta ned stora moduler i mindre, mer hanterbara delar för att förbättra läsbarheten och underhållbarheten.</p>
+        </li>
+        <li>
+            <strong>Genomsnittligt Antal Buggar per Klass (0.20):</strong>
+            <p>Med ett genomsnitt på 0.20 buggar per klass finns det potential för att vissa klasser innehåller fler buggar än andra. Identifiera och fokusera på dessa klasser för att minska antalet buggar genom bättre testning och kodgranskning.</p>
+        </li>
+    </ol>
+    
+    <h3>Visualisering</h3>
+    <p>Diagrammet nedan visar av Phpmetrics-rapporten:</p>
+    <img src="img/im1.jpg" width = 800 >
+
+     <h3>Scrutinizer Badges</h3>
+    <p>Klickbara badges för att visa aktuella statusar:</p>
+    <p>
+        <a href="https://scrutinizer-ci.com/g/moawyamearza/me-report/?branch=main"><img src="https://scrutinizer-ci.com/g/moawyamearza/me-report/badges/quality-score.png?b=main"></a>
+        <a href="https://scrutinizer-ci.com/g/moawyamearza/me-report/?branch=main"><img src="https://scrutinizer-ci.com/g/moawyamearza/me-report/badges/coverage.png?b=main" alt="Build Status"></a>
+        <a href="https://scrutinizer-ci.com/g/moawyamearza/me-report/?branch=main"><img src="https://scrutinizer-ci.com/g/moawyamearza/me-report/badges/build.png?b=main"></a>
+        <a href="https://scrutinizer-ci.com/g/moawyamearza/me-report/?branch=main"><img src="https://scrutinizer-ci.com/g/moawyamearza/me-report/badges/code-intelligence.svg?b=main"></a>
+    </p>
+
+    <h3>Analys kopplad till de 6C:na:</h3>
+    <h4>Codestyle (Kodkvalitet 9.95):</h4>
+
+    <p>Den höga kodkvalitetspoängen visar att koden följer goda kodningsstandarder och bästa praxis. Det är viktigt att upprätthålla detta genom att använda linters och kodgranskning.</p>
+    <h4>Coverage (Testtäckning 31%):</h4>
+
+    <p>Testtäckningen är låg, vilket innebär att en stor del av koden inte är testad. Detta ökar risken för buggar. Öka täckningen genom att skriva fler enhetstester och integrationstester.</p>
+    <h4>Complexity:</h4>
+
+    <p>En hög kodkvalitetspoäng indikerar låg komplexitet i koden, vilket gör den lättare att förstå och underhålla. Det är viktigt att fortsätta skriva enkel och tydlig kod för att hålla komplexiteten låg.</p>
+    <h4>Cohesion:</h4>
+
+    <p>Genom att analysera modulers sammanhållning kan vi identifiera delar av koden som kan förbättras genom refaktorisering. Hög sammanhållning innebär att komponenter inom en modul är starkt relaterade och arbetar tillsammans mot ett gemensamt mål.</p>
+    <h4>Coupling:</h4>
+
+    <p>Genom att hålla låg koppling mellan olika delar av koden kan vi göra den mer flexibel och lättare att underhålla. Det är viktigt att minimera beroenden och använda gränssnitt för att minska kopplingen.</p>
+    <h4>CRAP:</h4>
+
+    <p>Genom att kombinera komplexitet och kodtäckning kan vi bedöma risken för förändringar. En hög CRAP-poäng indikerar att koden är både komplex och dåligt testad. Det är viktigt att minska både komplexiteten och öka testtäckningen för att förbättra kodens kvalitet.</p>
+</div>
+{% endblock %}

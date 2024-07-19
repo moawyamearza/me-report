@@ -387,3 +387,11 @@ tr:hover {
 .actions .delete:hover {
   background-color: #c82333;
 }
+
+h3 {
+  color: #6e3900;
+}
+
+h4 {
+  color: #ffab6e;
+}
