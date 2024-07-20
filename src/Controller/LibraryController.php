@@ -10,22 +10,17 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Repository\BooklibRepository;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Validator\Constraints\File;
-use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use App\Form\BookType;
+
 
 class LibraryController extends AbstractController
 {
-    private $logger;
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager)
+    public function __construct( EntityManagerInterface $entityManager)
     {
-        $this->logger = $logger;
         $this->entityManager = $entityManager;
     }
 
@@ -45,12 +40,7 @@ class LibraryController extends AbstractController
 
         $Books = new Booklib();
 
-        $form = $this->createFormBuilder($Books)
-        ->add('bookname', TextType::class, ['label' => 'Book Name'])
-        ->add('isbn', TextType::class, ['label' => 'ISBN'])
-        ->add('writer', TextType::class, ['label' => 'Author'])
-        ->add('image', UrlType::class, ['label' => 'Book Cover'])
-            ->getForm();
+        $form = $this->createForm(BookType::class, $Books);
 
         $form->handleRequest($request);
 
@@ -100,12 +90,8 @@ class LibraryController extends AbstractController
             throw $this->createNotFoundException('The book does not exist');
         }
 
-        $form = $this->createFormBuilder($book)
-        ->add('bookname', TextType::class, ['label' => 'Book Name'])
-        ->add('isbn', TextType::class, ['label' => 'ISBN'])
-        ->add('writer', TextType::class, ['label' => 'Author'])
-        ->add('image', UrlType::class, ['label' => 'Book Cover'])
-            ->getForm();
+        $form = $this->createForm(BookType::class, $book);
+
 
         $form->handleRequest($request);
 
@@ -128,8 +114,8 @@ class LibraryController extends AbstractController
         if (!$book) {
             throw $this->createNotFoundException('The book does not exist');
         }
-
-        if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('_token'))) {
+        $token = $request->request->get('_token');
+        if (is_string($token) && $this->isCsrfTokenValid('delete' . $book->getId(), $token)) {
             $this->entityManager->remove($book);
             $this->entityManager->flush();
         }

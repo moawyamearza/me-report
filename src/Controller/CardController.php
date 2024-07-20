@@ -11,7 +11,11 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Card\DeckWith2Jokers as CardJ;
 
 class CardController extends AbstractController
-{
+{   
+    /**
+     * @param SessionInterface $session
+     * @return array<string, mixed>
+     */
     private function getCardData(SessionInterface $session): array
     {
         $shu = new CardJ();
@@ -23,18 +27,23 @@ class CardController extends AbstractController
             'link_to_deal' => $this->generateUrl('deal', ['players' => 4, 'cards1' => 5]),
         ];
     }
-
+    /**
+     * @param SessionInterface $session
+     * @param Request $request
+     * @param int $cardsToDraw
+     * @return array<string, mixed>
+     */
     private function drawCards(SessionInterface $session, Request $request, int $cardsToDraw): array
     {
         $shu = new CardJ();
-        $cards = $session->get("cards");
+        $cards = $session->get("cards", []);
         $draw = $request->request->get('draw');
         $start = $request->request->get('start');
         $sum = $session->get("sum") ?? 0;
         $colorarr = [];
-
+        $color = '';
         if ($draw) {
-            if (!empty($cards)) {
+            if (!empty($cards) && is_array($cards)) {
                 for ($i = 1; $i <= $cardsToDraw; $i++) {
                     $cardn = array_key_first($cards);
                     $color = reset($cards);
@@ -48,7 +57,7 @@ class CardController extends AbstractController
                 }
                 $session->set("color", $color);
             }
-            $this->addFlash("warning", "You have $sum cards left. Click 'Start' to start again.");
+            $this->addFlash("warning", "You have " . strval($sum) . " cards left. Click 'Start' to start again.");
         } elseif ($start) {
             $this->addFlash("warning", "You will start the game.");
             $sum = 0;
@@ -118,9 +127,9 @@ class CardController extends AbstractController
     /**
      * @Route("/card/deck/draw/{numDraw}", name="drawnum")
      */
-    public function drawnum(int $numDraw): Response
+    public function drawnum(int $numDraw, SessionInterface $session): Response
     {
-        $data = $this->getCardData($this->get('session'));
+        $data = $this->getCardData($session);
 
         return $this->render('card/drawnum.html.twig', $data);
     }
@@ -138,9 +147,9 @@ class CardController extends AbstractController
     /**
      * @Route("/card/deck/deal/{players}/{cards1}", name="deal")
      */
-    public function drawPl(): Response
+    public function drawPl(SessionInterface $session): Response
     {
-        $data = $this->getCardData($this->get('session'));
+        $data = $this->getCardData($session);
         $data['title'] = 'Graphic dice rolled many times';
 
         return $this->render('card/deal.html.twig', $data);
@@ -160,9 +169,9 @@ class CardController extends AbstractController
     /**
      * @Route("/card/deck2", name="deck2")
      */
-    public function deck2(): Response
+    public function deck2(SessionInterface $session): Response
     {
-        $data = $this->getCardData($this->get('session'));
+        $data = $this->getCardData($session);
         $data['title'] = 'Graphic dice rolled many times';
         $data['cards2'] = (new CardJ())->initEnglishDeck2Jokers();
 

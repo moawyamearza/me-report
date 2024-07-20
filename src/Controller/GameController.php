@@ -33,6 +33,7 @@ class GameController extends AbstractController
         }
         return $this->render('Game/landdningssida.html.twig');
     }
+
     /**
      * @Route(
      *       "/Game/start",
@@ -47,9 +48,11 @@ class GameController extends AbstractController
         $newround = $request->request->get('newround');
         $draw  = $request->request->get('draw');
         $stop = $request->request->get('stop');
+    
         if ($newround) {
             $session->clear();
         }
+    
         $cardGraphic = new CardG();
         $drawnCards = $session->get('drawn_cards', []);
         $cards = $session->get('cards', null);
@@ -58,37 +61,49 @@ class GameController extends AbstractController
         $cardsbank = $session->get('cardsbank', null);
         $sumValuebank = $session->get('sum_valuebank', 0);
         $gamefinshed = false;
+    
         if ($draw) {
-            $result = $cardGraphic->drawCards($cards, $drawnCards);
-            $drawnCards = $result['hand'];
-            $sumValue = $result['sumValue'];
-            $cards = $result['cards'];
-            $session->set('drawn_cards', $drawnCards);
-            $session->set('sum_value', $sumValue);
-            $session->set('cards', $cards);
-        } elseif ($stop) {
-            for ($i = 1; $i <= 100; $i++) {
-                $resultbank = $cardGraphic->drawCardsbank($cardsbank, $drawnCardsbsnk);
-                $drawnCardsbsnk = $resultbank['hand'];
-                $sumValuebank = $resultbank['sumValue'];
-                $cardsbank = $resultbank['cards'];
-                $session->set('drawn_cardsbank', $drawnCardsbsnk);
-                $session->set('sum_valuebank', $sumValuebank);
-                $session->set('cardsbank', $cardsbank);
+            if (is_array($cards) || is_null($cards)) {
+                $drawnCards = is_array($drawnCards) ? $drawnCards : [];
+                $result = $cardGraphic->drawCards($cards, $drawnCards);
+                $drawnCards = $result['hand'];
+                $sumValue = $result['sumValue'];
+                $cards = $result['cards'];
+                $session->set('drawn_cards', $drawnCards);
+                $session->set('sum_value', $sumValue);
+                $session->set('cards', $cards);
             }
-            $gamefinshed = true;
+        } elseif ($stop) {
+                for ($i = 1; $i <= 100; $i++) {
+                    if (is_array($cardsbank) || is_null($cardsbank)) {
+                        if (is_array($drawnCardsbsnk)) {
+                        $resultbank = $cardGraphic->drawCardsbank($cardsbank, $drawnCardsbsnk);
+                        $drawnCardsbsnk = $resultbank['hand'];
+                        $sumValuebank = $resultbank['sumValue'];
+                        $cardsbank = $resultbank['cardsbank'];
+                        $session->set('drawn_cardsbank', $drawnCardsbsnk);
+                        $session->set('sum_valuebank', $sumValuebank);
+                        $session->set('cardsbank', $cardsbank);
+                    }
+                }
+                $gamefinshed = true;
+            }
         }
+    
         $data = [
             'new' => $drawnCards,
             'valuesum' => $sumValue,
             'newbank' => $drawnCardsbsnk,
             'valuesumBanken' => $sumValuebank,
             'gamefinshed' => $gamefinshed,
-            'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5,]),
-            'link_to_deal' => $this->generateUrl('deal', ['players' => 4,'cards1' => 5,]),
+            'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5]),
+            'link_to_deal' => $this->generateUrl('deal', ['players' => 4, 'cards1' => 5]),
         ];
+    
         return $this->render('Game/game.html.twig', $data);
     }
+    
+
     /**
     * @Route(
     *       "/Game/doc",
@@ -102,6 +117,7 @@ class GameController extends AbstractController
     ): Response {
         return $this->render('Game/doc.html.twig');
     }
+
     /**
      * @Route(
      *       "/api/game",
@@ -112,8 +128,8 @@ class GameController extends AbstractController
     public function getGameStateJson(Request $request, SessionInterface $session): JsonResponse
     {
         $gameState = [
-            'new' => $session->get("drawn_cards") ?? array(),
-            'newBanken' => $session->get("drawn_cardsbank") ?? array(),
+            'new' => $session->get("drawn_cards") ?? [],
+            'newBanken' => $session->get("drawn_cardsbank") ?? [],
             'valueSum' => $session->get("sum_value") ?? 0,
             'valueSumBanken' => $session->get("sum_valuebank") ?? 0,
         ];

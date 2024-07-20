@@ -79,59 +79,59 @@ class CardGraphic
         ];
     }
 
-    /**
-    * Draws cards from the deck.
-    *
-    * @param array<string, array<string>>|null $cards1 The deck of cards to draw from.
-    * @param array<array<string>> $drawnCards The array to store drawn cards.
-    *
-    * @return array<string, mixed> The updated state after drawing cards.
-    */
-    public function drawCards($cards1, $drawnCards)
-    {
-        if ($cards1 === null) {
-            $this->shuffleDeck();
-            $cards1 = $this->cards;
-        }
-        $sumValue = array_sum(array_column($drawnCards, 1));
-        if (!empty($cards1) && $sumValue < 21) {
-            $cardKey = array_key_first($cards1);
-            $card = $cards1[$cardKey];
-            unset($cards1[$cardKey]);
-            array_push($drawnCards, $card);
-        }
-
-        $sumValue = array_sum(array_column($drawnCards, 1));
-
-        return ['hand' => $drawnCards, 'cards' => $cards1, 'sumValue' => $sumValue];
-    }
-
-    /**
-     * Draws cards from the deck.
+   /**
+     * Draw cards and update hand and sumValue.
      *
-     * @param array<string, array<string>>|null $cards1 The deck of cards to draw from.
-     * @param array<array<string>> $drawnCards The array to store drawn cards.
+     * @param array<string, array<string>>|null $cards
+     * @param array<array<string>> $drawnCards
      *
-     * @return array<string, mixed> The updated state after drawing cards.
+     * @return array<string, mixed>
      */
-    public function drawCardsbank($cards1, $drawnCards)
+    public function drawCards(?array $cards, array $drawnCards): array
     {
-        if ($cards1 === null) {
+        if ($cards === null) {
             $this->shuffleDeck();
-            $cards1 = $this->cards;
+            $cards = $this->cards;
         }
         $sumValue = array_sum(array_column($drawnCards, 1));
-        if (!empty($cards1) && $sumValue < 19) {
-            $cardKey = array_key_first($cards1);
-            $card = $cards1[$cardKey];
-            unset($cards1[$cardKey]);
+        if (!empty($cards) && $sumValue < 21) {
+            $cardKey = array_key_first($cards);
+            $card = $cards[$cardKey];
+            unset($cards[$cardKey]);
             array_push($drawnCards, $card);
         }
 
         $sumValue = array_sum(array_column($drawnCards, 1));
 
-        return ['hand' => $drawnCards, 'cards' => $cards1, 'sumValue' => $sumValue];
+        return ['hand' => $drawnCards, 'cards' => $cards, 'sumValue' => $sumValue];
     }
+
+    /**
+     * Draw cards and update hand and sumValue.
+     *
+     * @param array<string, array<string>>|null $cardsbank
+     * @param array<array<string>> $drawnCardsbsnk
+     * @return array<string, mixed>
+     */
+    public function drawCardsbank(?array $cardsbank, array $drawnCardsbsnk): array
+    {
+        if ($cardsbank === null) {
+            $this->shuffleDeck();
+            $cardsbank = $this->cards;
+        }
+        $sumValue = array_sum(array_column($drawnCardsbsnk, 1));
+        if (!empty($cardsbank) && $sumValue < 19) {
+            $cardKey = array_key_first($cardsbank);
+            $card = $cardsbank[$cardKey];
+            unset($cardsbank[$cardKey]);
+            array_push($drawnCardsbsnk, $card);
+        }
+
+        $sumValue = array_sum(array_column($drawnCardsbsnk, 1));
+
+        return ['hand' => $drawnCardsbsnk, 'cardsbank' => $cardsbank, 'sumValue' => $sumValue];
+    }
+
     /**
      * Shuffles the deck of cards.
      */
@@ -146,7 +146,6 @@ class CardGraphic
         $this->cards = $shuffledDeck;
     }
 }
-
 /**
  * Class Card
  *
