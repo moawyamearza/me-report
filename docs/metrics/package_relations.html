@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content content-first">
         <div class="report-details">
-            Created at 2024-07-19 14:40:07        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2024-07-20 19:24:00        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
         
@@ -262,6 +262,24 @@
 
     var relations = [
     {
+        "name": "App\\Form",
+        "size": 3000,
+        "relations": [
+            "Symfony\\Component\\Form",
+            "Symfony\\Component\\OptionsResolver"
+        ]
+    },
+    {
+        "name": "Symfony\\Component\\Form",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "Symfony\\Component\\OptionsResolver",
+        "size": 3000,
+        "relations": []
+    },
+    {
         "name": "App",
         "size": 3000,
         "relations": [
@@ -293,8 +311,9 @@
             "Symfony\\Component\\HttpFoundation\\Session",
             "App\\Card",
             "Doctrine\\ORM",
-            "App\\Repository",
-            "App\\Entity"
+            "Doctrine\\Persistence",
+            "App\\Entity",
+            "App\\Repository"
         ]
     },
     {
@@ -323,6 +342,11 @@
         "relations": []
     },
     {
+        "name": "Doctrine\\Persistence",
+        "size": 3000,
+        "relations": []
+    },
+    {
         "name": "App\\Repository",
         "size": 3000,
         "relations": [
@@ -332,11 +356,6 @@
     },
     {
         "name": "Doctrine\\Bundle\\DoctrineBundle\\Repository",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "Doctrine\\Persistence",
         "size": 3000,
         "relations": []
     }

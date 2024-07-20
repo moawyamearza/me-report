@@ -8,21 +8,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Booklib;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Repository\BooklibRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use App\Form\BookType;
-
+use App\Card\BookService;
 
 class LibraryController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
+    private BookService $bookService;
 
-    public function __construct( EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(BookService $bookService) {
+        $this->bookService = $bookService;
     }
+
 
     #[Route('/library', name: 'app_library')]
     public function index(): Response
@@ -36,7 +35,6 @@ class LibraryController extends AbstractController
         Request $request,
         ManagerRegistry $doctrine
     ): Response {
-        $entityManager = $doctrine->getManager();
 
         $Books = new Booklib();
 
@@ -45,8 +43,7 @@ class LibraryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($Books);
-            $entityManager->flush();
+            $this->bookService->saveBook($Books);
             return $this->redirectToRoute('library_show_all_books');
         }
 
@@ -83,8 +80,6 @@ class LibraryController extends AbstractController
     #[Route('/library/edit/{id}', name: 'library_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, int $id, BooklibRepository $booklibRepository, ManagerRegistry $doctrine): Response
     {
-        $entityManager = $doctrine->getManager();
-
         $book = $booklibRepository->find($id);
         if (!$book) {
             throw $this->createNotFoundException('The book does not exist');
@@ -96,8 +91,7 @@ class LibraryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($book);
-            $entityManager->flush();
+            $this->bookService->saveBook($book);
             return $this->redirectToRoute('library_show_all_books');
         }
 
