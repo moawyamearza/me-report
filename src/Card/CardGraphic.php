@@ -79,14 +79,14 @@ class CardGraphic
         ];
     }
 
-   /**
-     * Draw cards and update hand and sumValue.
-     *
-     * @param array<string, array<string>>|null $cards
-     * @param array<array<string>> $drawnCards
-     *
-     * @return array<string, mixed>
-     */
+    /**
+      * Draw cards and update hand and sumValue.
+      *
+      * @param array<string, array<string>>|null $cards
+      * @param array<array<string>> $drawnCards
+      *
+      * @return array<string, mixed>
+      */
     public function drawCards(?array $cards, array $drawnCards): array
     {
         if ($cards === null) {

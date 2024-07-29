@@ -17,9 +17,14 @@ use App\Card\BookService;
 class LibraryController extends AbstractController
 {
     private BookService $bookService;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(BookService $bookService) {
+
+    public function __construct(BookService $bookService, EntityManagerInterface $entityManager)
+    {
         $this->bookService = $bookService;
+        $this->entityManager = $entityManager;
+
     }
 
 

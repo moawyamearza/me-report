@@ -90,9 +90,54 @@
 
     <p>Hur det kommer att påverka mätvärdena:<br>
     Genom att fixa dessa issues bör koden bli mer robust och lättare att underhålla, vilket kan förbättra kodens kvalitetsindex.</p>
+
+    <h4>Öka kodtäckning:</h4>
+    <p>Vad jag tänker göra:<br>
+    Jag kommer att skriva fler enhetstester för att säkerställa att fler delar av koden är testade.</p>
+
+    <p>Varför jag väljer dem:<br>
+    Högre kodtäckning innebär att fler delar av koden är verifierade och fungerar som förväntat, vilket minskar risken för buggar.</p>
+
+    <p>Hur det kommer att påverka mätvärdena:<br>
+    Det bör öka kodtäckningen och förbättra stabiliteten och tillförlitligheten hos koden.</p>
+
+    <p>Åtgärder:<br>
+    1. Skriv enhetstester för varje offentlig metod i dina klasser.<br>
+    2. Använd testverktyg som PHPUnit för att köra och verifiera testerna.</p>
+
+    <h4>Minska komplexiteten i class/metod:</h4>
+    <p>Vad jag tänker göra:<br>
+    Jag kommer att bryta ner komplexa metoder och klasser i mindre, mer hanterbara delar.</p>
+
+    <p>Varför jag väljer dem:<br>
+    Hög komplexitet gör koden svår att förstå och underhålla. Genom att minska komplexiteten kan vi förbättra läsbarheten och underhållbarheten.</p>
+
+    <p>Hur det kommer att påverka mätvärdena:<br>
+    Det bör leda till lägre cyclomatic complexity och förbättrade kvalitetsmätvärden.</p>
+
+    <p>Åtgärder:<br>
+    1. Dela upp långa metoder i mindre hjälpfunktioner.<br>
+    2. Skapa serviceklasser för att hantera specifika logikområden.</p>
+    <h4>Analysera Rapporterna:</h4>
+
+    <p>Efter att ha implementerat förbättringarna, kör analysverktyg som <code>phpmetrics</code> och <code>Scrutinizer</code> för att se effekten av förbättringarna.</p>
+
+    <p>Före förbättringar:</p>
+    <ul>
+        <li>Kodkomplexitet: Hög</li>
+        <li>Kodtäckning: Låg</li>
+        <li>Issues: Många</li>
+    </ul>
+
+    <p>Efter förbättringar:</p>
+    <ul>
+        <li>Kodkomplexitet: Lägre</li>
+        <li>Kodtäckning: Högre</li>
+        <li>Issues: Färre</li>
+    </ul>
+
+    <p>Du kan nu köra kommandona för att generera rapporter och jämföra resultaten.</p>
     
-    <h4>Minska Komplexiteten i Class/Metod:</h4>
-    <h4>Minska Komplexiteten i Class/Metod:</h4>
 
 </div>
 {% endblock %}

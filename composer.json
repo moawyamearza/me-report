@@ -63,12 +63,14 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "App\\Card\\": "src/Card/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "App\\Tests\\": "tests/"
+            
         }
     },
     "replace": {

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Card\DeckWith2Jokers as CardJ;
 
 class CardController extends AbstractController
-{   
+{
     /**
      * @param SessionInterface $session
      * @return array<string, mixed>

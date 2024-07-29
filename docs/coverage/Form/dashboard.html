@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for /home/moawya/dbwebb-kurser/mvc/me/report/src/Entity</title>
+  <title>Dashboard for /home/moawya/dbwebb-kurser/mvc/me/report/src/Form</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../_css/bootstrap.min.css?v=9.2.31" rel="stylesheet" type="text/css">
   <link href="../_css/nv.d3.min.css?v=9.2.31" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
       <nav aria-label="breadcrumb">
        <ol class="breadcrumb">
          <li class="breadcrumb-item"><a href="../index.html">/home/moawya/dbwebb-kurser/mvc/me/report/src</a></li>
-         <li class="breadcrumb-item"><a href="index.html">Entity</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Form</a></li>
          <li class="breadcrumb-item active">(Dashboard)</li>
 
        </ol>
@@ -58,7 +58,7 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Booklib.php.html#9">App\Entity\Booklib</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BookType.php.html#12">App\Form\BookType</a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -112,15 +112,8 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Booklib.php.html#29"><abbr title="App\Entity\Booklib::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Booklib.php.html#34"><abbr title="App\Entity\Booklib::getBookname">getBookname</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Booklib.php.html#39"><abbr title="App\Entity\Booklib::setBookname">setBookname</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Booklib.php.html#46"><abbr title="App\Entity\Booklib::getIsbn">getIsbn</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Booklib.php.html#51"><abbr title="App\Entity\Booklib::setIsbn">setIsbn</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Booklib.php.html#58"><abbr title="App\Entity\Booklib::getWriter">getWriter</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Booklib.php.html#63"><abbr title="App\Entity\Booklib::setWriter">setWriter</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Booklib.php.html#70"><abbr title="App\Entity\Booklib::getImage">getImage</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Booklib.php.html#75"><abbr title="App\Entity\Booklib::setImage">setImage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BookType.php.html#14"><abbr title="App\Form\BookType::buildForm">buildForm</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BookType.php.html#23"><abbr title="App\Form\BookType::configureOptions">configureOptions</abbr></a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -183,7 +176,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([9,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
+      .datum(getCoverageDistributionData([2,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -233,7 +226,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[0,9,"<a href=\"Booklib.php.html#9\">App\\Entity\\Booklib<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[0,2,"<a href=\"BookType.php.html#12\">App\\Form\\BookType<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -257,7 +250,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[0,1,"<a href=\"Booklib.php.html#29\">App\\Entity\\Booklib::getId<\/a>"],[0,1,"<a href=\"Booklib.php.html#34\">App\\Entity\\Booklib::getBookname<\/a>"],[0,1,"<a href=\"Booklib.php.html#39\">App\\Entity\\Booklib::setBookname<\/a>"],[0,1,"<a href=\"Booklib.php.html#46\">App\\Entity\\Booklib::getIsbn<\/a>"],[0,1,"<a href=\"Booklib.php.html#51\">App\\Entity\\Booklib::setIsbn<\/a>"],[0,1,"<a href=\"Booklib.php.html#58\">App\\Entity\\Booklib::getWriter<\/a>"],[0,1,"<a href=\"Booklib.php.html#63\">App\\Entity\\Booklib::setWriter<\/a>"],[0,1,"<a href=\"Booklib.php.html#70\">App\\Entity\\Booklib::getImage<\/a>"],[0,1,"<a href=\"Booklib.php.html#75\">App\\Entity\\Booklib::setImage<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[0,1,"<a href=\"BookType.php.html#14\">App\\Form\\BookType::buildForm<\/a>"],[0,1,"<a href=\"BookType.php.html#23\">App\\Form\\BookType::configureOptions<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);

@@ -8,130 +8,84 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use App\Card\CardGraphic as CardG;
+use App\Service\GameService;
 
 class GameController extends AbstractController
 {
+    private const SESSION_DRAWN_CARDS = 'drawn_cards';
+    private const SESSION_SUM_VALUE = 'sum_value';
+    private const SESSION_DRAWN_CARDS_BANK = 'drawn_cardsbank';
+    private const SESSION_SUM_VALUE_BANK = 'sum_valuebank';
+    private const SESSION_GAME_FINISHED = 'game_finished';
+
+    private GameService $gameService;
+
+    public function __construct(GameService $gameService)
+    {
+        $this->gameService = $gameService;
+    }
+
     /**
-    * @Route(
-    *       "/Game",
-    *       name="game",
-    *       methods={"GET","HEAD","post"}
-    * )
+    * @Route("/Game", name="game", methods={"GET","HEAD","POST"})
     */
-    public function start(
-        Request $request,
-        SessionInterface $session
-    ): Response {
-        $start  = $request->request->get('start');
-        $doc  = $request->request->get('dokumentation');
-        if ($start) {
+    public function start(Request $request, SessionInterface $session): Response
+    {
+        if ($request->request->get('start')) {
             $session->clear();
             return $this->redirectToRoute('Startgame');
-        } elseif ($doc) {
+        } elseif ($request->request->get('dokumentation')) {
             return $this->redirectToRoute('doc');
         }
         return $this->render('Game/landdningssida.html.twig');
     }
 
     /**
-     * @Route(
-     *       "/Game/start",
-     *       name="Startgame",
-     *       methods={"GET","HEAD","POST"}
-     * )
+     * @Route("/Game/start", name="Startgame", methods={"GET","HEAD","POST"})
      */
-    public function gamepross(
-        Request $request,
-        SessionInterface $session
-    ): Response {
-        $newround = $request->request->get('newround');
-        $draw  = $request->request->get('draw');
-        $stop = $request->request->get('stop');
-    
-        if ($newround) {
+    public function gameProcess(Request $request, SessionInterface $session): Response
+    {
+        if ($request->request->get('newround')) {
             $session->clear();
         }
-    
-        $cardGraphic = new CardG();
-        $drawnCards = $session->get('drawn_cards', []);
-        $cards = $session->get('cards', null);
-        $sumValue = $session->get('sum_value', 0);
-        $drawnCardsbsnk = $session->get('drawn_cardsbank', []);
-        $cardsbank = $session->get('cardsbank', null);
-        $sumValuebank = $session->get('sum_valuebank', 0);
-        $gamefinshed = false;
-    
-        if ($draw) {
-            if (is_array($cards) || is_null($cards)) {
-                $drawnCards = is_array($drawnCards) ? $drawnCards : [];
-                $result = $cardGraphic->drawCards($cards, $drawnCards);
-                $drawnCards = $result['hand'];
-                $sumValue = $result['sumValue'];
-                $cards = $result['cards'];
-                $session->set('drawn_cards', $drawnCards);
-                $session->set('sum_value', $sumValue);
-                $session->set('cards', $cards);
-            }
-        } elseif ($stop) {
-                for ($i = 1; $i <= 100; $i++) {
-                    if (is_array($cardsbank) || is_null($cardsbank)) {
-                        if (is_array($drawnCardsbsnk)) {
-                        $resultbank = $cardGraphic->drawCardsbank($cardsbank, $drawnCardsbsnk);
-                        $drawnCardsbsnk = $resultbank['hand'];
-                        $sumValuebank = $resultbank['sumValue'];
-                        $cardsbank = $resultbank['cardsbank'];
-                        $session->set('drawn_cardsbank', $drawnCardsbsnk);
-                        $session->set('sum_valuebank', $sumValuebank);
-                        $session->set('cardsbank', $cardsbank);
-                    }
-                }
-                $gamefinshed = true;
+
+        if ($request->request->get('draw')) {
+            $this->gameService->drawCard($session);
+        } elseif ($request->request->get('stop')) {
+            for ($i = 0; $i < 100; $i++) {
+                $this->gameService->drawBankCards($session);
+                $session->set(self::SESSION_GAME_FINISHED, true);
             }
         }
-    
-        $data = [
-            'new' => $drawnCards,
-            'valuesum' => $sumValue,
-            'newbank' => $drawnCardsbsnk,
-            'valuesumBanken' => $sumValuebank,
-            'gamefinshed' => $gamefinshed,
+
+        return $this->render('Game/game.html.twig', [
+            'new' => $session->get(self::SESSION_DRAWN_CARDS, []),
+            'valuesum' => $session->get(self::SESSION_SUM_VALUE, 0),
+            'newbank' => $session->get(self::SESSION_DRAWN_CARDS_BANK, []),
+            'valuesumBanken' => $session->get(self::SESSION_SUM_VALUE_BANK, 0),
+            'gamefinshed' => $session->get(self::SESSION_GAME_FINISHED, false),
             'link_to_drawnum' => $this->generateUrl('drawnum', ['numDraw' => 5]),
             'link_to_deal' => $this->generateUrl('deal', ['players' => 4, 'cards1' => 5]),
-        ];
-    
-        return $this->render('Game/game.html.twig', $data);
+        ]);
     }
-    
 
     /**
-    * @Route(
-    *       "/Game/doc",
-    *       name="doc",
-    *       methods={"GET","HEAD","post"}
-    * )
+    * @Route("/Game/doc", name="doc", methods={"GET","HEAD","POST"})
     */
-    public function doc(
-        Request $request,
-        SessionInterface $session
-    ): Response {
+    public function doc(): Response
+    {
         return $this->render('Game/doc.html.twig');
     }
 
     /**
-     * @Route(
-     *       "/api/game",
-     *       name="api_game",
-     *       methods={"GET","HEAD","post"}
-     * )
+     * @Route("/api/game", name="api_game", methods={"GET","HEAD","POST"})
      */
-    public function getGameStateJson(Request $request, SessionInterface $session): JsonResponse
+    public function getGameStateJson(SessionInterface $session): JsonResponse
     {
         $gameState = [
-            'new' => $session->get("drawn_cards") ?? [],
-            'newBanken' => $session->get("drawn_cardsbank") ?? [],
-            'valueSum' => $session->get("sum_value") ?? 0,
-            'valueSumBanken' => $session->get("sum_valuebank") ?? 0,
+            'new' => $session->get(self::SESSION_DRAWN_CARDS, []),
+            'newBanken' => $session->get(self::SESSION_DRAWN_CARDS_BANK, []),
+            'valueSum' => $session->get(self::SESSION_SUM_VALUE, 0),
+            'valueSumBanken' => $session->get(self::SESSION_SUM_VALUE_BANK, 0),
         ];
         return new JsonResponse($gameState);
     }
