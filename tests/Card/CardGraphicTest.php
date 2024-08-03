@@ -45,10 +45,10 @@ class CardGraphicTest extends TestCase
     public function testDrawCardsbank(): void
     {
         $initialDeck = $this->cardGraphic->drawCardsbank(null, []);
-        $this->assertCount(51, $initialDeck['cards']); // One card is drawn
+        $this->assertCount(51, $initialDeck['cardsbank']); // One card is drawn
 
         $drawnCards = [];
-        $updatedState = $this->cardGraphic->drawCardsbank($initialDeck['cards'], $drawnCards);
+        $updatedState = $this->cardGraphic->drawCardsbank($initialDeck['cardsbank'], $drawnCards);
         $this->assertLessThan(19, $updatedState['sumValue']);
     }
 

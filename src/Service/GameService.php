@@ -7,12 +7,12 @@ use App\Card\CardGraphic as CardG;
 
 class GameService
 {
-    private const SESSION_DRAWN_CARDS = 'drawn_cards';
-    private const SESSION_SUM_VALUE = 'sum_value';
-    private const SESSION_CARDS = 'cards';
-    private const SESSION_DRAWN_CARDS_BANK = 'drawn_cardsbank';
-    private const SESSION_SUM_VALUE_BANK = 'sum_valuebank';
-    private const SESSION_CARDS_BANK = 'cardsbank';
+    public const SESSION_DRAWN_CARDS = 'drawn_cards';
+    public const SESSION_SUM_VALUE = 'sum_value';
+    public const SESSION_CARDS = 'cards';
+    public const SESSION_DRAWN_CARDS_BANK = 'drawn_cardsbank';
+    public const SESSION_SUM_VALUE_BANK = 'sum_valuebank';
+    public const SESSION_CARDS_BANK = 'cardsbank';
 
     private CardG $cardGraphic;
 
