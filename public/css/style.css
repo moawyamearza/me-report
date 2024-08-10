@@ -395,3 +395,30 @@ h3 {
 h4 {
   color: #ffab6e;
 }
+
+.poker-square {
+  display: grid;
+  grid-template-columns: repeat(5, 70px); /* Adjust width to fit card size */
+  grid-template-rows: repeat(5, 98px);   /* Adjust height to fit card size */
+  gap: 5px;
+  margin: 20px auto;
+}
+
+.box {
+  width: 70px;  /* Set the width to fit a playing card */
+  height: 98px; /* Set the height to fit a playing card */
+  background-color: #ffffff;
+  border: 2px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 89px;
+  margin: 20px;
+  
+}
+
+.box:hover {
+  background-color: #f0f0f0;
+}

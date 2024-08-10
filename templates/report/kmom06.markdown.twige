@@ -1,0 +1,10 @@
+Kmom06
+======
+PHPmetrics är ett mycket användbart verktyg för att analysera kvaliteten på kod i PHP-projekt. Detta är ett brett, enda mått för din kodbas som hjälper dig att upptäcka potentiella problem och missförstånd.
+
+
+Första intrycket av Scrutinizer och dess märken
+Det första intrycket av Scrutinizer är att det är heltäckande och flexibelt. Märken som indikerar kodkvalitet och täckning är visuellt tilltalande och lätta att förstå, vilket gör dem användbara för att kommunicera kodkrav till teammedlemmar och intressenter.
+
+TIL
+För närvarande kan kraftfulla PHP-mått analysera PHP-kodbas och kan integreras med en annan användare som Scrutinizer för att få en heltäckande bild av kodkvalitet och konsistens.

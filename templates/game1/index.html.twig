@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Card Play{% endblock %}
+
+{% block content %}
+
+<div class="game-board">
+
+
+    <h1>Poker Square</h1>
+    {% if lastcard is not null %}
+        <h2>Nytt kort:</h2>
+        <p class="info1" style="color:{{ lastcard.0 }}">{{ lastcard.2 }}</p>
+    {% endif %}
+    
+    <form method="post">
+        <input class="button" type="submit" name="newround" value="New Round">
+        <input class="button" type="{{ type }}" name="draw" value="Draw">
+        <div class="poker-square">
+            {% for i in 0..24 %}
+            {% set card = poker_square[i] %}
+                <form method="post" style="display:inline-block;">
+                    <button class="box" style="color:{{ card is not null ? card.0 : 'black' }}" type="submit" name="placeCard" value="{{ i }}">
+                        {% if poker_square[i] is not null %}
+                            {{ poker_square[i].2 }}
+                        {% endif %}                        
+                    </button>
+                </form>
+            {% endfor %}
+        </div>
+    </form>
+
+</div>
+{% endblock %}

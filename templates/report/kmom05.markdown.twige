@@ -1,2 +1,11 @@
 Kmom05
 ======
+Att jobba med Symfony och Doctrine gick överlag bra och jag lärde mig mycket om hur dessa verktyg kan förenkla utvecklingen av en webbaserad applikation.
+Min applikation var en enkel CRUD-applikation för att hantera användare och deras profiler.
+
+Byggandet
+Jag började med att definiera de entiteter jag behövde i Doctrine, vilket gjorde att jag snabbt kunde generera databasstrukturen. När jag byggde upp applikationen fokuserade jag på att följa de bästa praxis som rekommenderas av Symfony-dokumentationen.
+
+Att använda Doctrine ORM för att hantera CRUD-operationer (Create, Read, Update, Delete) gick relativt smidigt.
+Så här långt tycker jag att ORM är ett mycket bra verktyg för att abstrahera databasinteraktioner. Det gör att man kan arbeta med objekt och deras relationer snarare än att hantera rå SQL, vilket ofta leder till renare och mer underhållbar kod.
+För detta kmom lärde jag mig mycket om hur Symfony och Doctrine kan användas för att effektivisera utvecklingen av en webbapplikation och hur ORM kan göra interaktionen med databasen mer abstrakt och objektorienterad. Jag blev också mer medveten om hur viktigt det är att tänka på användargränssnittet och följa bästa praxis när man bygger applikationer med dessa verktyg.

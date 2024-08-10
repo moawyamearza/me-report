@@ -46,7 +46,7 @@ class GameServiceTest extends TestCase
         $this->sessionMock->expects($this->exactly(3))
             ->method('get')
             ->willReturnMap([
-                [self::SESSION_DRAWN_CARDS, [], []], // Handle all cases, including default return value
+                [self::SESSION_DRAWN_CARDS, [], []], 
                 [self::SESSION_CARDS, null, $initialCards],
                 [self::SESSION_SUM_VALUE, 0, 0]
             ]);
@@ -72,9 +72,9 @@ class GameServiceTest extends TestCase
     {
         // Arrange
         $drawnCardsBank = [];
-        $initialCardsBank = [['color' => 'black', 'value' => '5', 'form' => 'spade']]; // Example data
+        $initialCardsBank = [['color' => 'black', 'value' => '5', 'form' => 'spade']]; 
         $resultBank = [
-            'hand' => [['color' => 'red', 'value' => '10', 'form' => 'heart']], // Example drawn card for bank
+            'hand' => [['color' => 'red', 'value' => '10', 'form' => 'heart']], 
             'cardsbank' => [['color' => 'black', 'value' => '5', 'form' => 'spade']],
             'sumValue' => 17
         ];
@@ -82,7 +82,7 @@ class GameServiceTest extends TestCase
         $this->sessionMock->expects($this->exactly(3))
             ->method('get')
             ->willReturnMap([
-                [self::SESSION_DRAWN_CARDS_BANK, [], []], // Handle all cases, including default return value
+                [self::SESSION_DRAWN_CARDS_BANK, [], []], 
                 [self::SESSION_CARDS_BANK, null, $initialCardsBank],
                 [self::SESSION_SUM_VALUE_BANK, 0, 0]
             ]);
