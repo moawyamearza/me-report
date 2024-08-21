@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724280558">
-  <project timestamp="1724280558">
+<coverage generated="1724282290">
+  <project timestamp="1724282290">
     <file name="/home/moawya/dbwebb-kurser/mvc/me/report/src/Card/BookService.php">
       <class name="App\Card\BookService" namespace="global">
         <metrics complexity="2" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="5" coveredelements="0"/>
@@ -604,54 +604,54 @@
       <line num="177" type="stmt" count="1"/>
       <line num="183" type="method" name="isStraight" visibility="private" complexity="5" crap="10.83" count="1"/>
       <line num="185" type="stmt" count="1"/>
-      <line num="186" type="stmt" count="1"/>
       <line num="187" type="stmt" count="1"/>
       <line num="189" type="stmt" count="1"/>
-      <line num="190" type="stmt" count="1"/>
-      <line num="193" type="stmt" count="0"/>
-      <line num="194" type="stmt" count="0"/>
-      <line num="197" type="stmt" count="0"/>
-      <line num="198" type="stmt" count="0"/>
+      <line num="191" type="stmt" count="1"/>
+      <line num="192" type="stmt" count="1"/>
+      <line num="195" type="stmt" count="0"/>
+      <line num="196" type="stmt" count="0"/>
       <line num="199" type="stmt" count="0"/>
       <line num="200" type="stmt" count="0"/>
       <line num="201" type="stmt" count="0"/>
-      <line num="205" type="stmt" count="0"/>
-      <line num="214" type="method" name="isThreeOfAKind" visibility="private" complexity="1" crap="1" count="1"/>
-      <line num="216" type="stmt" count="1"/>
-      <line num="222" type="method" name="isTwoPair" visibility="private" complexity="1" crap="1" count="1"/>
-      <line num="224" type="stmt" count="1"/>
-      <line num="225" type="stmt" count="1"/>
-      <line num="231" type="method" name="isOnePair" visibility="private" complexity="1" crap="1" count="1"/>
-      <line num="233" type="stmt" count="1"/>
-      <line num="239" type="method" name="hasOfAKind" visibility="private" complexity="1" crap="1" count="1"/>
-      <line num="241" type="stmt" count="1"/>
-      <line num="242" type="stmt" count="1"/>
-      <line num="249" type="method" name="containsValues" visibility="private" complexity="1" crap="2" count="0"/>
-      <line num="251" type="stmt" count="0"/>
-      <line num="252" type="stmt" count="0"/>
-      <line num="255" type="method" name="sparaScore" visibility="public" complexity="2" crap="2.01" count="1"/>
-      <line num="258" type="stmt" count="1"/>
-      <line num="259" type="stmt" count="1"/>
-      <line num="260" type="stmt" count="0"/>
-      <line num="263" type="stmt" count="1"/>
+      <line num="202" type="stmt" count="0"/>
+      <line num="203" type="stmt" count="0"/>
+      <line num="207" type="stmt" count="0"/>
+      <line num="216" type="method" name="isThreeOfAKind" visibility="private" complexity="1" crap="1" count="1"/>
+      <line num="218" type="stmt" count="1"/>
+      <line num="224" type="method" name="isTwoPair" visibility="private" complexity="1" crap="1" count="1"/>
+      <line num="226" type="stmt" count="1"/>
+      <line num="227" type="stmt" count="1"/>
+      <line num="233" type="method" name="isOnePair" visibility="private" complexity="1" crap="1" count="1"/>
+      <line num="235" type="stmt" count="1"/>
+      <line num="241" type="method" name="hasOfAKind" visibility="private" complexity="1" crap="1" count="1"/>
+      <line num="243" type="stmt" count="1"/>
+      <line num="244" type="stmt" count="1"/>
+      <line num="251" type="method" name="containsValues" visibility="private" complexity="1" crap="2" count="0"/>
+      <line num="253" type="stmt" count="0"/>
+      <line num="254" type="stmt" count="0"/>
+      <line num="257" type="method" name="sparaScore" visibility="public" complexity="2" crap="2.01" count="1"/>
+      <line num="260" type="stmt" count="1"/>
+      <line num="261" type="stmt" count="1"/>
+      <line num="262" type="stmt" count="0"/>
       <line num="265" type="stmt" count="1"/>
       <line num="267" type="stmt" count="1"/>
       <line num="269" type="stmt" count="1"/>
-      <line num="275" type="method" name="getTopScores" visibility="public" complexity="2" crap="2.06" count="1"/>
-      <line num="278" type="stmt" count="1"/>
-      <line num="279" type="stmt" count="1"/>
-      <line num="280" type="stmt" count="0"/>
-      <line num="282" type="stmt" count="1"/>
-      <line num="285" type="method" name="isGridFull" visibility="public" complexity="4" crap="4.37" count="1"/>
-      <line num="288" type="stmt" count="1"/>
-      <line num="289" type="stmt" count="1"/>
-      <line num="290" type="stmt" count="0"/>
-      <line num="292" type="stmt" count="1"/>
-      <line num="293" type="stmt" count="1"/>
-      <line num="294" type="stmt" count="0"/>
-      <line num="297" type="stmt" count="1"/>
-      <metrics loc="300" ncloc="245" classes="1" methods="19" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="105" coveredstatements="70" elements="124" coveredelements="80"/>
+      <line num="271" type="stmt" count="1"/>
+      <line num="277" type="method" name="getTopScores" visibility="public" complexity="2" crap="2.06" count="1"/>
+      <line num="280" type="stmt" count="1"/>
+      <line num="281" type="stmt" count="1"/>
+      <line num="282" type="stmt" count="0"/>
+      <line num="284" type="stmt" count="1"/>
+      <line num="287" type="method" name="isGridFull" visibility="public" complexity="4" crap="4.37" count="1"/>
+      <line num="290" type="stmt" count="1"/>
+      <line num="291" type="stmt" count="1"/>
+      <line num="292" type="stmt" count="0"/>
+      <line num="294" type="stmt" count="1"/>
+      <line num="295" type="stmt" count="1"/>
+      <line num="296" type="stmt" count="0"/>
+      <line num="299" type="stmt" count="1"/>
+      <metrics loc="302" ncloc="248" classes="1" methods="19" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="105" coveredstatements="70" elements="124" coveredelements="80"/>
     </file>
-    <metrics files="15" loc="1513" ncloc="1264" classes="15" methods="86" coveredmethods="32" conditionals="0" coveredconditionals="0" statements="472" coveredstatements="208" elements="558" coveredelements="240"/>
+    <metrics files="15" loc="1515" ncloc="1267" classes="15" methods="86" coveredmethods="32" conditionals="0" coveredconditionals="0" statements="472" coveredstatements="208" elements="558" coveredelements="240"/>
   </project>
 </coverage>

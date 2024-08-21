@@ -46,7 +46,7 @@ class PokerSquareService
      */
     public function placeCard(SessionInterface $session, int $row, int $col): void
     {
-        /** @var array<int|null> $grid */
+
         $grid = $session->get(self::SESSION_POKER_SQUARE, array_fill(0, $this->size * $this->size, null));
         if (!is_array($grid)) {
             $grid = array_fill(0, $this->size * $this->size, null);
@@ -183,7 +183,9 @@ class PokerSquareService
     private function isStraight(array $hand): bool
     {
         $values = array_map('intval', array_column($hand, 1));
+        
         $values = array_unique(array_filter($values, fn($value) => $value > 0));
+        
         sort($values);
 
         if (count($values) < 5) {

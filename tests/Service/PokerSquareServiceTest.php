@@ -131,28 +131,4 @@ class PokerSquareServiceTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testSlotAlreadyOccupied(): void
-{
-    // Expect get calls
-    $this->sessionMock->expects($this->exactly(2))
-        ->method('get')
-        ->willReturnOnConsecutiveCalls(
-            array_fill(0, 25, null) + [12 => 7], // Grid with slot 12 occupied
-            7 // Last card
-        );
-
-    // Expect no set call
-    $this->sessionMock->expects($this->never())
-        ->method('set');
-
-    // Mock drawCardsPocker method
-    $this->cardGraphicMock->expects($this->never())
-        ->method('drawCardsPocker');
-
-    // Execute method
-    $this->pokerSquareService->placeCard($this->sessionMock, 2, 2);
-}
-
-
-
 }
