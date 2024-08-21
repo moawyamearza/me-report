@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724279309">
-  <project timestamp="1724279309">
+<coverage generated="1724280460">
+  <project timestamp="1724280460">
     <file name="/home/moawya/dbwebb-kurser/mvc/me/report/src/Card/BookService.php">
       <class name="App\Card\BookService" namespace="global">
         <metrics complexity="2" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="5" coveredelements="0"/>

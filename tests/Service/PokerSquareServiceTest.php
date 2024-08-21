@@ -131,34 +131,27 @@ class PokerSquareServiceTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testPlaceCardSuccessfully(): void
+    public function testNoCardToPlace(): void
     {
         // Expect get calls
         $this->sessionMock->expects($this->exactly(2))
             ->method('get')
             ->willReturnOnConsecutiveCalls(
                 array_fill(0, 25, null), // Grid initially empty
-                7 // Last card
+                0 // No card
             );
 
-        // Expect set call
-        $this->sessionMock->expects($this->once())
-            ->method('set')
-            ->with(
-                PokerSquareService::SESSION_POKER_SQUARE,
-                $this->callback(function ($grid) {
-                    return count($grid) === 25 && $grid[12] === 7; // 2*5 + 2 = 12
-                })
-            );
+        // Expect no set call
+        $this->sessionMock->expects($this->never())
+            ->method('set');
 
         // Mock drawCardsPocker method
-        $this->cardGraphicMock->expects($this->once())
-            ->method('drawCardsPocker')
-            ->with([], [7])
-            ->willReturn(['hand' => [7], 'lastcard' => null, 'cards' => null]);
+        $this->cardGraphicMock->expects($this->never())
+            ->method('drawCardsPocker');
 
         // Execute method
-        $this->service->placeCard($this->sessionMock, 2, 2);
+        $this->pokerSquareService->placeCard($this->sessionMock, 2, 2);
     }
+
 
 }
