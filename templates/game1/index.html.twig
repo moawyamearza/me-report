@@ -1,34 +1,84 @@
-{% extends "base.html.twig" %}
+{% extends "base1.html.twig" %}
 
 {% block title %}Card Play{% endblock %}
 
 {% block content %}
 
+
 <div class="game-board">
 
+    <div class="form-controls">
+        <h1>Poker Square</h1>
+        {% if lastcard is not null %}
+            <h2>Nytt kort:</h2>
+            <p class="info1" style="color:{{ lastcard.0 }}">{{ lastcard.2 }}</p>
+        {% endif %}
+        
+        <form method="post">
+            <input class="button" type="submit" name="newround" value="New Round">
+            <input class="button" type="{{ type }}" name="draw" value="Draw">
+        
+        </form>
+    </div>
 
-    <h1>Poker Square</h1>
-    {% if lastcard is not null %}
-        <h2>Nytt kort:</h2>
-        <p class="info1" style="color:{{ lastcard.0 }}">{{ lastcard.2 }}</p>
-    {% endif %}
-    
-    <form method="post">
-        <input class="button" type="submit" name="newround" value="New Round">
-        <input class="button" type="{{ type }}" name="draw" value="Draw">
-        <div class="poker-square">
-            {% for i in 0..24 %}
-            {% set card = poker_square[i] %}
-                <form method="post" style="display:inline-block;">
-                    <button class="box" style="color:{{ card is not null ? card.0 : 'black' }}" type="submit" name="placeCard" value="{{ i }}">
-                        {% if poker_square[i] is not null %}
-                            {{ poker_square[i].2 }}
-                        {% endif %}                        
-                    </button>
-                </form>
+    <table class="poker-square-table">
+        <tbody>
+            {% for row in 0..(size - 1) %}
+                <tr>
+                    {% for col in 0..(size - 1) %}
+                        {% set index = row * size + col %}
+                        {% set card = poker_square[index] %}
+                        <td>
+                            <form method="post" style="display:inline-block;">
+                                <button class="box" style="color:{{ card is not null ? card.0 : 'black' }}" type="submit" name="placeCard" value="{{ index }}">
+                                    {% if card is not null %}
+                                        {{ card.2 }}
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </td>
+                    {% endfor %}
+                    {% if poker_square|filter(v => v is not null)|length == size * size %}
+                        <td>
+                            {% set rowScores = scores.rowScores %}
+                            {% if row < rowScores|length %}
+                                {{ rowScores[row] }}
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                </tr>
             {% endfor %}
+        </tbody>
+        {% if poker_square|filter(v => v is not null)|length == size * size %}
+            <tfoot>
+                <tr>
+                    {% for col in 0..(size - 1) %}
+                        <td>
+                            {% set colScores = scores.colScores %}
+                            {% if col < colScores|length %}
+                                {{ colScores[col] }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                    <td>
+                        Total Score: {{ scores.totalScore }}
+                    </td>
+                </tr>
+            </tfoot>
+        {% endif %}
+        {% if game_over %}
+        <div id="nameModal" class="modal" style="display: block;">
+            <div class="modal-content">
+                <h2>Spelet är över!</h2>
+                <p>Din slutliga poäng är: {{ scores.totalScore }}</p>
+                <form method="post" action="{{ path('end_game') }}">
+                    <label for="name">Ange ditt namn:</label>
+                    <input type="text" id="name" name="name" required>
+                    <input type="submit" value="Spara poäng">
+                </form>
+            </div>
         </div>
-    </form>
-
+    {% endif %}
+    </table>
 </div>
 {% endblock %}

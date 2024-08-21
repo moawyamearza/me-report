@@ -24,8 +24,15 @@ class GameService
     public function drawCard(SessionInterface $session): void
     {
         $drawnCards = $session->get(self::SESSION_DRAWN_CARDS, []);
-        $cards = $session->get(self::SESSION_CARDS, null);
+        $cards = $session->get(self::SESSION_CARDS, []);
         $sumValue = $session->get(self::SESSION_SUM_VALUE, 0);
+
+        if (!is_array($cards)) {
+            $cards = [];
+        }
+        if (!is_array($drawnCards)) {
+            $drawnCards = [];
+        }
 
         $result = $this->cardGraphic->drawCards($cards, $drawnCards);
         $session->set(self::SESSION_DRAWN_CARDS, $result['hand']);
@@ -36,14 +43,19 @@ class GameService
     public function drawBankCards(SessionInterface $session): void
     {
         $drawnCardsBank = $session->get(self::SESSION_DRAWN_CARDS_BANK, []);
-        $cardsBank = $session->get(self::SESSION_CARDS_BANK, null);
+        $cardsBank = $session->get(self::SESSION_CARDS_BANK, []);
         $sumValueBank = $session->get(self::SESSION_SUM_VALUE_BANK, 0);
 
+        if (!is_array($cardsBank)) {
+            $cardsBank = [];
+        }
+        if (!is_array($drawnCardsBank)) {
+            $drawnCardsBank = [];
+        }
 
         $resultBank = $this->cardGraphic->drawCardsbank($cardsBank, $drawnCardsBank);
         $session->set(self::SESSION_DRAWN_CARDS_BANK, $resultBank['hand']);
         $session->set(self::SESSION_SUM_VALUE_BANK, $resultBank['sumValue']);
         $session->set(self::SESSION_CARDS_BANK, $resultBank['cardsbank']);
-
     }
 }

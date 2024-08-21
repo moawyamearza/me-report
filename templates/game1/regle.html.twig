@@ -1,0 +1,48 @@
+{% extends "base1.html.twig" %}
+
+{% block title %}Card Play{% endblock %}
+
+{% block content %}
+
+<h1>Leaderboard</h1>
+<div class="navbar">
+
+
+<h1>Regler för Poker Square</h1>
+    <p>Poker Square är ett kortspel som kombinerar element från poker och ett rutnät. Spelet spelas vanligtvis med ett standardkortlek och målet är att skapa den bästa möjliga pokerhanden i varje rad och kolumn av ett 5x5-rutnät.</p>
+
+    <h2>Spelets Målsättning</h2>
+    <p>Syftet med Poker Square är att fylla ett 5x5-rutnät med kort så att varje rad och kolumn representerar en pokerhand. Poängen baseras på pokerhändernas värde.</p>
+
+    <h2>Grundläggande Regler</h2>
+    <ul class="rule-list">
+        <li><strong>Rutnät:</strong> Spelbrädet är ett 5x5-rutnät.</li>
+        <li><strong>Kort:</strong> Använd en standard kortlek utan jokrar. Korten är utslagna en efter en.</li>
+        <li><strong>Placering av Kort:</strong> Kort dras och placeras i rutnätet genom att klicka på en ruta. Du kan bara placera ett kort i en ruta om den är tom.</li>
+        <li><strong>Rader och Kolumner:</strong> Varje rad och kolumn i rutnätet måste fyllas med kort. När alla kort är på plats, bedöms poängen baserat på pokerhändernas värde i varje rad och kolumn.</li>
+        <li><strong>Handvärden:</strong> Pokerhänder rangordnas som följer, från högsta till lägsta:
+            <ul>
+                <li>Royal Flush</li>
+                <li>Straight Flush</li>
+                <li>Four of a Kind</li>
+                <li>Full House</li>
+                <li>Flush</li>
+                <li>Straight</li>
+                <li>Three of a Kind</li>
+                <li>Two Pair</li>
+                <li>One Pair</li>
+                <li>High Card</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Poängsättning</h2>
+    <p>Poäng tilldelas baserat på pokerhandens rangordning. Högre händer ger fler poäng. Efter att rutnätet är fyllt kommer varje rad och kolumn att bedömas, och den totala poängen sammanställs.</p>
+
+    <h2>Slutspel</h2>
+    <p>När hela rutnätet är fyllt och alla kort är placerade, beräknas poängen för varje rad och kolumn. Den totala poängen är summan av alla poäng. Vinnaren är den spelare med den högsta poängen.</p>
+
+    <p>Lycka till och ha kul med Poker Square!</p>
+<
+
+{% endblock %}

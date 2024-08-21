@@ -1,6 +1,26 @@
 Search.appendIndex(
     [
                 {
+            "fqsen": "\\App\\Card\\BookService",
+            "name": "BookService",
+            "summary": "",
+            "url": "classes/App-Card-BookService.html"
+        },                {
+            "fqsen": "\\App\\Card\\BookService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Card-BookService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Card\\BookService\u003A\u003AsaveBook\u0028\u0029",
+            "name": "saveBook",
+            "summary": "",
+            "url": "classes/App-Card-BookService.html#method_saveBook"
+        },                {
+            "fqsen": "\\App\\Card\\BookService\u003A\u003A\u0024entityManager",
+            "name": "entityManager",
+            "summary": "",
+            "url": "classes/App-Card-BookService.html#property_entityManager"
+        },                {
             "fqsen": "\\App\\Card\\CardGraphic",
             "name": "CardGraphic",
             "summary": "Class\u0020CardGraphic",
@@ -18,12 +38,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Card\\CardGraphic\u003A\u003AdrawCards\u0028\u0029",
             "name": "drawCards",
-            "summary": "Draws\u0020cards\u0020from\u0020the\u0020deck.",
+            "summary": "Draw\u0020cards\u0020and\u0020update\u0020hand\u0020and\u0020sumValue.",
             "url": "classes/App-Card-CardGraphic.html#method_drawCards"
+        },                {
+            "fqsen": "\\App\\Card\\CardGraphic\u003A\u003AdrawCardsPocker\u0028\u0029",
+            "name": "drawCardsPocker",
+            "summary": "Draw\u0020cards\u0020and\u0020update\u0020hand\u0020and\u0020sumValue.",
+            "url": "classes/App-Card-CardGraphic.html#method_drawCardsPocker"
         },                {
             "fqsen": "\\App\\Card\\CardGraphic\u003A\u003AdrawCardsbank\u0028\u0029",
             "name": "drawCardsbank",
-            "summary": "Draws\u0020cards\u0020from\u0020the\u0020deck.",
+            "summary": "Draw\u0020cards\u0020and\u0020update\u0020hand\u0020and\u0020sumValue.",
             "url": "classes/App-Card-CardGraphic.html#method_drawCardsbank"
         },                {
             "fqsen": "\\App\\Card\\CardGraphic\u003A\u003AshuffleDeck\u0028\u0029",
@@ -166,15 +191,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-GameController.html"
         },                {
+            "fqsen": "\\App\\Controller\\GameController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Controller-GameController.html#method___construct"
+        },                {
             "fqsen": "\\App\\Controller\\GameController\u003A\u003Astart\u0028\u0029",
             "name": "start",
             "summary": "",
             "url": "classes/App-Controller-GameController.html#method_start"
         },                {
-            "fqsen": "\\App\\Controller\\GameController\u003A\u003Agamepross\u0028\u0029",
-            "name": "gamepross",
+            "fqsen": "\\App\\Controller\\GameController\u003A\u003AgameProcess\u0028\u0029",
+            "name": "gameProcess",
             "summary": "",
-            "url": "classes/App-Controller-GameController.html#method_gamepross"
+            "url": "classes/App-Controller-GameController.html#method_gameProcess"
         },                {
             "fqsen": "\\App\\Controller\\GameController\u003A\u003Adoc\u0028\u0029",
             "name": "doc",
@@ -185,6 +215,166 @@ Search.appendIndex(
             "name": "getGameStateJson",
             "summary": "",
             "url": "classes/App-Controller-GameController.html#method_getGameStateJson"
+        },                {
+            "fqsen": "\\App\\Controller\\GameController\u003A\u003ASESSION_DRAWN_CARDS",
+            "name": "SESSION_DRAWN_CARDS",
+            "summary": "",
+            "url": "classes/App-Controller-GameController.html#constant_SESSION_DRAWN_CARDS"
+        },                {
+            "fqsen": "\\App\\Controller\\GameController\u003A\u003ASESSION_SUM_VALUE",
+            "name": "SESSION_SUM_VALUE",
+            "summary": "",
+            "url": "classes/App-Controller-GameController.html#constant_SESSION_SUM_VALUE"
+        },                {
+            "fqsen": "\\App\\Controller\\GameController\u003A\u003ASESSION_DRAWN_CARDS_BANK",
+            "name": "SESSION_DRAWN_CARDS_BANK",
+            "summary": "",
+            "url": "classes/App-Controller-GameController.html#constant_SESSION_DRAWN_CARDS_BANK"
+        },                {
+            "fqsen": "\\App\\Controller\\GameController\u003A\u003ASESSION_SUM_VALUE_BANK",
+            "name": "SESSION_SUM_VALUE_BANK",
+            "summary": "",
+            "url": "classes/App-Controller-GameController.html#constant_SESSION_SUM_VALUE_BANK"
+        },                {
+            "fqsen": "\\App\\Controller\\GameController\u003A\u003ASESSION_GAME_FINISHED",
+            "name": "SESSION_GAME_FINISHED",
+            "summary": "",
+            "url": "classes/App-Controller-GameController.html#constant_SESSION_GAME_FINISHED"
+        },                {
+            "fqsen": "\\App\\Controller\\GameController\u003A\u003A\u0024gameService",
+            "name": "gameService",
+            "summary": "",
+            "url": "classes/App-Controller-GameController.html#property_gameService"
+        },                {
+            "fqsen": "\\App\\Controller\\GController",
+            "name": "GController",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#method_index"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003AendGame\u0028\u0029",
+            "name": "endGame",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#method_endGame"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003Ashow_score\u0028\u0029",
+            "name": "show_score",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#method_show_score"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003Ashow_regle\u0028\u0029",
+            "name": "show_regle",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#method_show_regle"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003Aabout\u0028\u0029",
+            "name": "about",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#method_about"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003ASESSION_DRAWN_CARDS",
+            "name": "SESSION_DRAWN_CARDS",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#constant_SESSION_DRAWN_CARDS"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003ASESSION_LASTCARD",
+            "name": "SESSION_LASTCARD",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#constant_SESSION_LASTCARD"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003ASESSION_POKER_SQUARE",
+            "name": "SESSION_POKER_SQUARE",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#constant_SESSION_POKER_SQUARE"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003ASESSION_BUTTON_TYPE",
+            "name": "SESSION_BUTTON_TYPE",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#constant_SESSION_BUTTON_TYPE"
+        },                {
+            "fqsen": "\\App\\Controller\\GController\u003A\u003A\u0024pokerService",
+            "name": "pokerService",
+            "summary": "",
+            "url": "classes/App-Controller-GController.html#property_pokerService"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController",
+            "name": "LibraryController",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#method_index"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#method_new"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003AshowAllLibrarybooks\u0028\u0029",
+            "name": "showAllLibrarybooks",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#method_showAllLibrarybooks"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003AshowOneLibrarybooks\u0028\u0029",
+            "name": "showOneLibrarybooks",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#method_showOneLibrarybooks"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003Aedit\u0028\u0029",
+            "name": "edit",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#method_edit"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#method_delete"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003AgetAllBooks\u0028\u0029",
+            "name": "getAllBooks",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#method_getAllBooks"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003AgetBookByISBN\u0028\u0029",
+            "name": "getBookByISBN",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#method_getBookByISBN"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003A\u0024bookService",
+            "name": "bookService",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#property_bookService"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003A\u0024entityManager",
+            "name": "entityManager",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#property_entityManager"
+        },                {
+            "fqsen": "\\App\\Controller\\MetricsController",
+            "name": "MetricsController",
+            "summary": "",
+            "url": "classes/App-Controller-MetricsController.html"
+        },                {
+            "fqsen": "\\App\\Controller\\MetricsController\u003A\u003Ametrics_analys\u0028\u0029",
+            "name": "metrics_analys",
+            "summary": "",
+            "url": "classes/App-Controller-MetricsController.html#method_metrics_analys"
         },                {
             "fqsen": "\\App\\Controller\\ReportController",
             "name": "ReportController",
@@ -216,10 +406,295 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-ReportController.html#method_debug"
         },                {
+            "fqsen": "\\App\\Entity\\Booklib",
+            "name": "Booklib",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#method_getId"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003AgetBookname\u0028\u0029",
+            "name": "getBookname",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#method_getBookname"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003AsetBookname\u0028\u0029",
+            "name": "setBookname",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#method_setBookname"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003AgetIsbn\u0028\u0029",
+            "name": "getIsbn",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#method_getIsbn"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003AsetIsbn\u0028\u0029",
+            "name": "setIsbn",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#method_setIsbn"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003AgetWriter\u0028\u0029",
+            "name": "getWriter",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#method_getWriter"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003AsetWriter\u0028\u0029",
+            "name": "setWriter",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#method_setWriter"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003AgetImage\u0028\u0029",
+            "name": "getImage",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#method_getImage"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003AsetImage\u0028\u0029",
+            "name": "setImage",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#method_setImage"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#property_id"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003A\u0024bookname",
+            "name": "bookname",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#property_bookname"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003A\u0024isbn",
+            "name": "isbn",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#property_isbn"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003A\u0024writer",
+            "name": "writer",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#property_writer"
+        },                {
+            "fqsen": "\\App\\Entity\\Booklib\u003A\u003A\u0024image",
+            "name": "image",
+            "summary": "",
+            "url": "classes/App-Entity-Booklib.html#property_image"
+        },                {
+            "fqsen": "\\App\\Form\\BookType",
+            "name": "BookType",
+            "summary": "",
+            "url": "classes/App-Form-BookType.html"
+        },                {
+            "fqsen": "\\App\\Form\\BookType\u003A\u003AbuildForm\u0028\u0029",
+            "name": "buildForm",
+            "summary": "",
+            "url": "classes/App-Form-BookType.html#method_buildForm"
+        },                {
+            "fqsen": "\\App\\Form\\BookType\u003A\u003AconfigureOptions\u0028\u0029",
+            "name": "configureOptions",
+            "summary": "",
+            "url": "classes/App-Form-BookType.html#method_configureOptions"
+        },                {
             "fqsen": "\\App\\Kernel",
             "name": "Kernel",
             "summary": "",
             "url": "classes/App-Kernel.html"
+        },                {
+            "fqsen": "\\App\\Repository\\BooklibRepository",
+            "name": "BooklibRepository",
+            "summary": "",
+            "url": "classes/App-Repository-BooklibRepository.html"
+        },                {
+            "fqsen": "\\App\\Repository\\BooklibRepository\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Repository-BooklibRepository.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\GameService",
+            "name": "GameService",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html"
+        },                {
+            "fqsen": "\\App\\Service\\GameService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\GameService\u003A\u003AdrawCard\u0028\u0029",
+            "name": "drawCard",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html#method_drawCard"
+        },                {
+            "fqsen": "\\App\\Service\\GameService\u003A\u003AdrawBankCards\u0028\u0029",
+            "name": "drawBankCards",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html#method_drawBankCards"
+        },                {
+            "fqsen": "\\App\\Service\\GameService\u003A\u003ASESSION_DRAWN_CARDS",
+            "name": "SESSION_DRAWN_CARDS",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html#constant_SESSION_DRAWN_CARDS"
+        },                {
+            "fqsen": "\\App\\Service\\GameService\u003A\u003ASESSION_SUM_VALUE",
+            "name": "SESSION_SUM_VALUE",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html#constant_SESSION_SUM_VALUE"
+        },                {
+            "fqsen": "\\App\\Service\\GameService\u003A\u003ASESSION_CARDS",
+            "name": "SESSION_CARDS",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html#constant_SESSION_CARDS"
+        },                {
+            "fqsen": "\\App\\Service\\GameService\u003A\u003ASESSION_DRAWN_CARDS_BANK",
+            "name": "SESSION_DRAWN_CARDS_BANK",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html#constant_SESSION_DRAWN_CARDS_BANK"
+        },                {
+            "fqsen": "\\App\\Service\\GameService\u003A\u003ASESSION_SUM_VALUE_BANK",
+            "name": "SESSION_SUM_VALUE_BANK",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html#constant_SESSION_SUM_VALUE_BANK"
+        },                {
+            "fqsen": "\\App\\Service\\GameService\u003A\u003ASESSION_CARDS_BANK",
+            "name": "SESSION_CARDS_BANK",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html#constant_SESSION_CARDS_BANK"
+        },                {
+            "fqsen": "\\App\\Service\\GameService\u003A\u003A\u0024cardGraphic",
+            "name": "cardGraphic",
+            "summary": "",
+            "url": "classes/App-Service-GameService.html#property_cardGraphic"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService",
+            "name": "PokerSquareService",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AdrawCardsPocker\u0028\u0029",
+            "name": "drawCardsPocker",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_drawCardsPocker"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AplaceCard\u0028\u0029",
+            "name": "placeCard",
+            "summary": "Places\u0020a\u0020card\u0020in\u0020the\u0020specified\u0020row\u0020and\u0020column\u0020in\u0020the\u0020grid.",
+            "url": "classes/App-Service-PokerSquareService.html#method_placeCard"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AcalculateScores\u0028\u0029",
+            "name": "calculateScores",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_calculateScores"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AcalculateHandScore\u0028\u0029",
+            "name": "calculateHandScore",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_calculateHandScore"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AisRoyalFlush\u0028\u0029",
+            "name": "isRoyalFlush",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_isRoyalFlush"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AisStraightFlush\u0028\u0029",
+            "name": "isStraightFlush",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_isStraightFlush"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AisFourOfAKind\u0028\u0029",
+            "name": "isFourOfAKind",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_isFourOfAKind"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AisFullHouse\u0028\u0029",
+            "name": "isFullHouse",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_isFullHouse"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AisFlush\u0028\u0029",
+            "name": "isFlush",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_isFlush"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AisStraight\u0028\u0029",
+            "name": "isStraight",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_isStraight"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AisThreeOfAKind\u0028\u0029",
+            "name": "isThreeOfAKind",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_isThreeOfAKind"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AisTwoPair\u0028\u0029",
+            "name": "isTwoPair",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_isTwoPair"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AisOnePair\u0028\u0029",
+            "name": "isOnePair",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_isOnePair"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AhasOfAKind\u0028\u0029",
+            "name": "hasOfAKind",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_hasOfAKind"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AcontainsValues\u0028\u0029",
+            "name": "containsValues",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_containsValues"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AsparaScore\u0028\u0029",
+            "name": "sparaScore",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_sparaScore"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AgetTopScores\u0028\u0029",
+            "name": "getTopScores",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_getTopScores"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003AisGridFull\u0028\u0029",
+            "name": "isGridFull",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#method_isGridFull"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003ASESSION_DRAWN_CARDS",
+            "name": "SESSION_DRAWN_CARDS",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#constant_SESSION_DRAWN_CARDS"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003ASESSION_LASTCARD",
+            "name": "SESSION_LASTCARD",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#constant_SESSION_LASTCARD"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003ASESSION_CARDS",
+            "name": "SESSION_CARDS",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#constant_SESSION_CARDS"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003ASESSION_POKER_SQUARE",
+            "name": "SESSION_POKER_SQUARE",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#constant_SESSION_POKER_SQUARE"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003A\u0024cardGraphic",
+            "name": "cardGraphic",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#property_cardGraphic"
+        },                {
+            "fqsen": "\\App\\Service\\PokerSquareService\u003A\u003A\u0024size",
+            "name": "size",
+            "summary": "",
+            "url": "classes/App-Service-PokerSquareService.html#property_size"
         },                {
             "fqsen": "\\",
             "name": "\\",
@@ -236,9 +711,29 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/app-controller.html"
         },                {
+            "fqsen": "\\App\\Entity",
+            "name": "Entity",
+            "summary": "",
+            "url": "namespaces/app-entity.html"
+        },                {
+            "fqsen": "\\App\\Form",
+            "name": "Form",
+            "summary": "",
+            "url": "namespaces/app-form.html"
+        },                {
             "fqsen": "\\App",
             "name": "App",
             "summary": "",
             "url": "namespaces/app.html"
+        },                {
+            "fqsen": "\\App\\Repository",
+            "name": "Repository",
+            "summary": "",
+            "url": "namespaces/app-repository.html"
+        },                {
+            "fqsen": "\\App\\Service",
+            "name": "Service",
+            "summary": "",
+            "url": "namespaces/app-service.html"
         }            ]
 );

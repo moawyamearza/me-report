@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Min Webbplats{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/style1.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Min Webbplats</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ path('game_index') }}">Poker Square</a></li>
+                    <li><a href="{{ path('show_score') }}">Leaderboard</a></li>
+                    <li><a href="{{ path('show_regle') }}">Regler</a></li>
+                    <li><a href="{{ path('about_proj') }}">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; {{ "now"|date("Y") }} Min Webbplats. Alla rättigheter förbehållna.</p>
+        </div>
+    </footer>
+
+    <script src="{{ asset('scripts/main.js') }}"></script>
+</body>
+</html>

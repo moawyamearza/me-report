@@ -34,11 +34,10 @@ class GameServiceTest extends TestCase
 
     public function testDrawCard(): void
     {
-        // Arrange
         $drawnCards = [];
-        $initialCards = [['color' => 'red', 'value' => '10', 'form' => 'heart']]; // Example data
+        $initialCards = [['color' => 'red', 'value' => '10', 'form' => 'heart']];
         $result = [
-            'hand' => [['color' => 'black', 'value' => '5', 'form' => 'spade']], // Example drawn card
+            'hand' => [['color' => 'black', 'value' => '5', 'form' => 'spade']],
             'cards' => [['color' => 'red', 'value' => '10', 'form' => 'heart']],
             'sumValue' => 15
         ];
@@ -46,8 +45,8 @@ class GameServiceTest extends TestCase
         $this->sessionMock->expects($this->exactly(3))
             ->method('get')
             ->willReturnMap([
-                [self::SESSION_DRAWN_CARDS, [], []], 
-                [self::SESSION_CARDS, null, $initialCards],
+                [self::SESSION_DRAWN_CARDS, [], $drawnCards],
+                [self::SESSION_CARDS, [], $initialCards],
                 [self::SESSION_SUM_VALUE, 0, 0]
             ]);
 
@@ -66,11 +65,11 @@ class GameServiceTest extends TestCase
 
         // Act
         $this->gameService->drawCard($this->sessionMock);
-    }
+
+        }
 
     public function testDrawBankCards(): void
     {
-        // Arrange
         $drawnCardsBank = [];
         $initialCardsBank = [['color' => 'black', 'value' => '5', 'form' => 'spade']]; 
         $resultBank = [
@@ -82,8 +81,8 @@ class GameServiceTest extends TestCase
         $this->sessionMock->expects($this->exactly(3))
             ->method('get')
             ->willReturnMap([
-                [self::SESSION_DRAWN_CARDS_BANK, [], []], 
-                [self::SESSION_CARDS_BANK, null, $initialCardsBank],
+                [self::SESSION_DRAWN_CARDS_BANK, [], $drawnCardsBank], 
+                [self::SESSION_CARDS_BANK, [], $initialCardsBank],
                 [self::SESSION_SUM_VALUE_BANK, 0, 0]
             ]);
 
@@ -100,7 +99,7 @@ class GameServiceTest extends TestCase
                 [self::SESSION_CARDS_BANK, $resultBank['cardsbank']]
             );
 
-        // Act
         $this->gameService->drawBankCards($this->sessionMock);
+
     }
 }
