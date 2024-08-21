@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="" tests="17" assertions="149" errors="0" warnings="0" failures="1" skipped="0" time="0.085101">
-    <testsuite name="Project Test Suite" tests="17" assertions="149" errors="0" warnings="0" failures="1" skipped="0" time="0.085101">
-      <testsuite name="Tests\Unit\Card\CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" tests="6" assertions="11" errors="0" warnings="0" failures="0" skipped="0" time="0.009539">
-        <testcase name="testDrawPlayerCards" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="23" assertions="4" time="0.006515"/>
-        <testcase name="testDrawCards" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="34" assertions="2" time="0.001149"/>
-        <testcase name="testDrawCardsbank" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="45" assertions="2" time="0.000315"/>
-        <testcase name="testGetColor" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="55" assertions="1" time="0.000894"/>
-        <testcase name="testGetValue" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="60" assertions="1" time="0.000359"/>
-        <testcase name="testGetForm" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="65" assertions="1" time="0.000307"/>
+  <testsuite name="" tests="17" assertions="149" errors="0" warnings="0" failures="1" skipped="0" time="0.080223">
+    <testsuite name="Project Test Suite" tests="17" assertions="149" errors="0" warnings="0" failures="1" skipped="0" time="0.080223">
+      <testsuite name="Tests\Unit\Card\CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" tests="6" assertions="11" errors="0" warnings="0" failures="0" skipped="0" time="0.012237">
+        <testcase name="testDrawPlayerCards" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="23" assertions="4" time="0.009685"/>
+        <testcase name="testDrawCards" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="34" assertions="2" time="0.001056"/>
+        <testcase name="testDrawCardsbank" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="45" assertions="2" time="0.000348"/>
+        <testcase name="testGetColor" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="55" assertions="1" time="0.000656"/>
+        <testcase name="testGetValue" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="60" assertions="1" time="0.000254"/>
+        <testcase name="testGetForm" class="Tests\Unit\Card\CardGraphicTest" classname="Tests.Unit.Card.CardGraphicTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/CardGraphicTest.php" line="65" assertions="1" time="0.000237"/>
       </testsuite>
-      <testsuite name="DeckWith2JokersTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/DeckWith2JokersTest.php" tests="2" assertions="113" errors="0" warnings="0" failures="0" skipped="0" time="0.003702">
-        <testcase name="testInitEnglishDeck2Jokers" class="DeckWith2JokersTest" classname="DeckWith2JokersTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/DeckWith2JokersTest.php" line="11" assertions="110" time="0.001062"/>
-        <testcase name="testShuffleCards" class="DeckWith2JokersTest" classname="DeckWith2JokersTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/DeckWith2JokersTest.php" line="32" assertions="3" time="0.002640"/>
+      <testsuite name="DeckWith2JokersTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/DeckWith2JokersTest.php" tests="2" assertions="113" errors="0" warnings="0" failures="0" skipped="0" time="0.002903">
+        <testcase name="testInitEnglishDeck2Jokers" class="DeckWith2JokersTest" classname="DeckWith2JokersTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/DeckWith2JokersTest.php" line="11" assertions="110" time="0.001006"/>
+        <testcase name="testShuffleCards" class="DeckWith2JokersTest" classname="DeckWith2JokersTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Card/DeckWith2JokersTest.php" line="32" assertions="3" time="0.001897"/>
       </testsuite>
-      <testsuite name="BookTypeTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Form/BookTypeTest.php" tests="1" assertions="13" errors="0" warnings="0" failures="0" skipped="0" time="0.052340">
-        <testcase name="testBookTypeForm" class="BookTypeTest" classname="BookTypeTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Form/BookTypeTest.php" line="10" assertions="13" time="0.052340"/>
+      <testsuite name="BookTypeTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Form/BookTypeTest.php" tests="1" assertions="13" errors="0" warnings="0" failures="0" skipped="0" time="0.049056">
+        <testcase name="testBookTypeForm" class="BookTypeTest" classname="BookTypeTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Form/BookTypeTest.php" line="10" assertions="13" time="0.049056"/>
       </testsuite>
-      <testsuite name="GameServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/GameServiceTest.php" tests="2" assertions="4" errors="0" warnings="0" failures="0" skipped="0" time="0.012006">
-        <testcase name="testDrawCard" class="GameServiceTest" classname="GameServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/GameServiceTest.php" line="35" assertions="2" time="0.010084"/>
-        <testcase name="testDrawBankCards" class="GameServiceTest" classname="GameServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/GameServiceTest.php" line="71" assertions="2" time="0.001922"/>
+      <testsuite name="GameServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/GameServiceTest.php" tests="2" assertions="4" errors="0" warnings="0" failures="0" skipped="0" time="0.009101">
+        <testcase name="testDrawCard" class="GameServiceTest" classname="GameServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/GameServiceTest.php" line="35" assertions="2" time="0.007971"/>
+        <testcase name="testDrawBankCards" class="GameServiceTest" classname="GameServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/GameServiceTest.php" line="71" assertions="2" time="0.001130"/>
       </testsuite>
-      <testsuite name="App\Tests\Service\PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" tests="6" assertions="8" errors="0" warnings="0" failures="1" skipped="0" time="0.007514">
-        <testcase name="testDrawCardsPocker" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="25" assertions="2" time="0.001973"/>
-        <testcase name="testCalculateScores" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="65" assertions="1" time="0.001782"/>
-        <testcase name="testSparaScore" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="88" assertions="1" time="0.000866"/>
-        <testcase name="testGetTopScores" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="104" assertions="2" time="0.001170"/>
-        <testcase name="testIsGridFull" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="121" assertions="2" time="0.000589"/>
-        <testcase name="testNoCardToPlace" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="134" assertions="0" time="0.001133">
-          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Service\PokerSquareServiceTest::testNoCardToPlace
-Symfony\Component\HttpFoundation\Session\SessionInterface::get('drawn_cards', Array ()): mixed was not expected to be called more than 2 times.
+      <testsuite name="App\Tests\Service\PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" tests="6" assertions="8" errors="0" warnings="0" failures="1" skipped="0" time="0.006926">
+        <testcase name="testDrawCardsPocker" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="25" assertions="2" time="0.002984"/>
+        <testcase name="testCalculateScores" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="65" assertions="1" time="0.000923"/>
+        <testcase name="testSparaScore" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="88" assertions="1" time="0.000670"/>
+        <testcase name="testGetTopScores" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="104" assertions="2" time="0.000692"/>
+        <testcase name="testIsGridFull" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="121" assertions="2" time="0.000557"/>
+        <testcase name="testSlotAlreadyOccupied" class="App\Tests\Service\PokerSquareServiceTest" classname="App.Tests.Service.PokerSquareServiceTest" file="/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php" line="134" assertions="0" time="0.001100">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Service\PokerSquareServiceTest::testSlotAlreadyOccupied
+Symfony\Component\HttpFoundation\Session\SessionInterface::set('poker_square', Array (...)) was not expected to be called.
 
-/home/moawya/dbwebb-kurser/mvc/me/report/src/Service/PokerSquareService.php:27
-/home/moawya/dbwebb-kurser/mvc/me/report/src/Service/PokerSquareService.php:59
-/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php:150</failure>
+/home/moawya/dbwebb-kurser/mvc/me/report/src/Service/PokerSquareService.php:58
+/home/moawya/dbwebb-kurser/mvc/me/report/tests/Service/PokerSquareServiceTest.php:153</failure>
         </testcase>
       </testsuite>
     </testsuite>
