@@ -131,5 +131,34 @@ class PokerSquareServiceTest extends TestCase
         $this->assertTrue($result);
     }
 
-    
+    public function testPlaceCardSuccessfully(): void
+    {
+        // Expect get calls
+        $this->sessionMock->expects($this->exactly(2))
+            ->method('get')
+            ->willReturnOnConsecutiveCalls(
+                array_fill(0, 25, null), // Grid initially empty
+                7 // Last card
+            );
+
+        // Expect set call
+        $this->sessionMock->expects($this->once())
+            ->method('set')
+            ->with(
+                PokerSquareService::SESSION_POKER_SQUARE,
+                $this->callback(function ($grid) {
+                    return count($grid) === 25 && $grid[12] === 7; // 2*5 + 2 = 12
+                })
+            );
+
+        // Mock drawCardsPocker method
+        $this->cardGraphicMock->expects($this->once())
+            ->method('drawCardsPocker')
+            ->with([], [7])
+            ->willReturn(['hand' => [7], 'lastcard' => null, 'cards' => null]);
+
+        // Execute method
+        $this->service->placeCard($this->sessionMock, 2, 2);
+    }
+
 }
