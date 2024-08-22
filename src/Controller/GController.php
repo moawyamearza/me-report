@@ -89,7 +89,7 @@ class GController extends AbstractController
     /**
      * @Route("/proj/show_score", name="show_score")
      */
-    public function show_score(Request $request, SessionInterface $session): Response
+    public function show_score(SessionInterface $session): Response
     {
         $scores = $session->get('scores', []);
         return $this->render('game1/toplist.html.twig', [
@@ -100,7 +100,7 @@ class GController extends AbstractController
     /**
      * @Route("/proj/show_regle", name="show_regle")
      */
-    public function show_regle(Request $request, SessionInterface $session): Response
+    public function show_regle(SessionInterface $session): Response
     {
         $scores = $session->get('scores', []);
         return $this->render('game1/regle.html.twig', [
