@@ -49,9 +49,9 @@ class PokerSquareService
     public function placeCard(SessionInterface $session, int $row, int $col): void
     {
         $grid = $session->get(self::SESSION_POKER_SQUARE, array_fill(0, $this->size * $this->size, null));
-        if (!is_array($grid)) {
-            $grid = array_fill(0, $this->size * $this->size, null);
-        }
+       
+        $grid = array_fill(0, $this->size * $this->size, null);
+        
         $card = $session->get(self::SESSION_LASTCARD, 0);
         $index = $row * $this->size + $col;
         if ($card !== null && $grid[$index] === null) {
@@ -69,9 +69,9 @@ class PokerSquareService
     {
         /** @var array<int|null> $grid */
         $grid = $session->get(self::SESSION_POKER_SQUARE, array_fill(0, $this->size * $this->size, null));
-        if (!is_array($grid)) {
-            $grid = array_fill(0, $this->size * $this->size, null);
-        }
+       
+        $grid = array_fill(0, $this->size * $this->size, null);
+        
 
         /** @var array<int> $rowScores */
         $rowScores = [];
@@ -260,9 +260,8 @@ class PokerSquareService
     {
         /** @var array<int, array{name: string, score: int}> $scores */
         $scores = $session->get('scores', []);
-        if (!is_array($scores)) {
-            $scores = [];
-        }
+        $scores = [];
+        
 
         $scores[] = ['name' => $name, 'score' => $score];
 
@@ -280,9 +279,9 @@ class PokerSquareService
     {
         /** @var array<int, array{name: string, score: int}> $scores */
         $scores = $session->get('scores', []);
-        if (!is_array($scores)) {
-            $scores = [];
-        }
+        
+        $scores = [];
+        
         return $scores;
     }
 
@@ -290,9 +289,9 @@ class PokerSquareService
     {
         /** @var array<int|null> $grid */
         $grid = $session->get(self::SESSION_POKER_SQUARE, array_fill(0, $this->size * $this->size, null));
-        if (!is_array($grid)) {
-            $grid = array_fill(0, $this->size * $this->size, null);
-        }
+       
+        $grid = array_fill(0, $this->size * $this->size, null);
+        
         foreach ($grid as $card) {
             if ($card === null) {
                 return false;
