@@ -19,22 +19,37 @@ class BooklibRepositoryTest extends KernelTestCase
 
         // Get the EntityManager from the kernel container
         $this->entityManager = self::getContainer()->get(EntityManagerInterface::class);
+        if ($this->entityManager === null) {
+            throw new \RuntimeException('EntityManagerInterface could not be retrieved from the container.');
+        }
+        
         $this->repository = $this->entityManager->getRepository(Booklib::class);
+        if ($this->repository === null) {
+            throw new \RuntimeException('Repository for Booklib could not be retrieved.');
+        }
 
         // Setup schema for tests
         $schemaTool = new SchemaTool($this->entityManager);
         $classes = $this->entityManager->getMetadataFactory()->getAllMetadata();
+        
+        // Drop and create schema
         $schemaTool->dropSchema($classes);
         $schemaTool->createSchema($classes);
     }
 
     protected function tearDown(): void
     {
-        $schemaTool = new SchemaTool($this->entityManager);
-        $classes = $this->entityManager->getMetadataFactory()->getAllMetadata();
-        $schemaTool->dropSchema($classes);
+        if ($this->entityManager !== null) {
+            $schemaTool = new SchemaTool($this->entityManager);
+            $classes = $this->entityManager->getMetadataFactory()->getAllMetadata();
+            
+            // Drop schema
+            $schemaTool->dropSchema($classes);
 
-        $this->entityManager = null;
+            $this->entityManager->close();
+            $this->entityManager = null;
+        }
+
         $this->repository = null;
     }
 

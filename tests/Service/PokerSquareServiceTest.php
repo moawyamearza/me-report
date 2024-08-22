@@ -197,7 +197,6 @@ class PokerSquareServiceTest extends TestCase
         $this->assertFalse($result);
     }
 
-    
     public function testCalculateScoresWithEmptyGrid(): void
     {
         $emptyGrid = array_fill(0, 25, null);

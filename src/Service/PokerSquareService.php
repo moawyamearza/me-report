@@ -27,7 +27,6 @@ class PokerSquareService
         $drawnCards = $session->get(self::SESSION_DRAWN_CARDS, []);
         $cards = $session->get(self::SESSION_CARDS, null);
         $lastcard = $session->get(self::SESSION_LASTCARD, 0);
-        // Ensure arrays and null handling
 
         if (!is_array($drawnCards)) {
             $drawnCards = [];
@@ -42,14 +41,13 @@ class PokerSquareService
         $session->set(self::SESSION_CARDS, $result['cards']);
     }
 
-
     /**
      * Places a card in the specified row and column in the grid.
      */
     public function placeCard(SessionInterface $session, int $row, int $col): void
     {
         $grid = $session->get(self::SESSION_POKER_SQUARE, array_fill(0, $this->size * $this->size, null));
-       
+        
         $grid = array_fill(0, $this->size * $this->size, null);
         
         $card = $session->get(self::SESSION_LASTCARD, 0);
@@ -69,9 +67,9 @@ class PokerSquareService
     {
         /** @var array<int|null> $grid */
         $grid = $session->get(self::SESSION_POKER_SQUARE, array_fill(0, $this->size * $this->size, null));
-       
-        $grid = array_fill(0, $this->size * $this->size, null);
-        
+        if (!is_array($grid)) {
+            $grid = array_fill(0, $this->size * $this->size, null);
+        }
 
         /** @var array<int> $rowScores */
         $rowScores = [];
@@ -260,8 +258,9 @@ class PokerSquareService
     {
         /** @var array<int, array{name: string, score: int}> $scores */
         $scores = $session->get('scores', []);
-        $scores = [];
-        
+        if (!is_array($scores)) {
+            $scores = [];
+        }
 
         $scores[] = ['name' => $name, 'score' => $score];
 
@@ -279,9 +278,9 @@ class PokerSquareService
     {
         /** @var array<int, array{name: string, score: int}> $scores */
         $scores = $session->get('scores', []);
-        
-        $scores = [];
-        
+        if (!is_array($scores)) {
+            $scores = [];
+        }
         return $scores;
     }
 
@@ -289,9 +288,9 @@ class PokerSquareService
     {
         /** @var array<int|null> $grid */
         $grid = $session->get(self::SESSION_POKER_SQUARE, array_fill(0, $this->size * $this->size, null));
-       
-        $grid = array_fill(0, $this->size * $this->size, null);
-        
+        if (!is_array($grid)) {
+            $grid = array_fill(0, $this->size * $this->size, null);
+        }
         foreach ($grid as $card) {
             if ($card === null) {
                 return false;
