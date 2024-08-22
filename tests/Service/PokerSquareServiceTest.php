@@ -197,11 +197,7 @@ class PokerSquareServiceTest extends TestCase
         $this->assertFalse($result);
     }
 
-    private function createHand(array $cards): array
-    {
-        return array_map(fn($card) => ['card' => $card['value'], 'suit' => $card['suit']], $cards);
-    }
-
+    
     public function testCalculateScoresWithEmptyGrid(): void
     {
         $emptyGrid = array_fill(0, 25, null);
