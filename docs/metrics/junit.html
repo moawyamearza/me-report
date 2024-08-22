@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content content-first">
         <div class="report-details">
-            Created at 2024-08-21 23:10:01        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2024-08-22 11:49:18        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
         
@@ -60,14 +60,14 @@
         <div class="bloc bloc-number">
             <div class="label">Test suites</div>
             <div class="number">
-                5            </div>
+                6            </div>
         </div>
     </div>
     <div class="column">
         <div class="bloc bloc-number">
             <div class="label">Assertions</div>
             <div class="number">
-                151            </div>
+                176            </div>
         </div>
     </div>
     <div class="column">
@@ -153,8 +153,8 @@
                                         5                                        </span>
                                     </td>
                                                                     <td>
-                                        <span class="badge"  style="background-color: hsla(203, 82%, 76%, 0.3);">
-                                        0.3                                        </span>
+                                        <span class="badge"  style="background-color: hsla(203, 82%, 76%, 0.29);">
+                                        0.29                                        </span>
                                     </td>
                                                             </tr>
                                                         <tr>
@@ -283,6 +283,20 @@
                                                                     </td>
                             </tr>
                                                     <tr>
+                                <td valign="top"><span class="path">App\Tests\Repository\BooklibRepositoryTest</span></td>
+                                <td style="padding-bottom: 1em;">
+                                                                                                                    <span class="badge" title="Cyclomatic complexity of class">
+                                            -                                        </span>
+                                        <span class="path">Symfony\Bundle\FrameworkBundle\Test\KernelTestCase</span>
+                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
+                                            -                                        </span>
+                                        <span class="path">Doctrine\ORM\Tools\SchemaTool</span>
+                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
+                                            1                                        </span>
+                                        <span class="path">App\Entity\Booklib</span>
+                                                                    </td>
+                            </tr>
+                                                    <tr>
                                 <td valign="top"><span class="path">GameServiceTest</span></td>
                                 <td style="padding-bottom: 1em;">
                                                                                                                     <span class="badge" title="Cyclomatic complexity of class">
@@ -300,14 +314,11 @@
                                             -                                        </span>
                                         <span class="path">PHPUnit\Framework\TestCase</span>
                                                                             <br>                                        <span class="badge" title="Cyclomatic complexity of class">
-                                            -                                        </span>
-                                        <span class="path">Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage</span>
-                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
-                                            -                                        </span>
-                                        <span class="path">Symfony\Component\HttpFoundation\Session\Session</span>
-                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
                                             30                                        </span>
                                         <span class="path">App\Service\PokerSquareService</span>
+                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
+                                            -                                        </span>
+                                        <span class="path">ReflectionClass</span>
                                                                     </td>
                             </tr>
                                             </table>
@@ -554,7 +565,7 @@
 
 
             
-            var json = {"name":"Execution time","children":[{"name":"Tests\\Unit\\Card\\CardGraphicTest","time":0.007975},{"name":"DeckWith2JokersTest","time":0.002867},{"name":"BookTypeTest","time":0.045662},{"name":"GameServiceTest","time":0.010036},{"name":"App\\Tests\\Service\\PokerSquareServiceTest","time":0.009463}]};
+            var json = {"name":"Execution time","children":[{"name":"Tests\\Unit\\Card\\CardGraphicTest","time":0.01371},{"name":"DeckWith2JokersTest","time":0.006488},{"name":"BookTypeTest","time":0.156943},{"name":"App\\Tests\\Repository\\BooklibRepositoryTest","time":0.966979},{"name":"GameServiceTest","time":0.01413},{"name":"App\\Tests\\Service\\PokerSquareServiceTest","time":0.010636}]};
             root = json;
             var nodes = treemap.nodes(json)
                 .filter(function (d) {

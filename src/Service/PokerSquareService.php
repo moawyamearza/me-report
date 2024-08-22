@@ -27,6 +27,7 @@ class PokerSquareService
         $drawnCards = $session->get(self::SESSION_DRAWN_CARDS, []);
         $cards = $session->get(self::SESSION_CARDS, null);
         $lastcard = $session->get(self::SESSION_LASTCARD, 0);
+        // Ensure arrays and null handling
 
         if (!is_array($drawnCards)) {
             $drawnCards = [];
@@ -41,12 +42,12 @@ class PokerSquareService
         $session->set(self::SESSION_CARDS, $result['cards']);
     }
 
+
     /**
      * Places a card in the specified row and column in the grid.
      */
     public function placeCard(SessionInterface $session, int $row, int $col): void
     {
-
         $grid = $session->get(self::SESSION_POKER_SQUARE, array_fill(0, $this->size * $this->size, null));
         if (!is_array($grid)) {
             $grid = array_fill(0, $this->size * $this->size, null);
@@ -59,6 +60,7 @@ class PokerSquareService
             $this->drawCardsPocker($session);
         }
     }
+
 
     /**
      * @return array<string, array<int>|int>

@@ -43,7 +43,7 @@ class GController extends AbstractController
             $session->set(self::SESSION_BUTTON_TYPE, 'hidden');
         } elseif ($request->request->has('placeCard')) {
             $index = $request->request->get('placeCard');
-            $index = (int) $index;
+            
             $row = (int) floor($index / 5); 
             $col = (int) ($index % 5); 
             $this->pokerService->placeCard($session, $row, $col);
