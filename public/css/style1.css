@@ -156,3 +156,15 @@ footer {
     margin: 20px;
     display: inline-block;
   }
+
+  .game-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px auto;
+    width: 80%;
+}
+
+.form-controls {
+    margin-right: 20px;
+}

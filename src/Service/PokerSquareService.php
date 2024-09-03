@@ -48,7 +48,6 @@ class PokerSquareService
     {
         $grid = $session->get(self::SESSION_POKER_SQUARE, array_fill(0, $this->size * $this->size, null));
         
-        $grid = array_fill(0, $this->size * $this->size, null);
         
         $card = $session->get(self::SESSION_LASTCARD, 0);
         $index = $row * $this->size + $col;
