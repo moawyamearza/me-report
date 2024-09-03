@@ -1,0 +1,15 @@
+Projekt
+======
+Implementering av Krav 1, 2, 3: Webbplats: <br>
+
+För att uppfylla kraven började jag med att skapa en ny landningssida under /proj. Det var viktigt att denna sida skulle kännas som starten på en helt ny webbplats, så jag designade en separat stylesheet för att ge den en unik look. Färgtemat, typsnitt och layout skiljer sig ganska mycket från min tidigare sida, vilket gör att den nya delen verkligen står ut. Jag lade även till en egen navigeringsmeny för projektet, som bara visar de länkar som är relevanta för detta projekt. På sidan /proj/about skrev jag en kort introduktion som förklarar vad projektet handlar om. Sen valde jag att göra en Poker Square spel för projektet. Jag har implementerat en klass och kontroll som ska hantera processen för spelet. Jag har fokuserat på kod kvalitet.<br>
+
+Allmän reflektion om projektet: <br>
+
+Projektet var både roligt och lite utmanande. Att skapa en ny spel tog en del tid. Men det var också en av de mer kreativa och rolighet del av arbetet. När det gäller tekniska delen som handlar om kodtäckning och kvalitetsanalys, så flöt det på ganska bra men det tog tid och det var mycket som behövde tänka på men jag känner att jag lärde mig mycket och att resultatet blev riktigt bra. Hela projekt tog lång tid det var mycket som ska tänka på men samtidighet man haft bra koll på massa nya saker i detta området.
+
+Reflektion om kursen:<br>
+
+Kursen har varit riktigt givande. Jag har lärt mig massor, både när det gäller backend och frontend. Materialet var tydligt och handledningen hjälpte verkligen när det gällde att förstå mer komplicerade saker som automatiserade tester och att hålla en hög kodkvalitet. Läraren var Mycket hjälpsam och tydligt med förklaring. Totalt sett är jag väldigt nöjd med kursen och skulle absolut rekommendera den till vänner som är intresserade av webbutveckling.
+
+
